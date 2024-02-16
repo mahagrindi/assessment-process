@@ -1,11 +1,3 @@
-from flask import jsonify
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from bs4 import BeautifulSoup
-import time
-
 class StartupTunisia:
     def __init__(self, name, sector, created_at, label, logo, website, description, founders, email, phone):
         self.name = name

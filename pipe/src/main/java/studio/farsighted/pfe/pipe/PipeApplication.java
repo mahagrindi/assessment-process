@@ -1,4 +1,4 @@
-package com.example.pipe;
+package studio.farsighted.pfe.pipe;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

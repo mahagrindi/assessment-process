@@ -8,9 +8,12 @@ import time
 class StartupActScrapper:
     def __init__(self, url):
         self.url = url
-        self.driver = webdriver.Edge()
+        # headless mode
+        options = webdriver.EdgeOptions()
+        options.add_argument('--headless')
+        self.driver = webdriver.Edge(options=options)
         self.driver.get(url)
-        time.sleep(5)
+        WebDriverWait(self.driver, 0.5).until(EC.presence_of_element_located((By.ID, 'startup-table')))
         
     def scrape(self):
         all_startups = []
@@ -35,7 +38,7 @@ class StartupActScrapper:
                     all_startups.append({'name': name, 'sector': sector, 'createdAt': createdAt, 'logo': image_src, 'website': website, 'label': label_data, 'description': description, 'founders': founders, 'email': email, 'phone': phone})
 
             try:
-                next_button = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#startup-table_next')))
+                next_button = WebDriverWait(self.driver, 0.5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#startup-table_next')))
                 if 'disabled' in next_button.get_attribute('class'):
                     break
                 else:

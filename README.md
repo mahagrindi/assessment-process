@@ -13,13 +13,7 @@ up to this moment or per last commit we have 3 branches
 * learner (branch) will be the branch for the building the machine learning model
 * client (branch) will be the branch for the client side project
 
-## ports
 
-```yml
-learner = 6008
-crawler = 6006
-client  = 3000
-api     = 8080
-kafka   = 8699
-manager = 9968 
-```
+## To get started with the project
+
+* Start by setting up kafka inside a docker container link to [docker.md](.docker/docker.md) for more information

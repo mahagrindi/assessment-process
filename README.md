@@ -1,3 +1,5 @@
+[![Merge Develop into Main](https://github.com/W9968/design-develop-assessment-process/actions/workflows/merge-develop-into-main.yml/badge.svg)](https://github.com/W9968/design-develop-assessment-process/actions/workflows/merge-develop-into-main.yml)
+
 # git flow
 
 up to this moment or per last commit we have 3 branches

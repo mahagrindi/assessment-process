@@ -1,10 +1,10 @@
-package com.example.pipe;
+package studio.farsighted.pfe.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PipeApplicationTests {
+class ApiApplicationTests {
 
     @Test
     void contextLoads() {

@@ -1,0 +1,37 @@
+name: Merge Develop into Main
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  merge_into_main:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+      with:
+        ref: main
+
+    - name: Merge develop into main
+      run: |
+        git fetch origin
+        git merge origin/develop --no-edit
+        git push origin main
+
+    - name: Create merge request
+      uses: actions/github-script@v4
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const { data: pullRequest } = await github.pulls.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: 'Merge develop into main',
+            head: 'develop',
+            base: 'main',
+            body: 'Automatically created merge request from develop to main.'
+          });
+          console.log(`Merge request created: ${pullRequest.html_url}`);

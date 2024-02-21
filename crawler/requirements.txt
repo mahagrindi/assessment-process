@@ -1,4 +1,5 @@
 dotenv
 flask
 selenium
-bs4 
+bs4
+kafka-python

@@ -17,7 +17,7 @@ class StartupActScrapper:
         self.driver = webdriver.Edge(options=options)
         self.driver.get(url)
         WebDriverWait(self.driver, 0.5).until(EC.presence_of_element_located((By.ID, 'startup-table')))
-        
+
     def scrape(self):
         all_startups = []
         while True:
@@ -59,6 +59,6 @@ class StartupActScrapper:
         if data:
             df = pandas.DataFrame(data)
             if os.getenv("APP_STORAGE") == "local":
-                df.to_csv(f"../../DB/sheets/{filename}", index=False)
+                df.to_csv(os.path.join("..", "DB", "sheets", filename), index=False)
                 return True
         return False

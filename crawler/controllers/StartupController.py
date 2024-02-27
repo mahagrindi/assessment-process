@@ -10,13 +10,13 @@ class StartupController:
 
     @endpoint.route('', methods=['POST'])
     def index():
-        scrapper = StartupActScrapper('https://startup.gov.tn/fr/database')
+        scrapper = StartupActScrapper('https://startup.gov.tn/en/database')
         start_time = time.time()
         try:
             startups = scrapper.scrape()  # Corrected method call
             if len(startups) > 0:
-                if scrapper.save_to_file(startups, f"startups_{int(start_time)}.csv"):
-                    return jsonify({'status': 'success', 'statusCode': 200, 'time': time.time() - start_time, 'fileName': f"startups_{int(start_time)}.csv"})
+                if scrapper.save_to_file(startups, f"startups.csv"):
+                    return jsonify({'status': 'success', 'statusCode': 200, 'time': time.time() - start_time, 'fileName': f"startups.csv"})
                 return jsonify({'status': 'error', 'message': 'Error saving data to file', 'time': time.time() - start_time})
         except Exception as e:
             return jsonify({'status': 'error', 'message': str(e), 'time': time.time() - start_time})

@@ -3,7 +3,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
+
 import time
+import pandas
+import os
 
 class StartupActScrapper:
     def __init__(self, url):
@@ -51,3 +54,11 @@ class StartupActScrapper:
 
         self.driver.quit()
         return all_startups
+    
+    def save_to_file(self, data, filename):
+        if data:
+            df = pandas.DataFrame(data)
+            if os.getenv("APP_STORAGE") == "local":
+                df.to_csv(f"upload/{filename}", index=False)
+                return True
+        return False

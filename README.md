@@ -1,3 +1,5 @@
+[![Merge Develop into Main](https://github.com/W9968/design-develop-assessment-process/actions/workflows/merge-develop-into-main.yml/badge.svg)](https://github.com/W9968/design-develop-assessment-process/actions/workflows/merge-develop-into-main.yml)
+
 # git flow
 
 up to this moment or per last commit we have 3 branches
@@ -10,3 +12,8 @@ up to this moment or per last commit we have 3 branches
 * pipe (branch) will be the branch for the broker using kafka
 * learner (branch) will be the branch for the building the machine learning model
 * client (branch) will be the branch for the client side project
+
+
+## To get started with the project
+
+* Start by setting up kafka inside a docker container link to [docker.md](.docker/docker.md) for more information

@@ -1,17 +1,10 @@
 from flask import Flask
 from dotenv import load_dotenv
 
-#************************************#
-#********* Loading env file *********#
-#************************************#
+from controllers.StartupController import StartupController
+
 load_dotenv()
 
-#************************************#
-#********* Creating app *************#
-#************************************#
-app = Flask(__name__)
 
-#************************************#
-#********* Importing routes *********#
-#************************************#
-from controllers.ScrapperController import *
+app = Flask(__name__)
+StartupController(app)

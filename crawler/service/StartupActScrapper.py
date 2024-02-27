@@ -59,6 +59,6 @@ class StartupActScrapper:
         if data:
             df = pandas.DataFrame(data)
             if os.getenv("APP_STORAGE") == "local":
-                df.to_csv(f"upload/{filename}", index=False)
+                df.to_csv(f"../../DB/sheets/{filename}", index=False)
                 return True
         return False

@@ -2,6 +2,8 @@ package studio.farsighted.pfe.api.services;
 
 import jakarta.persistence.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import studio.farsighted.pfe.api.components.CsvParser;
 import studio.farsighted.pfe.api.entities.Startup;
@@ -20,8 +22,13 @@ public class StartupService implements StartupInterface {
     private CsvParser csvParser;
 
     @Override
-    public List<Startup> index() throws PersistenceException {
-        return startupRepository.findAll();
+    public Page<Startup> getAll(Pageable pageable){
+        return startupRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Startup> getBySector(String queryName, Pageable pageable) {
+        return startupRepository.findByStartupActivitySectorContainingIgnoreCaseOrderByStartupCreatedAtDesc(queryName, pageable);
     }
 
     @Override
@@ -30,22 +37,22 @@ public class StartupService implements StartupInterface {
     }
 
     @Override
-    public Startup save(Startup startup) throws PersistenceException {
+    public Startup save(Startup startup) {
         return startupRepository.save(startup);
     }
 
     @Override
-    public Startup update(Startup startup) throws PersistenceException {
+    public Startup update(Startup startup) {
         return startupRepository.save(startup);
     }
 
     @Override
-    public void delete(String id) throws PersistenceException {
+    public void delete(String id) {
         startupRepository.deleteById(id);
     }
 
     @Override
-    public Boolean transformToDatabase() throws PersistenceException {
+    public Boolean transformToDatabase() {
         try {
             List<Startup> startups = csvParser.parse("D:\\Repositories\\web work\\design-develop-assessment-process\\DB\\sheets\\startups.csv", Startup.class);
             startupRepository.saveAll(startups);

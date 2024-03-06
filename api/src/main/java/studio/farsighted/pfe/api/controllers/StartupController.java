@@ -42,20 +42,24 @@ public class StartupController {
     @PutMapping
     public Startup update(@RequestBody Startup startup) {
         if (!startupService.isExist(startup.getStartupName())) {
-            throw new EntityNotFoundException("Startup  with id: "+ startup.getStartupName() + "not found");
+            throw new EntityNotFoundException("Startup  with id: "+ startup.getStartupName() + " not found");
         }
         return startupService.update(startup);
     }
 
     @PatchMapping
-    public ResponseEntity<Boolean> merge(@RequestBody Startup startup) {
-        return ResponseEntity.ok(startupService.transformToDatabase());
+    public ResponseEntity<Boolean> merge() {
+        try {
+            return ResponseEntity.ok(startupService.transformToDatabase());
+        } catch (Exception e) {
+            throw new PersistDataException("Startups file can not merged: " + e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Startup> find(@PathVariable String id) {
         if(!startupService.isExist(id)) {
-            throw new EntityNotFoundException("Startup  with id: "+ id + "not found");
+            throw new EntityNotFoundException("Startup  with id: "+ id + " not found");
         }
         return ResponseEntity.ok(startupService.find(id));
     }
@@ -63,7 +67,7 @@ public class StartupController {
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable String id) {
         if(!startupService.isExist(id)) {
-            throw new EntityNotFoundException("Startup  with id: "+ id + "not found");
+            throw new EntityNotFoundException("Startup  with id: "+ id + " not found");
         }
         startupService.delete(id);
         return ResponseEntity.noContent().build();

@@ -34,12 +34,11 @@ class StartupActScrapper:
                     label_data = columns[4].text.strip()
                     website = columns[5].find('a')['href'] if columns[5].find('a') else None
                     description = columns[6].text.strip()
-                    founders = columns[7].text.strip()
+                    founders = ', '.join([founder.text.strip() for founder in columns[7].find_all('li')])
                     email = columns[8].text.strip()
                     phone = columns[9].text.strip()
 
-                    all_startups.append({'name': name, 'sector': sector, 'createdAt': createdAt, 'logo': image_src, 'website': website, 'label': label_data, 'description': description, 'founders': founders, 'email': email, 'phone': phone})
-
+                    all_startups.append({ 'startupName': name, 'startupActivitySector': sector, 'startupCreatedAt': createdAt, 'startupLogo': image_src, 'startupWebsite': website, 'startupLabelDate': label_data, 'startupDescription': description, 'startupFounders': founders, 'startupEmail': email, 'startupPhone': phone })
             try:
                 next_button = WebDriverWait(self.driver, 0.5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#startup-table_next')))
                 if 'disabled' in next_button.get_attribute('class'):

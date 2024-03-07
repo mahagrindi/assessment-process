@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from transformers import GPT2Tokenizer
+from transformers import AutoTokenizer
 
 import os
 import time
@@ -19,7 +19,7 @@ class DataAugmentationController:
     def index():
         start_time = time.time()
         try:
-            service = DataAugmentationService(GPT2Tokenizer.from_pretrained("gpt2-xl"))
+            service = DataAugmentationService(AutoTokenizer.from_pretrained("humarin/chatgpt_paraphraser_on_T5_base"))
             result = service.augment_data(os.path.join("upload", "pool.csv"), num_sequences=5)
             if result:
                 return jsonify({'status': 'success', 'statusCode': 200, 'time': time.time() - start_time, 'message': "Data has been augmented successfully"}), 200

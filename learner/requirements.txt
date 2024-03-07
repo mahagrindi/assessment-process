@@ -2,3 +2,4 @@ dotenv
 flask
 pandas
 transformers
+torch

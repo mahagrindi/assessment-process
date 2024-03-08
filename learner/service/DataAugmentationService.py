@@ -1,4 +1,5 @@
 from transformers import AutoModelForSeq2SeqLM
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import re
 import os
@@ -15,10 +16,13 @@ class DataAugmentationService:
         """
         Clean the text by removing extra spaces and newlines
         """
-        text = text.lower()
-        text = re.sub(r"\s+", " ", text)
-        text = re.sub(r"[^a-zA-Z0-9\s]", " ", text)
-        return text.strip()
+        if isinstance(text, str):
+            text = text.lower()
+            text = re.sub(r"\s+", " ", text)
+            text = re.sub(r"[^a-zA-Z0-9\s]", " ", text)
+            return text.strip()
+        else:
+            return str(text)
 
     def paraphrase(self, question, num_return_sequences=5):
         """

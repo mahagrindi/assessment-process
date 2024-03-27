@@ -1,4 +1,4 @@
-package studio.farsighted.pfe.api.controllers;
+package studio.farsighted.pfe.api.startup.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -7,11 +7,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import studio.farsighted.pfe.api.entities.Startup;
 import studio.farsighted.pfe.api.exceptions.EntityNotFoundException;
 import studio.farsighted.pfe.api.exceptions.PaginationBoundException;
 import studio.farsighted.pfe.api.exceptions.PersistDataException;
-import studio.farsighted.pfe.api.services.StartupService;
+import studio.farsighted.pfe.api.startup.models.Startup;
+import studio.farsighted.pfe.api.startup.services.StartupService;
 
 @RestController
 @RequestMapping("api/startup")

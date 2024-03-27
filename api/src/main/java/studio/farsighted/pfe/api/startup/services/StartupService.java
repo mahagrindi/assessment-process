@@ -1,14 +1,14 @@
-package studio.farsighted.pfe.api.services;
+package studio.farsighted.pfe.api.startup.services;
 
 import jakarta.persistence.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import studio.farsighted.pfe.api.components.CsvParser;
-import studio.farsighted.pfe.api.entities.Startup;
-import studio.farsighted.pfe.api.interfaces.StartupInterface;
-import studio.farsighted.pfe.api.repositories.StartupRepository;
+import studio.farsighted.pfe.api.startup.components.CsvParser;
+import studio.farsighted.pfe.api.startup.interfaces.StartupInterface;
+import studio.farsighted.pfe.api.startup.models.Startup;
+import studio.farsighted.pfe.api.startup.repositories.StartupRepository;
 
 import java.io.IOException;
 import java.util.List;

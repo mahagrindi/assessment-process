@@ -1,4 +1,4 @@
-package studio.farsighted.pfe.api.startup.controllers;
+package studio.farsighted.pfe.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import studio.farsighted.pfe.api.exceptions.EntityNotFoundException;
 import studio.farsighted.pfe.api.exceptions.PaginationBoundException;
 import studio.farsighted.pfe.api.exceptions.PersistDataException;
-import studio.farsighted.pfe.api.startup.models.Startup;
-import studio.farsighted.pfe.api.startup.services.StartupService;
+import studio.farsighted.pfe.api.models.Startup;
+import studio.farsighted.pfe.api.services.StartupService;
 
 @RestController
 @RequestMapping("api/startup")

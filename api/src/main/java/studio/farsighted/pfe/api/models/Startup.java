@@ -1,4 +1,4 @@
-package studio.farsighted.pfe.api.startup.models;
+package studio.farsighted.pfe.api.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

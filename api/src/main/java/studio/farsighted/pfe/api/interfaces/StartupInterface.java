@@ -1,8 +1,8 @@
-package studio.farsighted.pfe.api.startup.interfaces;
+package studio.farsighted.pfe.api.interfaces;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import studio.farsighted.pfe.api.startup.models.Startup;
+import studio.farsighted.pfe.api.models.Startup;
 
 public interface StartupInterface {
 

@@ -1,4 +1,4 @@
-package studio.farsighted.pfe.api.startup.components;
+package studio.farsighted.pfe.api.components;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;

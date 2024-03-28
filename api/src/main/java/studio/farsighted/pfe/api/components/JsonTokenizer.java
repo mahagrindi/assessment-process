@@ -12,7 +12,7 @@ import studio.farsighted.pfe.api.interfaces.JsonTokenizerInterface;
 import javax.crypto.SecretKey;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Function;
 
 /**
@@ -36,7 +36,12 @@ public class JsonTokenizer implements Serializable, JsonTokenizerInterface {
      */
     @Override
     public Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(token).getBody();
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(SECRET_KEY)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     /**
@@ -53,12 +58,12 @@ public class JsonTokenizer implements Serializable, JsonTokenizerInterface {
 
     /**
      * @param token The JWT token from which to extract the email
-     * @return The email extracted from the JWT token
-     * @title Extracts the email from the Json web token
-     * @description This method extracts the email claim from the JWT token. It uses the `extractClaimFromToken` method to extract the subject claim from the token, which is typically the email address of the user.
+     * @return The username extracted from the JWT token
+     * @title Extracts the username from the Json web token
+     * @description This method extracts the username claim from the JWT token. It uses the `extractClaimFromToken` method to extract the subject claim from the token, which is typically the username address of the user.
      */
     @Override
-    public String extractEmailFromToken(String token) {
+    public String extractUsernameFromToken(String token) {
         return extractClaimFromToken(token, Claims::getSubject);
     }
 
@@ -94,19 +99,21 @@ public class JsonTokenizer implements Serializable, JsonTokenizerInterface {
     // TODO: Add Email as a principal parameter to UserDetails
     @Override
     public Boolean validateToken(String token, UserDetails userDetails) {
-        return (extractEmailFromToken(token).equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return (extractUsernameFromToken(token).equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
     /**
-     * @param claims
-     * @param email
+     * @param username
      * @return The generated JWT token
      * @title Generates a Json web token
      * @description This method generates a JWT token using the provided claims and email address. It uses the `Jwts` builder to create a token with the specified claims, subject, and expiration date, and then signs the token with the secret key.
      */
     @Override
-    public String generateToken(Map<String, Object> claims, String email) {
-        return Jwts.builder().setClaims(claims).setSubject(email).setIssuedAt(new Date(System.currentTimeMillis()))
+    public String generateToken(String username) {
+        return Jwts.builder()
+                .setClaims(new HashMap<>())
+                .setSubject(username)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(SECRET_KEY).compact();
     }

@@ -29,6 +29,9 @@ public class UserEntity {
     @Column(name = "user-role", nullable = false)
     private String role;
 
+    @Column(name = "user-account-non-locked")
+    private Boolean isAccountNonLocked = true;
+
     @CreatedDate
     @Column(name = "user-created-at", nullable = true, updatable = false)
     private Date createdAt = new Date();

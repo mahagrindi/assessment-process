@@ -43,7 +43,7 @@ public class UserService implements UserInterface {
 
     @Override
     public UserEntity findByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByUsername(email);
     }
 
     @Override

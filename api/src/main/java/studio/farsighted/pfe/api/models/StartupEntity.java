@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "datatable-startup")
-public class Startup {
+public class StartupEntity {
 
     @Id
     @Column(name = "startup-name", unique = true, nullable = false)

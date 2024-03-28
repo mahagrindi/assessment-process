@@ -36,7 +36,7 @@ public class UserController {
         try {
             return ResponseEntity.ok(userService.save(user));
         } catch (Exception e) {
-            throw new PersistDataException("Startup not saved: " + e.getMessage());
+            throw new PersistDataException("StartupEntity not saved: " + e.getMessage());
         }
     }
 

@@ -11,11 +11,14 @@ public interface UserInterface {
     Page<UserEntity> getAll(Pageable pageable);
 
     UserEntity find(UUID id);
+
     UserEntity save(UserEntity user);
+
     UserEntity update(UserEntity user);
 
     void delete(UUID id);
 
     UserEntity findByEmail(String email);
+
     Boolean isExist(UUID id);
 }

@@ -20,8 +20,8 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "user-email", unique = true, nullable = false)
-    private String email;
+    @Column(name = "user-name", unique = true, nullable = false)
+    private String username;
 
     @Column(name = "user-password", nullable = false)
     private String password;

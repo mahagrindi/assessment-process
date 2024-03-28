@@ -3,8 +3,8 @@ package studio.farsighted.pfe.api.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import studio.farsighted.pfe.api.DTOs.AuthJwtResponseDTO;
-import studio.farsighted.pfe.api.DTOs.AuthLoginRequestDTO;
+import studio.farsighted.pfe.api.dto.AuthRequestDTO;
+import studio.farsighted.pfe.api.dto.JwtResponseDTO;
 import studio.farsighted.pfe.api.services.AuthService;
 
 @RestController
@@ -16,8 +16,8 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping
-    public ResponseEntity<AuthJwtResponseDTO> login(@RequestBody AuthLoginRequestDTO authLoginRequestDTO) {
-        AuthJwtResponseDTO authJwtResponseDTO = this.authService.login(authLoginRequestDTO);
+    public ResponseEntity<JwtResponseDTO> login(@RequestBody AuthRequestDTO authLoginRequestDTO) {
+        JwtResponseDTO authJwtResponseDTO = this.authService.login(authLoginRequestDTO);
         if (authJwtResponseDTO != null) {
             return ResponseEntity.ok(authJwtResponseDTO);
         } else {

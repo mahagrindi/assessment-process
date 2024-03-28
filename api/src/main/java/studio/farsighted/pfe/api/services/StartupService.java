@@ -54,7 +54,7 @@ public class StartupService implements StartupInterface {
     @Override
     public Boolean transformToDatabase() {
         try {
-            List<StartupEntity> startupEntities = csvParser.parse("D:\\Repositories\\web work\\design-develop-assessment-process\\DB\\sheets\\startupEntities.csv", StartupEntity.class);
+            List<StartupEntity> startupEntities = csvParser.parse("D:\\Repositories\\web work\\design-develop-assessment-process\\DB\\sheets\\startups.csv", StartupEntity.class);
             startupRepository.saveAll(startupEntities);
             return true;
         } catch (IOException e) {

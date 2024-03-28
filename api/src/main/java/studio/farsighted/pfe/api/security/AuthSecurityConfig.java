@@ -35,8 +35,8 @@ public class AuthSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/auth/**").permitAll())
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/**").permitAll())
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/auth/**", "/api/user/**").permitAll())
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/**").authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jsonWebTokenAuthFilter, UsernamePasswordAuthenticationFilter.class).build();

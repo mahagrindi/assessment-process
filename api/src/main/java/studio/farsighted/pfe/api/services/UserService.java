@@ -42,8 +42,8 @@ public class UserService implements UserInterface {
     }
 
     @Override
-    public UserEntity findByEmail(String email) {
-        return userRepository.findByUsername(email);
+    public UserEntity findByEmail(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Override

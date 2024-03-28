@@ -6,5 +6,5 @@ import studio.farsighted.pfe.api.models.UserEntity;
 import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<UserEntity, UUID> {
-    UserEntity findByUsername(String email);
+    UserEntity findByUsername(String username);
 }

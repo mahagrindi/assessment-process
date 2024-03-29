@@ -23,7 +23,7 @@ public class StartupController {
     private StartupService startupService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<Page<StartupEntity>> index(@PageableDefault(size = 10, page = 0, sort = "startupCreatedAt", direction = Sort.Direction.DESC) Pageable pageable) {
         try {
             return ResponseEntity.ok(startupService.getAll(pageable));

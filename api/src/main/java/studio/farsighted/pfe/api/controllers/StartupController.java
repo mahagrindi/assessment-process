@@ -6,11 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import studio.farsighted.pfe.api.entities.Startup;
 import studio.farsighted.pfe.api.exceptions.EntityNotFoundException;
 import studio.farsighted.pfe.api.exceptions.PaginationBoundException;
 import studio.farsighted.pfe.api.exceptions.PersistDataException;
+import studio.farsighted.pfe.api.models.StartupEntity;
 import studio.farsighted.pfe.api.services.StartupService;
 
 @RestController
@@ -22,7 +23,8 @@ public class StartupController {
     private StartupService startupService;
 
     @GetMapping
-    public ResponseEntity<Page<Startup>> index(@PageableDefault(size = 10, page = 0, sort = "startupCreatedAt", direction = Sort.Direction.DESC )Pageable pageable) {
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<Page<StartupEntity>> index(@PageableDefault(size = 10, page = 0, sort = "startupCreatedAt", direction = Sort.Direction.DESC) Pageable pageable) {
         try {
             return ResponseEntity.ok(startupService.getAll(pageable));
         } catch (Exception e) {
@@ -31,20 +33,20 @@ public class StartupController {
     }
 
     @PostMapping
-    public ResponseEntity<Startup> save(@RequestBody Startup startup) {
+    public ResponseEntity<StartupEntity> save(@RequestBody StartupEntity startupEntity) {
         try {
-            return ResponseEntity.ok(startupService.save(startup));
+            return ResponseEntity.ok(startupService.save(startupEntity));
         } catch (Exception e) {
-            throw new PersistDataException("Startup not saved: " + e.getMessage());
+            throw new PersistDataException("StartupEntity not saved: " + e.getMessage());
         }
     }
 
     @PutMapping
-    public Startup update(@RequestBody Startup startup) {
-        if (!startupService.isExist(startup.getStartupName())) {
-            throw new EntityNotFoundException("Startup  with id: "+ startup.getStartupName() + " not found");
+    public StartupEntity update(@RequestBody StartupEntity startupEntity) {
+        if (!startupService.isExist(startupEntity.getStartupName())) {
+            throw new EntityNotFoundException("StartupEntity  with id: " + startupEntity.getStartupName() + " not found");
         }
-        return startupService.update(startup);
+        return startupService.update(startupEntity);
     }
 
     @PatchMapping
@@ -57,24 +59,24 @@ public class StartupController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Startup> find(@PathVariable String id) {
-        if(!startupService.isExist(id)) {
-            throw new EntityNotFoundException("Startup  with id: "+ id + " not found");
+    public ResponseEntity<StartupEntity> find(@PathVariable String id) {
+        if (!startupService.isExist(id)) {
+            throw new EntityNotFoundException("StartupEntity  with id: " + id + " not found");
         }
         return ResponseEntity.ok(startupService.find(id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable String id) {
-        if(!startupService.isExist(id)) {
-            throw new EntityNotFoundException("Startup  with id: "+ id + " not found");
+        if (!startupService.isExist(id)) {
+            throw new EntityNotFoundException("StartupEntity  with id: " + id + " not found");
         }
         startupService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping(value = "/q", params = {"sector"})
-    public ResponseEntity<Page<Startup>> getBySector(@RequestParam String sector, @PageableDefault(size = 10, page = 0, sort = "startupCreatedAt", direction = Sort.Direction.DESC )Pageable pageable) {
+    public ResponseEntity<Page<StartupEntity>> getBySector(@RequestParam String sector, @PageableDefault(size = 10, page = 0, sort = "startupCreatedAt", direction = Sort.Direction.DESC) Pageable pageable) {
         try {
             if (sector.isEmpty()) {
                 throw new PaginationBoundException("Sector not found");

@@ -6,8 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import studio.farsighted.pfe.api.components.CsvParser;
-import studio.farsighted.pfe.api.entities.Startup;
 import studio.farsighted.pfe.api.interfaces.StartupInterface;
+import studio.farsighted.pfe.api.models.StartupEntity;
 import studio.farsighted.pfe.api.repositories.StartupRepository;
 
 import java.io.IOException;
@@ -22,28 +22,28 @@ public class StartupService implements StartupInterface {
     private CsvParser csvParser;
 
     @Override
-    public Page<Startup> getAll(Pageable pageable){
+    public Page<StartupEntity> getAll(Pageable pageable) {
         return startupRepository.findAll(pageable);
     }
 
     @Override
-    public Page<Startup> getBySector(String queryName, Pageable pageable) {
+    public Page<StartupEntity> getBySector(String queryName, Pageable pageable) {
         return startupRepository.findByStartupActivitySectorContainingIgnoreCaseOrderByStartupCreatedAtDesc(queryName, pageable);
     }
 
     @Override
-    public Startup find(String id) {
+    public StartupEntity find(String id) {
         return startupRepository.findById(id).get();
     }
 
     @Override
-    public Startup save(Startup startup) {
-        return startupRepository.save(startup);
+    public StartupEntity save(StartupEntity startupEntity) {
+        return startupRepository.save(startupEntity);
     }
 
     @Override
-    public Startup update(Startup startup) {
-        return startupRepository.save(startup);
+    public StartupEntity update(StartupEntity startupEntity) {
+        return startupRepository.save(startupEntity);
     }
 
     @Override
@@ -54,8 +54,8 @@ public class StartupService implements StartupInterface {
     @Override
     public Boolean transformToDatabase() {
         try {
-            List<Startup> startups = csvParser.parse("D:\\Repositories\\web work\\design-develop-assessment-process\\DB\\sheets\\startups.csv", Startup.class);
-            startupRepository.saveAll(startups);
+            List<StartupEntity> startupEntities = csvParser.parse("D:\\Repositories\\web work\\design-develop-assessment-process\\DB\\sheets\\startups.csv", StartupEntity.class);
+            startupRepository.saveAll(startupEntities);
             return true;
         } catch (IOException e) {
             throw new PersistenceException("Error parsing CSV file: " + e.getMessage(), e);

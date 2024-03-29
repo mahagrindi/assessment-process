@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import studio.farsighted.pfe.api.exceptions.EntityNotFoundException;
 import studio.farsighted.pfe.api.exceptions.PaginationBoundException;
@@ -22,6 +23,7 @@ public class StartupController {
     private StartupService startupService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Page<StartupEntity>> index(@PageableDefault(size = 10, page = 0, sort = "startupCreatedAt", direction = Sort.Direction.DESC) Pageable pageable) {
         try {
             return ResponseEntity.ok(startupService.getAll(pageable));

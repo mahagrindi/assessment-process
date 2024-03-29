@@ -1,3 +1,4 @@
 DB/sheets/**
 DB/crates/**
 DB/mySQL/**
+target/**

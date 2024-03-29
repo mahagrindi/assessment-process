@@ -1,0 +1,8 @@
+{
+  "github": {
+    "token": "ghp_4J9",
+    "secret": "shh!",
+    "silent": true,
+    "autoJobCancelation": true
+  }
+}

@@ -7,7 +7,7 @@
   "embeddedLanguageFormatting": "auto",
   "enable": true,
   "enableDebugLogs": false,
-  "endOfLine": "lf",
+  "endOfLine": "crlf",
   "htmlWhitespaceSensitivity": "css",
   "ignorePath": ".prettierignore",
   "insertPragma": false,

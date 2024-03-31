@@ -1,22 +1,29 @@
 import '@/styles/main.css'
 
+import { ReactNode } from 'react'
 import type { Metadata } from 'next'
-import type { ReactNode } from 'react'
-import { Inter } from 'next/font/google'
 
 import { mr } from '@/lib/class-authority-merge'
-
-const inter = Inter({ subsets: ['latin'] })
+import { NavBarAuth } from '@/templates/navbar/navbar-auth'
+import { FooterAuth } from '@/templates/footer/footer-auth'
 
 export const metadata: Metadata = {
-  title: 'EY Evaluation Login',
-  description: 'EY Evaluation login page',
+  title: 'EY Auth',
+  description: 'Auth page',
 }
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang='en'>
-      <body className={mr(inter.className)}>{children}</body>
-    </html>
+    <div className={mr('bg-primary-background w-full min-h-screen grid grid-cols-8')}>
+      <div className='bg-primary-yellow flex p-6 col-span-2'>
+        <NavBarAuth />
+      </div>
+      <div className='flex flex-col flex-1 p-6 col-span-6'>
+        <div className='flex-1'>{children}</div>
+        <div>
+          <FooterAuth />
+        </div>
+      </div>
+    </div>
   )
 }

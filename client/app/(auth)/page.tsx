@@ -1,3 +1,3 @@
 export default function Page() {
-  return <p>login testing</p>
+  return <div>testing</div>
 }

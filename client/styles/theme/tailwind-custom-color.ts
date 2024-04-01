@@ -4,6 +4,7 @@ export const EY_COLORS = {
     black: '#1a1a24',
     white: '#fffffe',
     background: '#f7f7f8',
+    border: '#E5E7EB',
   },
   accent: {
     link: '#155cb4',

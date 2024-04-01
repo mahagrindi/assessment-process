@@ -1,20 +1,12 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss'
+import { EY_COLORS } from './styles/theme/tailwind-custom-color'
 
 const config: Config = {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  darkMode: 'class',
+  content: ['./app/**/*.{js,ts,jsx,tsx,mdx}', './pages/**/*.{js,ts,jsx,tsx,mdx}', './components/**/*.{js,ts,jsx,tsx,mdx}', './ui/**/*.{js,ts,jsx,tsx,mdx}', 'node_modules/preline/dist/*.ts'],
   theme: {
-    extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
-    },
+    colors: { transparent: 'transparent', current: 'currentColor', ...EY_COLORS },
   },
-  plugins: [],
-};
-export default config;
+  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography'), require('preline/plugin')],
+}
+export default config

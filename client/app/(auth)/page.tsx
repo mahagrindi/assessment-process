@@ -3,7 +3,7 @@ import type { JSX } from 'react'
 import { Button } from '@/ui/button'
 import { Input } from '@/ui/input'
 
-export default function Page() {
+export default function Page(): JSX.Element {
   return (
     <div className='w-full h-full flex items-center justify-center'>
       <div className='w-full max-w-sm flex flex-col gap-8'>

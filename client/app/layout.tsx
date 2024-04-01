@@ -1,6 +1,6 @@
 import '@/styles/main.css'
 
-import { Suspense, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 

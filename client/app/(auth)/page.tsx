@@ -1,4 +1,5 @@
 import type { JSX } from 'react'
+import Link from 'next/link'
 
 import { Button } from '@/ui/button'
 import { Input } from '@/ui/input'
@@ -13,10 +14,15 @@ export default function Page(): JSX.Element {
         </div>
         <div className='w-full grid gap-4'>
           <Input type='email' label={'work email'} />
-          <Input type='password' label={'password'} />
+          <div className='w-full flex flex-col'>
+            <Input type='password' label={'password'} />
+            <Link href={'/forget-password'} passHref className='text-sm text-accent-link font-[500] capitalize flex-1 text-end'>
+              reset password?
+            </Link>
+          </div>
         </div>
         <div className='w-full'>
-          <Button title={'EY button'} />
+          <Button title={'sign in'} />
         </div>
       </div>
     </div>

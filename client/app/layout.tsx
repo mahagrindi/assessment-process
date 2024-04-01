@@ -4,7 +4,7 @@ import { Suspense, type ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
-import { mr } from '@/lib/class-authority-merge'
+import { mr } from '@/utils/class-authority-merge'
 
 const inter = Inter({ subsets: ['latin'] })
 

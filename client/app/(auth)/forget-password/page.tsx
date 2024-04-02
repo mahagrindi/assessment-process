@@ -13,7 +13,7 @@ export default function Page(): JSX.Element {
           <p className='w-full text-center text-sm text-content-prompt'>Enter your work email to receive an email confirming you password reset.</p>
         </div>
         <div className='w-full grid gap-4'>
-          <div className='w-full flex flex-col'>
+          <div className='w-full flex flex-col gap-1'>
             <Input type='email' label={'work email'} />
             <Link href={'/'} passHref className='text-sm text-accent-link font-[500] capitalize flex-1 text-end'>
               login instead!

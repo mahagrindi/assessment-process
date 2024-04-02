@@ -24,7 +24,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
       </div>
       <div className='bg-primary-black flex items-center justify-center p-6 col-span-4 relative overflow-hidden'>
         <BoxesCore />
-        <div className='absolute bg-gradient-to-tl from-transparent to-primary-black inset-0 w-full h-full flex items-center justify-center z-20 pointer-events-none'>
+        <div className='absolute bg-gradient-to-br from-transparent to-primary-black inset-0 w-full h-full flex items-center justify-center z-20 pointer-events-none'>
           <Image src='/assets/logo/ey-logo-white.png' width={175} height={200} alt={'logo auth logo'} priority />
         </div>
       </div>

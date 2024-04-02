@@ -14,7 +14,7 @@ export default function Page(): JSX.Element {
         </div>
         <div className='w-full grid gap-4'>
           <Input type='email' label={'work email'} />
-          <div className='w-full flex flex-col'>
+          <div className='w-full flex flex-col gap-1'>
             <Input type='password' label={'password'} />
             <Link href={'/forget-password'} passHref className='text-sm text-accent-link font-[500] capitalize flex-1 text-end'>
               reset password?

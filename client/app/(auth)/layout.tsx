@@ -6,7 +6,7 @@ import Image from 'next/image'
 
 import { BoxesCore } from '@/ui/storybook/boxes-core'
 import { mr } from '@/utils/class-authority-merge'
-import { FooterAuth } from '@/components/footer/footer-auth'
+import { AuthFooter } from '@/components/auth-footer'
 
 export const metadata: Metadata = {
   title: 'EY Auth',
@@ -19,7 +19,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
       <div className='flex flex-col flex-1 p-6 col-span-4 gap-6'>
         <div className='flex-1'>{children}</div>
         <div>
-          <FooterAuth />
+          <AuthFooter />
         </div>
       </div>
       <div className='bg-primary-black flex items-center justify-center p-6 col-span-4 relative overflow-hidden'>

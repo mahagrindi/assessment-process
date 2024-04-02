@@ -6,7 +6,6 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { mr } from '@/utils/class-authority-merge'
 import { MdOutlineChevronRight } from 'react-icons/md'
-import Link from 'next/link'
 
 interface ComponentProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean

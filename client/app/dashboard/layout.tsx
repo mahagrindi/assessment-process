@@ -5,7 +5,6 @@ import type { Metadata } from 'next'
 
 import { mr } from '@/utils/class-authority-merge'
 import { HeaderDashboard } from '@/components/dashboard-header/header-dashboard'
-import { VerticalNavigation } from '@/ui/vertical-navigation'
 import { DashboardSidebar } from '@/components/dahsboard-sidebar'
 
 export const metadata: Metadata = {

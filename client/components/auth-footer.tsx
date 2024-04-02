@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import Link from 'next/link'
 
-export const FooterAuth: FC = () => {
+export const AuthFooter: FC = () => {
   return (
     <footer className='flex items-center justify-between'>
       <div>

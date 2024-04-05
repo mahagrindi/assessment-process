@@ -1,4 +1,6 @@
 export const EY_INTERSTATE_FONT = {
-  fontSize: {},
+  fontSize: { 
+    
+  },
   lineHeight: {},
 }

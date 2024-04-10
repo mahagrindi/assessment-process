@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.18",
     "@lexical/react": "^0.14.2",
     "@mantine/core": "^7.7.1",
     "@mantine/hooks": "^7.7.1",

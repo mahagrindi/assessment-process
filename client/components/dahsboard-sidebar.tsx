@@ -10,6 +10,7 @@ const sidebarItems: { title: string; path: string; icon: ReactElement; scroll: b
   { title: 'programs', path: '/dashboard/programs', scroll: true, icon: <MdOutlineFolderCopy size={24} /> },
   { title: 'consultants', path: '/dashboard/consultants', scroll: false, icon: <MdOutlinePeopleAlt size={24} /> },
   { title: 'startups', path: '/dashboard/startups', scroll: false, icon: <MdOutlineLink size={24} /> },
+  { title: 'Form Builder', path: '/dashboard/form-bulider', scroll: false, icon: <MdOutlineLink size={24} /> },
 ]
 
 export const DashboardSidebar: FC = () => {

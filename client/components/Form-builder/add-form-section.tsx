@@ -96,11 +96,31 @@ export const AddFormSection: FC = () => {
           {sections.map((section) => (
             <div key={section.id} className="my-10">
               <div className="flex flex-row my-4">
+              <div className='relative'>
+    <div 
+      className='before:absolute before:content-[attr(data-tip)]
+       before:px-3 before:py-2 before:left-1/2 before:-top-3 
+       before:w-max before:max-w-xs before:-translate-x-1/2 
+       before:-translate-y-full before:bg-primary-black 
+       before:text-primary-white 
+       before:text-sm 
+
+       before:rounded-md before:opacity-0 
+       before:transition-all after:absolute after:left-1/2 
+       after:-top-3 after:h-0 after:w-0 after:-translate-x-1/2 
+       after:border-8 
+       after:border-t-primary-black after:border-l-transparent 
+       after:border-b-transparent after:border-r-transparent 
+       after:opacity-0 after:transition-all hover:before:opacity-100 hover:after:opacity-100' 
+      data-tip="Remove Section"
+    >
                 <MdCancel
                   className="text-red-500 hover:text-red-700 cursor-pointer"
                   size={24}
                   onClick={() => handleCancel(section.id)}
                 />
+                </div>
+                </div>
                 <p className="mx-2 text-lg font-medium">Section {section.id}</p>
               </div>
               <div className="w-full grid gap-4 mx-4">
@@ -119,12 +139,32 @@ export const AddFormSection: FC = () => {
 
                   {section.questions.map(question => (
                     <div key={question.id} className="flex items-center">
+                       <div className='relative'>
+    <div 
+      className='before:absolute before:content-[attr(data-tip)]
+       before:px-3 before:py-2 before:left-1/2 before:-top-3 
+       before:w-max before:max-w-xs before:-translate-x-1/2 
+       before:-translate-y-full before:bg-primary-black 
+       before:text-primary-white 
+       before:text-sm 
+
+       before:rounded-md before:opacity-0 
+       before:transition-all after:absolute after:left-1/2 
+       after:-top-3 after:h-0 after:w-0 after:-translate-x-1/2 
+       after:border-8 
+       after:border-t-primary-black after:border-l-transparent 
+       after:border-b-transparent after:border-r-transparent 
+       after:opacity-0 after:transition-all hover:before:opacity-100 hover:after:opacity-100' 
+      data-tip="Remove Question"
+    >
                       <MdCancel
                       data-tooltip-target="tooltip-default"
                         className="text-red-500 ml-2 cursor-pointer mx-2"
                         size={20}
                         onClick={() => removeQuestion(section.id, question.id)}
                       />
+                      </div>
+                      </div>
                       <div>{question.text}</div>
                     </div>
                   ))}
@@ -148,10 +188,32 @@ export const AddFormSection: FC = () => {
         </div>
       </div>
       <div className='flex justify-center my-10'>
+
+      <div className='relative'>
+    <div 
+      className='before:absolute before:content-[attr(data-tip)]
+       before:px-3 before:py-2 before:left-1/2 before:-top-3 
+       before:w-max before:max-w-xs before:-translate-x-1/2 
+       before:-translate-y-full before:bg-primary-black 
+       before:text-primary-white 
+       before:text-sm 
+
+       before:rounded-md before:opacity-0 
+       before:transition-all after:absolute after:left-1/2 
+       after:-top-3 after:h-0 after:w-0 after:-translate-x-1/2 
+       after:border-8 
+       after:border-t-primary-black after:border-l-transparent 
+       after:border-b-transparent after:border-r-transparent 
+       after:opacity-0 after:transition-all hover:before:opacity-100 hover:after:opacity-100' 
+      data-tip="Add New Section"
+    >
         <MdAddCircleOutline
           className="text-gray-400 hover:text-primary-yellow cursor-pointer"
           size={32} onClick={addSection}
         />
+        
+      </div>
+      </div>
       </div>
 
 

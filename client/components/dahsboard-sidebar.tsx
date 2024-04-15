@@ -3,10 +3,11 @@
 import type { FC, ReactElement } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { VerticalNavigation } from '@/ui/vertical-navigation'
-import { MdOutlineAssignment, MdOutlineFolderCopy, MdOutlineLink, MdOutlinePeopleAlt, MdOutlineStackedLineChart } from 'react-icons/md'
+import { MdOutlineAccountTree, MdOutlineAssignment, MdOutlineBolt, MdOutlineFolderCopy, MdOutlineLink, MdOutlinePeopleAlt, MdOutlineStackedLineChart } from 'react-icons/md'
 
 const sidebarItems: { title: string; path: string; icon: ReactElement; scroll: boolean; subMenu?: { title: string; path: string }[] }[] = [
   { title: 'dashboard', path: '/dashboard', scroll: false, icon: <MdOutlineStackedLineChart size={24} /> },
+  { title: 'activities', path: '/dashboard/activities', scroll: false, icon: <MdOutlineBolt size={24} /> },
   {
     title: 'programs',
     path: '/dashboard/programs',
@@ -23,7 +24,7 @@ const sidebarItems: { title: string; path: string; icon: ReactElement; scroll: b
     title: 'axes',
     path: '/dashboard/axes',
     scroll: true,
-    icon: <MdOutlineFolderCopy size={24} />,
+    icon: <MdOutlineAccountTree size={24} />,
     subMenu: [
       { title: 'overview', path: '/dashboard/axes' },
       { title: 'categories', path: '/dashboard/axes/categories' },

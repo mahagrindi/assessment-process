@@ -18,6 +18,7 @@ import { authenticate } from '@/lib/actions/auth-actions'
 
 export default function Page(): JSX.Element {
   const { push } = useRouter()
+  const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<ErrorAuthType | undefined>()
 
   const {
@@ -30,14 +31,17 @@ export default function Page(): JSX.Element {
   })
 
   const onSubmit = (data: LoginType): void => {
+    setLoading(true)
     authenticate(data).then((res) => {
       if (res.fulfillment) {
         setCookie('token', res.token.token, { path: '/', domain: 'localhost', maxAge: res.token.expiresIn / 1000, expires: new Date(res.token.expiresIn / 1000) })
         if (getCookie('token')) {
+          setLoading(false)
           push('/dashboard')
         }
       } else {
         setError(res.error)
+        setLoading(false)
       }
     })
   }
@@ -69,7 +73,7 @@ export default function Page(): JSX.Element {
           </div>
         </div>
         <div className='w-full'>
-          <Button title={'sign in'} type={'submit'} onClick={handleSubmit(onSubmit)} />
+          <Button title={'sign in'} type={'submit'} onClick={handleSubmit(onSubmit)} loading={loading} />
         </div>
       </div>
     </div>

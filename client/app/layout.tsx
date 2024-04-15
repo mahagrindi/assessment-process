@@ -5,7 +5,6 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 import { mr } from '@/utils/class-authority-merge'
-import QueryProvider from '@/provider/query-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,9 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang='en'>
-      <body className={mr(inter.className)}>
-        <QueryProvider>{children}</QueryProvider>
-      </body>
+      <body className={mr(inter.className, 'overscroll-none overflow-hidden')}>{children}</body>
     </html>
   )
 }

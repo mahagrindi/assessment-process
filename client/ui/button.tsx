@@ -8,7 +8,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { CgLoadbar, CgLoadbarAlt } from 'react-icons/cg'
 
 const buttonVariant = cva(
-  'relative w-full flex items-center justify-center border-[1px] border-content-display pointer-cursor disabled:bg-gray-200 disabled:border-gray-200 disabled:text-content-disabled disabled:pointer-events-none rounded',
+  'relative w-full flex items-center justify-center border-[2px] border-content-display pointer-cursor disabled:bg-gray-200 disabled:border-gray-200 disabled:text-content-disabled disabled:pointer-events-none rounded',
   {
     variants: {
       variant: {

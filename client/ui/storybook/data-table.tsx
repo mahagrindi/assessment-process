@@ -44,7 +44,7 @@ export function DataTable<T>({ data, columns, paging }: PropsWithChildren<Compon
 
   // handle server-side pagination
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
-    pageIndex: Number(pagination_page),
+    pageIndex: Number(pagination_page) - 1,
     pageSize: Number(pagination_size),
   })
 
@@ -107,8 +107,6 @@ export function DataTable<T>({ data, columns, paging }: PropsWithChildren<Compon
 
   return (
     <div className='bg-primary-white border-[2px] border-gray-200'>
-      <div className='px-6 py-4'></div>
-
       <table className='w-full'>
         <thead className='h-[42px] bg-gray-50 border-y borer-gray-250'>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -130,7 +128,7 @@ export function DataTable<T>({ data, columns, paging }: PropsWithChildren<Compon
             table.getRowModel().rows.map((row) => (
               <tr key={row.id} data-state={row.getIsSelected() && 'selected'} className='h-[64px] border-b border-gray-250 text-start'>
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className='text-start font-normal text-sm capitalize text-content-display px-3'>
+                  <td key={cell.id} className='text-start font-normal text-sm text-content-display px-3'>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

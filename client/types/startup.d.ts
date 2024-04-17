@@ -1,4 +1,5 @@
 interface StartupType {
+  id: string
   startupName: string
   startupActivitySector: string
   startupLabelDate: string

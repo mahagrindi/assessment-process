@@ -9,21 +9,22 @@ import org.springframework.util.StringUtils;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class CsvParser {
 
     public <T> List<T> parse(String path, Class<T> elementType) throws IOException {
         List<T> results = new ArrayList<>();
+        Set<T> uniqueEntities = new HashSet<>();
         try (FileReader fileReader = new FileReader(path);
              CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(fileReader)) {
             for (CSVRecord record : parser) {
                 try {
                     T entity = convert(elementType, record);
-                    results.add(entity);
+                    if (uniqueEntities.add(entity)) {
+                        results.add(entity);
+                    }
                 } catch (Exception e) {
                     throw new IOException("Error converting CSV record to entity: " + e.getMessage(), e);
                 }

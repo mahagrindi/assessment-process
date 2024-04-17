@@ -22,9 +22,6 @@ public class UserEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "user-full-name", nullable = false)
-    private String fullName;
-
     @Column(name = "user-name", nullable = false)
     private String username;
 

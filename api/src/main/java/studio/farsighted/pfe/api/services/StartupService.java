@@ -12,6 +12,7 @@ import studio.farsighted.pfe.api.repositories.StartupRepository;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class StartupService implements StartupInterface {
@@ -22,17 +23,12 @@ public class StartupService implements StartupInterface {
     private CsvParser csvParser;
 
     @Override
-    public Page<StartupEntity> getAll(Pageable pageable) {
-        return startupRepository.findAll(pageable);
+    public Page<StartupEntity> get(String query, String sector, Pageable pageable) {
+        return startupRepository.findByStartupNameOrDescriptionAndSector(query, sector, pageable);
     }
 
     @Override
-    public Page<StartupEntity> getBySector(String queryName, Pageable pageable) {
-        return startupRepository.findByStartupActivitySectorContainingIgnoreCaseOrderByStartupCreatedAtDesc(queryName, pageable);
-    }
-
-    @Override
-    public StartupEntity find(String id) {
+    public StartupEntity find(UUID id) {
         return startupRepository.findById(id).get();
     }
 
@@ -47,7 +43,7 @@ public class StartupService implements StartupInterface {
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(UUID id) {
         startupRepository.deleteById(id);
     }
 
@@ -63,7 +59,13 @@ public class StartupService implements StartupInterface {
     }
 
     @Override
-    public Boolean isExist(String id) {
+    public Boolean isExist(UUID id) {
         return startupRepository.existsById(id);
     }
+
+    @Override
+    public List<String> getDistinctSector() {
+        return startupRepository.findDistinctStartupActivitySector();
+    }
+
 }

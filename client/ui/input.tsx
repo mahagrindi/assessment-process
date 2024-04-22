@@ -1,9 +1,9 @@
-import React, { FC, forwardRef, InputHTMLAttributes } from 'react'
+import { type FC, forwardRef, type InputHTMLAttributes } from 'react'
 
 import { mr } from '@/utils/class-authority-merge'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const inputVariant = cva('px-2 disabled:bg-gray-100 disabled:pointer-events-none rounded outline-none', {
+const inputVariant = cva('px-2 border-[2px] disabled:bg-gray-100 disabled:pointer-events-none rounded outline-none', {
   variants: {
     variant: {
       default: 'w-full border-primary-border text-sm focus:border-gray-500 focus:ring-gray-500',
@@ -22,7 +22,7 @@ const inputVariant = cva('px-2 disabled:bg-gray-100 disabled:pointer-events-none
 })
 
 interface ComponentProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>, VariantProps<typeof inputVariant> {
-  label: string
+  label?: string
   hint?: string
   error?: string
 }

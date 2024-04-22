@@ -1,0 +1,32 @@
+name: Create PR and merge based on commit message
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  create_pr_and_merge:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Check commit message and create PR
+      id: create_pr
+      run: |
+        commit_message=$(git log --format=%B -n 1 $GITHUB_SHA)
+        if [[ $commit_message == "[merge-all]"* ]]; then
+          gh pr create --base develop --head develop --title "Automated PR" --body "Automated PR created based on commit message." --draft
+        else
+          echo "Commit message does not start with [merge-all]. Skipping PR creation."
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Merge PR
+      if: steps.create_pr.outputs != ''
+      run: gh pr merge ${{ steps.create_pr.outputs.number }} --squash --auto
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

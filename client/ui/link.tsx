@@ -19,9 +19,9 @@ const linkVariant = cva(
         error: 'bg-accent-error border-red-700 text-primary-white hover:bg-red-500',
       },
       size: {
-        default: 'h-[40px] px-8',
-        small: 'h-[32px] px-6',
-        large: 'h-[48px] px-10',
+        default: 'h-[40px] px-3',
+        small: 'h-[36px] px-2',
+        large: 'h-[48px] px-4',
       },
     },
     defaultVariants: {

@@ -14,4 +14,8 @@ export async function identify(): Promise<AuthUserProfileType> {
         return res.data
       }
     })
+    .catch(() => {
+      cookies().delete('token')
+      cookies().delete('user')
+    })
 }

@@ -27,7 +27,7 @@ export default function Page(): JSX.Element {
     control,
   } = useForm({
     resolver: yupResolver(formLoginSchema),
-    defaultValues: { email: '', password: '' },
+    defaultValues: { username: '', password: '' },
   })
 
   const onSubmit = (data: LoginType): void => {
@@ -56,9 +56,9 @@ export default function Page(): JSX.Element {
         </div>
         <div className='w-full grid gap-4'>
           <Controller
-            name={'email'}
+            name={'username'}
             control={control}
-            render={({ field }) => <Input {...field} type='email' label={'work email'} autoComplete={'off'} error={errors?.email && errors.email.message} />}
+            render={({ field }) => <Input {...field} type='email' label={'work email'} autoComplete={'off'} error={errors?.username && errors.username.message} />}
           />
 
           <div className='w-full flex flex-col gap-1'>

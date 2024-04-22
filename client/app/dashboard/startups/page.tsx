@@ -48,6 +48,7 @@ export default async function Page({ searchParams }: { searchParams: { page: str
               }
               classname={'min-w-[250px]'}
               data={activitySectors.map((sector) => ({ label: sector, value: sector }))}
+              paramQuery={'sector'}
             />
           </div>
         </div>

@@ -1,5 +1,5 @@
 interface LoginType {
-  email: string
+  username: string
   password: string
 }
 
@@ -18,20 +18,26 @@ interface ErrorAuthType {
 }
 
 interface AuthUserProfileType extends Omit<LoginType, 'password'> {
-  id: string
-  fullName: string
-  username: string
+  id?: string
   role: string
-  isAccountNonLocked: boolean
-  isAccountNonExpired: boolean
-  isCredentialsNonExpired: boolean
-  isEnabled: boolean
-  createdAt: string
-  enabled: boolean
+  accountNonLocked?: boolean
+  accountNonExpired?: boolean
+  credentialsNonExpired?: boolean
+  enabled?: boolean
+  createdAt?: string
+  firstName: string
+  lastName: string
+  middleName?: string
+  badgeNumber: string
+  jobTitle?: string
+  department?: string
+  phoneNumber?: string
+  eyEmployee?: boolean
+  profileImage?: string
+  notes?: string
+  isEligibleForEvaluation: boolean
+
   authorities: Array<{
     authority: string
   }>
-  accountNonLocked: boolean
-  accountNonExpired: boolean
-  credentialsNonExpired: boolean
 }

@@ -1,22 +1,28 @@
 interface ConsultantType {
-  id: string
-  fullName: string
+  id?: string
   username: string
-  email: string
   password: string
   role: string
-  isAccountNonLocked: boolean
-  isAccountNonExpired: boolean
-  isCredentialsNonExpired: boolean
-  isEnabled: boolean
-  createdAt: string
+  accountNonLocked?: boolean
+  accountNonExpired?: boolean
+  credentialsNonExpired?: boolean
+  enabled?: boolean
+  createdAt?: string
+  firstName: string
+  lastName: string
+  middleName?: string
+  badgeNumber: string
+  jobTitle?: string
+  department?: string
+  phoneNumber?: string
+  eyEmployee?: boolean
+  profileImage?: string
+  notes?: string
+  isEligibleForEvaluation: boolean
+
   authorities: Array<{
     authority: string
   }>
-  accountNonExpired: boolean
-  credentialsNonExpired: boolean
-  accountNonLocked: boolean
-  enabled: boolean
 }
 
 type ConsultantResponseType = PageableType & {

@@ -21,7 +21,7 @@ public class InitialAdminUserSeeder implements ApplicationListener<ContextRefres
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent __unused__) {
-        if (this.userRepository.findByEmail("wale.sebii@ey.com").isPresent()) return;
-        this.userRepository.save(new UserEntity(null, "wale", "wale.sebii@ey.com", passwordEncoder.encode("admin00"), "ADMIN,CONSULTANT,EXPERT,GUEST", true, true, true, true, new Date()));
+        if (this.userRepository.findByUsername("wale.sebii@ey.com").isPresent()) return;
+        this.userRepository.save(new UserEntity(null, "wale.sebii@ey.com", passwordEncoder.encode("admin00"), "ADMIN,CONSULTANT,EXPERT,GUEST", true, true, true, true, new Date(), "wale", "sebii", "eddine", "0000000000", "administrator", "CIUX", "+216", true, null, null, true));
     }
 }

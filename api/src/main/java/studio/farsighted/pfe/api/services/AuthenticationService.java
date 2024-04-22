@@ -28,9 +28,9 @@ public class AuthenticationService {
 
     public UserEntity login(LoginUserDTO user) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
+                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
         );
-        return userRepository.findByEmail(user.getEmail()).orElseThrow();
+        return userRepository.findByUsername(user.getUsername()).orElseThrow();
     }
 
 }

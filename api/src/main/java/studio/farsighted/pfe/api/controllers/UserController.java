@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import studio.farsighted.pfe.api.exceptions.PaginationBoundException;
 import studio.farsighted.pfe.api.exceptions.PersistDataException;
@@ -22,25 +23,28 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public ResponseEntity<Page<UserEntity>> index(@PageableDefault(size = 10, page = 0, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+    @GetMapping(value = "", params = {"query", "title", "role", "dep"})
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<Page<UserEntity>> index(@RequestParam("query") String query, @RequestParam("title") String title, @RequestParam("role") String role, @RequestParam("dep") String dep, @PageableDefault(size = 10, page = 0, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         try {
-            return ResponseEntity.ok(userService.getAll(pageable));
+            return ResponseEntity.ok(userService.get(query, title, role, dep, pageable));
         } catch (Exception e) {
-            throw new PaginationBoundException("Startups not found");
+            throw new PaginationBoundException("User not found");
         }
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<UserEntity> save(@RequestBody UserEntity user) {
         try {
             return ResponseEntity.ok(userService.save(user));
         } catch (Exception e) {
-            throw new PersistDataException("StartupEntity not saved: " + e.getMessage());
+            throw new PersistDataException("User not saved: " + e.getMessage());
         }
     }
 
     @PutMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public UserEntity update(@RequestBody UserEntity user) {
         if (!userService.isExist(user.getId())) {
             throw new PersistDataException("User with id: " + user.getId() + " not found");
@@ -49,7 +53,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserEntity> find(@PathVariable UUID id) {
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<UserEntity> find(@PathVariable("id") UUID id) {
         if (!userService.isExist(id)) {
             throw new PersistDataException("User with id: " + id + " not found");
         }
@@ -57,8 +62,29 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable UUID id) {
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public void delete(@PathVariable("id") UUID id) {
         userService.delete(id);
+    }
+
+    @GetMapping("/departments")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<?> getDistinctDepartment() {
+        try {
+            return ResponseEntity.ok(userService.getDistinctDepartment());
+        } catch (Exception e) {
+            throw new PersistDataException("Departments not found: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/job-titles")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<?> getDistinctJobTitles() {
+        try {
+            return ResponseEntity.ok(userService.getDistinctJobTitles());
+        } catch (Exception e) {
+            throw new PersistDataException("Job titles not found: " + e.getMessage());
+        }
     }
 
 }

@@ -1,21 +1,28 @@
 'use client'
-// pages/YourPageName.tsx
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
+import { AddChallenges } from '@/components/Form-builder/add-challenges'; 
 import RichTextEditor from '@/components/RichTextEditor';
-import { FormBuilderHeader } from '@/components/Form-builder/form-builder-header';
-import { AddChallenges } from '@/components/Form-builder/add-challenges';
 import { AddFormSection } from '@/components/Form-builder/add-form-section';
-export default function YourPageName() { 
+import { FormBuilderHeader } from '@/components/Form-builder/form-builder-header';
+
+
+
+export default function Page(): JSX.Element {
+
+
+  const [sections, setSections] = useState<Section[]>([]);
+  const [challenges, setChallenges] = useState<Challenge[]>([]);
+  const [text, setText] = useState("");
 
   return (
-    <div>
-      <FormBuilderHeader />
+    <div className="m-10">
+      <FormBuilderHeader text={text}  challenges={challenges}   sections={sections}  />
       <br />
-      <RichTextEditor />
+      <RichTextEditor text={text} setText={setText}  />
       <br />
-      <AddChallenges />
+      <AddChallenges  challenges={challenges }  setChallenges={setChallenges} />
       <br />
-      <AddFormSection />
+      <AddFormSection sections={sections} setSections={setSections} />
 
     </div>
   );

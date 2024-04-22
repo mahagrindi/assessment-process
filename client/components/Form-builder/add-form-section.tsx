@@ -1,57 +1,20 @@
 import { useState } from 'react';
 import { FC } from 'react';
 import { MdCancel, MdAddCircleOutline, MdDelete } from 'react-icons/md';
-import { Input } from '@/ui/input';
-import Textarea from '@/ui/textarea';
-import { Button } from '@/ui/button';
+import { Input } from '@/ui/input'; 
+import { TimeLine } from '@/ui/timeline';
+import { QuestionInput } from '@/ui/QuestionInput';
 
-interface Question {
-  id: number;
-  text: string;
-}
+ 
 
-interface Section {
-  id: number;
-  name: string;
-  questions: Question[];
-}
+interface Props {
+  sections: Section[];
+  setSections: React.Dispatch<React.SetStateAction<Section[]>>;
+} 
 
-const QuestionInput: FC<{ sectionId: number; addQuestion: (text: string) => void }> = ({ sectionId, addQuestion }) => {
-  const [text, setText] = useState('');
 
-  const handleAddClick = () => {
-    if (text.trim() !== '') {
-      addQuestion(text);
-      setText('');
-    }
-  };
+export const AddFormSection: React.FC<Props> = ({ sections, setSections }) => {
 
-  return (
-    <div className="flex  my-5">
-    
-    <div className="flex-grow">
-      <Input
-        type="text"
-        placeholder="Enter a question"
-        label=""
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            handleAddClick();
-          }
-        }}
-      />
-    </div>
-    <div>
-      <Button title='Add Question' variant="primary" className='w-24' onClick={handleAddClick} />
-    </div>
-  </div>
-   );
-};
-
-export const AddFormSection: FC = () => {
-  const [sections, setSections] = useState<Section[]>([]);
   const [nextId, setNextId] = useState<number>(1);
 
   const addSection = () => {
@@ -92,7 +55,7 @@ export const AddFormSection: FC = () => {
     <div>
       <h2 className="text-[24px] font-semibold">List of sections</h2>
       <div className="flex flex-row">
-        <div className="basis-1/2">
+        <div className="basis-2/3">
           {sections.map((section) => (
             <div key={section.id} className="my-10">
               <div className="flex flex-row my-4">
@@ -173,18 +136,12 @@ export const AddFormSection: FC = () => {
             </div>
           ))}
         </div>
-        <div className="basis-1/2 mx-5 p-10" >
-          {sections.map((section , index) => (
-            <div key={section.id}>
-              <h2 className="text-lg font-medium">Section {index + 1} :  {section.name}</h2>
-              <h4 className=" mx-3 font-medium">Questions:</h4>
-              <div className='mx-5' >
-              {section.questions.map(question => (
-                <li   key={question.id}>{question.text}</li>
-              ))}
-            </div>
-            </div>
-          ))}
+        <div className="basis-1/3 mx-5 p-10" >
+          
+         
+              <TimeLine variant={"primary"}    sections={sections} />
+        
+          
         </div>
       </div>
       <div className='flex justify-center my-10'>
@@ -215,7 +172,6 @@ export const AddFormSection: FC = () => {
       </div>
       </div>
       </div>
-
 
       
     </div>

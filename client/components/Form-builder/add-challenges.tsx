@@ -2,17 +2,17 @@ import { useState } from 'react';
 import { FC } from 'react';
 import { MdCancel, MdAddCircleOutline } from 'react-icons/md';
 import { Input } from '@/ui/input';
-import Card from '@/ui/card-challenge';
-import Textarea from '@/ui/textarea';
+import Card from '@/ui/card-challenge'; 
+import { Textarea } from '@/ui/textarea';
 
-interface Challenge {
-  id: number;
-  name: string;
-  description: string;
-}
 
-export const AddChallenges: FC = () => {
-  const [challenges, setChallenges] = useState<Challenge[]>([]);
+interface Props {
+  challenges: Challenge[];
+  setChallenges: React.Dispatch<React.SetStateAction<Challenge[]>>;
+} 
+
+export const AddChallenges : React.FC<Props> = ({ challenges, setChallenges }) => {
+ 
   const [nextId, setNextId] = useState<number>(1);
 
   const addChallenge = () => {
@@ -90,8 +90,7 @@ export const AddChallenges: FC = () => {
                 <Textarea
                   label="Challenge's description"
                 //  size="small"
-                  value={challenge.description}
-                  onChange={(value) => handleDescriptionChange(challenge.id, value)}
+                 
                 />
               </div>
             </div>

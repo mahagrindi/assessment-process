@@ -1,10 +1,14 @@
-"use client";
 import React, { useRef, useEffect } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 
-const RichTextEditor = () => {
-  const quillRef = useRef(null);
+interface Props {
+  text: string;
+  setText: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const RichTextEditor: React.FC<Props> = ({ text, setText }) => {
+  const quillRef = useRef<HTMLDivElement>(null);
 
   const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'], // toggled buttons
@@ -30,11 +34,9 @@ const RichTextEditor = () => {
       theme: 'snow',
     });
 
-    // Add console logs for debugging
-    console.log('Quill editor created'); // Log editor creation
-
     quill.on('text-change', () => {
-      console.log('Text changed:', quill.root.innerHTML);
+      const html = editor.innerHTML;
+      setText(html);
     });
 
     return () => {

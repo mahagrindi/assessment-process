@@ -14,29 +14,7 @@ import studio.farsighted.pfe.api.services.AuthenticationService;
 @RestController
 @RequestMapping("auth")
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
-public class
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-AuthenticationController {
+public class AuthenticationController {
     @Autowired
     private JsonWebTokenizer jwt;
 

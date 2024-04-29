@@ -11,8 +11,7 @@ import studio.farsighted.pfe.api.repositories.CohortRepository;
 
 // Annotation
 @Service
-public class CohortService
-	implements CohortInterface {
+public class CohortService	implements CohortInterface {
 
 	@Autowired
 	private CohortRepository cohortRepository;

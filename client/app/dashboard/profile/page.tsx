@@ -18,7 +18,7 @@ export default function Page(): JSX.Element {
   return (
     <div className='h-full min-h-full w-full'>
       <ContentHeader title={'Profile'} args={[]} />
-      <ProfileHeader  fullName={user?.fullName}  email={user?.email}   description="Maecenas semper purus lacus, vitae facilisis neque luctus sit amet. Morbi augue tellus, auctor fringilla quam non, feugiat feugiat leo." />
+      <ProfileHeader  fullName={user?.firstName + " " + user?.lastName}  email={user?.username}   description="Maecenas semper purus lacus, vitae facilisis neque luctus sit amet. Morbi augue tellus, auctor fringilla quam non, feugiat feugiat leo." />
       <Tabs child1={<Information />} child2={<HistoryOfAssesment />} />
   </div>
   );

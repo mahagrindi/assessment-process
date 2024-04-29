@@ -24,14 +24,8 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
     @Query("SELECT user FROM UserEntity user WHERE " +
             "(:query IS NULL OR :query = '' OR LOWER(user.firstName) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(user.lastName) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(user.username) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(user.cin) LIKE LOWER(CONCAT('%', :query, '%'))) " +
             "AND (:title IS NULL OR :title = '' OR user.jobTitle = :title) " +
-            "AND (:role IS NULL OR :role = '' OR user.role = :role) " +
+            "AND (:status IS NULL OR user.enabled = :status) " +
             "AND (:department IS NULL OR :department = '' OR user.department = :department)")
-    Page<UserEntity> findUsersByFilterCriteria(
-            @Param("query") String query,
-            @Param("title") String title,
-            @Param("role") String role,
-            @Param("department") String department,
-            Pageable pageable);
-
+    Page<UserEntity> findUsersByFilterCriteria(@Param("query") String query, @Param("title") String title, @Param("status") Boolean status, @Param("department") String department, Pageable pageable);
 
 }

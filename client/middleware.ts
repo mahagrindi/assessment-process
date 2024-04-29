@@ -1,10 +1,9 @@
 import { type NextRequest, NextResponse } from 'next/server'
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   if (!request.cookies.get('token')) {
     return NextResponse.redirect(new URL('/', request.url))
   }
-
   return NextResponse.next()
 }
 

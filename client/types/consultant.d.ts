@@ -12,13 +12,14 @@ interface ConsultantType {
   lastName: string
   middleName?: string
   badgeNumber: string
-  jobTitle?: string
-  department?: string
-  phoneNumber?: string
+  jobTitle: string
+  department: string
+  phoneNumber: string
   eyEmployee?: boolean
   profileImage?: string
   notes?: string
   isEligibleForEvaluation: boolean
+  cin: string
 
   authorities: Array<{
     authority: string

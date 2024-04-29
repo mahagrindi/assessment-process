@@ -11,10 +11,10 @@ const linkVariant = cva(
       variant: {
         default: 'bg-primary-yellow text-primary-background text-content-display hover:bg-primary-black hover:text-primary-white',
         primary: 'bg-content-display text-primary-white hover:bg-primary-white hover:text-content-display',
-        secondary: 'bg-primary-white text-content-display hover:bg-primary-black hover:text-primary-white',
-        tertiary: 'bg-purple-400 border-purple-700 text-primary-white hover:bg-purple-500',
+        secondary: 'bg-primary-white text-content-display hover:bg-content-display hover:text-primary-white',
+        tertiary: 'bg-purple-400 border-purple-700 text-primary-white hover:bg-purple-300',
         info: 'bg-accent-link border-blue-700 text-primary-white hover:bg-blue-500',
-        link: 'text-accent-link border-transparent hover:text-blue-500 hover:bg-gray-200',
+        link: 'bg-gray-200 border-gray-300/50 text-accent-link hover:text-blue-500 hover:bg-gray-225',
         ghost: 'bg-transparent border-transparent text-content-display hover:bg-gray-200',
         error: 'bg-accent-error border-red-700 text-primary-white hover:bg-red-500',
       },

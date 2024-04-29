@@ -23,13 +23,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "", params = {"query", "title", "role", "dep"})
+    @GetMapping(value = "", params = {"query", "title", "status", "dep"})
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Page<UserEntity>> index(@RequestParam("query") String query, @RequestParam("title") String title, @RequestParam("role") String role, @RequestParam("dep") String dep, @PageableDefault(size = 10, page = 0, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+    public ResponseEntity<Page<UserEntity>> index(@RequestParam(value = "query", required = false) String query, @RequestParam(value = "title", required = false) String title, @RequestParam(value = "status", required = false) Boolean status, @RequestParam(value = "dep", required = false) String dep, @PageableDefault(size = 10, page = 0, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         try {
-            return ResponseEntity.ok(userService.get(query, title, role, dep, pageable));
+            return ResponseEntity.ok(userService.get(query, title, status, dep, pageable));
         } catch (Exception e) {
-            throw new PaginationBoundException("User not found");
+            throw new PaginationBoundException("Users not found: " + e.getMessage());
         }
     }
 

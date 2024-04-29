@@ -23,28 +23,27 @@ public class AuthenticationController {
 
     @GetMapping("/me")
     public ResponseEntity<UserEntity> authenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        UserEntity currentUser = (UserEntity) authentication.getPrincipal();
-
-        return ResponseEntity.ok(currentUser);
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            UserEntity currentUser = (UserEntity) authentication.getPrincipal();
+            return ResponseEntity.ok(currentUser);
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping("/signup")
     public ResponseEntity<UserEntity> register(@RequestBody UserEntity registerUserDto) {
         UserEntity registeredUser = authenticationService.register(registerUserDto);
-
         return ResponseEntity.ok(registeredUser);
     }
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponseDTO> authenticate(@RequestBody LoginUserDTO loginUserDto) {
         UserEntity authenticatedUser = authenticationService.login(loginUserDto);
-
         String jwtToken = jwt.generateToken(authenticatedUser);
-
         JwtResponseDTO loginResponse = new JwtResponseDTO(jwtToken, jwt.getExpirationTime());
-
         return ResponseEntity.ok(loginResponse);
     }
 }

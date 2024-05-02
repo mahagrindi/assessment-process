@@ -26,7 +26,7 @@ export const DashboardHeaderProfile: FC<ComponentProps> = () => {
 
   return (
     <div>
-      <VerticalNavigation title='settings' icon={<MdOutlineSettings size={24} />} onClick={() => push('/dashboard/settings')} active={pathname === '/dashboard/settings'} />
+      <VerticalNavigation title='settings' icon={<MdOutlineSettings size={24} />} onClick={() => push('/dashboard/settings')} active={pathname.includes('/dashboard/settings')} />
       <div className='w-full h-[1px] bg-content-display' />
       <div className={mr('h-[82px]  flex items-center justify-center relative', pathname === '/dashboard/profile' && 'bg-content-display')}>
         <div className={mr('w-1 h-full bg-red-200', pathname.includes('dashboard/profile') ? 'bg-primary-yellow' : 'bg-primary-black')} />

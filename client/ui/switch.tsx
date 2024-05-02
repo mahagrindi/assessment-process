@@ -5,13 +5,13 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { mr } from '@/utils/class-authority-merge'
 
 const switchVariant = cva(
-  'relative flex items-center justify-start bg-primary-white border-gray-300 focus:ring-content-display text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 checked:focus:border-accent-success before:border before:border-gray-500 before:bg-gray-300 before:rounded-full before:transform before:transition before:ease-in-out before:duration-200 before:ring-0 before:focus:outline-none before:focus:ring-0 checked:bg-none checked:border-accent-success checked:before:bg-accent-success checked: checked:text-green-200 disabled:bg-gray-100 disabled:border-gray-225 disabled:before:border-gray-300 disabled:checked:text-gray-100 disabled:checked:before:bg-green-400 disabled:before:cursor-not-allowed',
+  'relative flex items-center p-px bg-gray-300 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:ring-blue-600/30 disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-blue-600/30 checked:border-blue-600/30 before:shadow-sm focus:checked:border-blue-600/30 before:inline-block before:bg-primary-white checked:before:bg-blue-600 before:translate-x-0 checked:before:translate-x-[90%] before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200',
   {
     variants: {
       size: {
-        small: 'w-8 h-4 before:size-[18px] before:translate-x-[-25%] checked:before:translate-x-[90%]',
-        medium: 'w-10 h-5 before:size-[24px] before:translate-x-[-25%] checked:before:translate-x-[85%]',
-        large: 'w-12 h-6 before:size-[32px] before:translate-x-[-25%] checked:before:translate-x-[70%]',
+        small: 'w-[35px] h-[21px] before:size-4',
+        medium: 'w-11 h-6 before:size-5',
+        large: 'w-[3.25rem] h-7 before:size-6',
       },
     },
     defaultVariants: {
@@ -31,7 +31,7 @@ export const Switch: FC<ComponentProps> = forwardRef<HTMLInputElement, Component
   return (
     <div className='flex flex-col items-start gap-1 self-stretch'>
       <div className='flex items-center gap-6'>
-        <label htmlFor={label} className={mr('txt-sm font-[500] tracking-wide capitalize text-content-prompt')} style={{ width: width }}>
+        <label htmlFor={label} className={mr('text-sm font-[500] tracking-wide capitalize text-content-display')} style={{ width: width }}>
           <div>
             <span>{label}</span>
             {required && <span className='text-accent-error ml-1 text-sm'>*</span>}

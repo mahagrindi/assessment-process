@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/startup")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:1999", allowCredentials = "true", allowedHeaders = "*")
 public class StartupController {
 
     @Autowired
@@ -56,7 +56,7 @@ public class StartupController {
 
     @PatchMapping
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Boolean> merge() {
+    public ResponseEntity<Integer> merge() {
         try {
             return ResponseEntity.ok(startupService.transformToDatabase());
         } catch (Exception e) {

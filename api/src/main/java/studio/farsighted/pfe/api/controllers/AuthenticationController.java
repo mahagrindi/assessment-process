@@ -13,7 +13,7 @@ import studio.farsighted.pfe.api.services.AuthenticationService;
 
 @RestController
 @RequestMapping("auth")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:1999", allowCredentials = "true", allowedHeaders = "*")
 public class AuthenticationController {
     @Autowired
     private JsonWebTokenizer jwt;
@@ -27,8 +27,7 @@ public class AuthenticationController {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             UserEntity currentUser = (UserEntity) authentication.getPrincipal();
             return ResponseEntity.ok(currentUser);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }

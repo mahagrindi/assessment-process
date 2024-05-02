@@ -12,7 +12,7 @@ interface ComponentProps {
 
 export const ContentHeader: FC<ComponentProps> = ({ title, subtitle, isBreadcrumb = true, args }) => {
   return (
-    <div className='flex items-center justify-between p-6'>
+    <div className='w-full flex items-center justify-between p-6'>
       <div className='flex-1'>
         <div className='mb-3'>
           <p className='text-4xl capitalize font-semibold'>{title}</p>
@@ -20,7 +20,7 @@ export const ContentHeader: FC<ComponentProps> = ({ title, subtitle, isBreadcrum
         </div>
         {isBreadcrumb && <Breadcrumb />}
       </div>
-      {args && <div className='flex gap-2'>{...args}</div>}
+      {args && <div className='grid grid-flow-col gap-2'>{...args}</div>}
     </div>
   )
 }

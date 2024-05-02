@@ -8,14 +8,20 @@ import java.util.List;
 import java.util.UUID;
 
 public interface StartupInterface {
-    Page<StartupEntity> get(String query, String sector,Pageable pageable);
+    Page<StartupEntity> get(String query, String sector, Pageable pageable);
+
     StartupEntity find(UUID id);
+
     StartupEntity save(StartupEntity startupEntity);
+
     StartupEntity update(StartupEntity startupEntity);
+
     void delete(UUID id);
 
 
-    Boolean transformToDatabase();
+    Integer transformToDatabase();
+
     Boolean isExist(UUID id);
+
     List<String> getDistinctSector();
 }

@@ -12,6 +12,8 @@ import java.util.UUID;
 
 public interface StartupRepository extends JpaRepository<StartupEntity, UUID> {
 
+    StartupEntity findByStartupName(String name);
+
     @Query("SELECT DISTINCT startupActivitySector FROM StartupEntity")
     List<String> findDistinctStartupActivitySector();
 

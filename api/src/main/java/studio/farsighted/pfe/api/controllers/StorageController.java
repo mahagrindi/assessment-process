@@ -15,7 +15,7 @@ import studio.farsighted.pfe.api.services.StorageService;
 
 @RestController
 @RequestMapping("api/files")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:1999", allowCredentials = "true", allowedHeaders = "*")
 public class StorageController {
 
     @Autowired

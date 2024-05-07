@@ -6,8 +6,8 @@ import { DashboardHeaderIcons } from '@/components/dashboard-header-icons'
 
 export const DashboardHeader: FC = () => {
   return (
-    <nav className='h-full max-h-[62px] px-6 bg-primary-black flex items-center justify-between'>
-      <div className='flex items-center gap-6'>
+    <nav className='h-full max-h-[62px] bg-primary-black flex items-center justify-between'>
+      <div className='flex h-full items-center gap-6'>
         <DashboardHeaderMenuIcon />
         <DashboardHeaderLogo />
       </div>

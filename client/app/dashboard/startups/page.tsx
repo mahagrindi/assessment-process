@@ -6,11 +6,11 @@ import { Linker } from '@/ui/link'
 import { DataTable } from '@/ui/storybook/data-table'
 
 import { ContentHeader } from '@/components/content-header'
-import { startupColumns } from '@/constants/data-tables-headers/startup-datatable-header'
+import { startupColumns } from '@/app/dashboard/startups/_data/startup-datatable-header'
 
 import { ServerSelect } from '@/ui/storybook/server-select'
 import { SearchInput } from '@/components/content-data-table-search'
-import { GET, GET_ACTIVITY_SECTOR } from '@/lib/actions/startup-server-actions'
+import { GET, GET_ACTIVITY_SECTOR } from '@/actions/startup-server-actions'
 
 export const metadata: Metadata = {
   title: 'EY Dashboard',
@@ -29,7 +29,7 @@ export default async function Page({ searchParams }: { searchParams: { page: str
       <ContentHeader
         title={'startups'}
         args={[
-          <Linker key={'create-link-consultant'} size={'large'} title={'add new'} className={'gap-1 px-3'} href={`/dashboard/consultants/create`} icon={<LuPlusCircle className='flex' size={18} />} />,
+          <Linker key={'create-link-consultant'} size={'large'} title={'add new'} className={'gap-2 px-3'} href={`/dashboard/startups/create`} icon={<LuPlusCircle className='flex' size={18} />} />,
         ]}
       />
 
@@ -43,7 +43,7 @@ export default async function Page({ searchParams }: { searchParams: { page: str
               placeholder={
                 <div className='flex items-center gap-2 capitalize text-gray-400'>
                   <LuStore size={20} />
-                  <p className='text-sm font-medium'>department</p>
+                  <p className='text-sm font-medium'>activity sector</p>
                 </div>
               }
               classname={'min-w-[250px]'}

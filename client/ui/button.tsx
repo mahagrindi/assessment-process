@@ -17,7 +17,7 @@ const buttonVariant = cva(
         secondary: 'bg-primary-white text-content-display hover:bg-content-display hover:text-primary-white',
         tertiary: 'bg-purple-400 border-purple-700 text-primary-white hover:bg-purple-300',
         info: 'bg-accent-link border-blue-700 text-primary-white hover:bg-blue-500',
-        link: 'bg-gray-200 text-accent-link border-transparent hover:text-blue-500 hover:bg-gray-225',
+        link: 'bg-gray-200 border-gray-300/50 text-accent-link hover:text-blue-500 hover:bg-gray-225',
         ghost: 'bg-transparent border-transparent text-content-display hover:bg-gray-200',
         error: 'bg-accent-error border-red-700 text-primary-white hover:bg-red-500',
       },
@@ -67,7 +67,7 @@ export const Button: FC<ComponentProps> = ({ title, icon, variant = 'default', s
       )}
       {...rest}>
       {icon && icon}
-      <p className={mr('text-sm font-[550] tracking-wide capitalize')}>
+      <div className={mr('text-sm font-[550] tracking-wide capitalize')}>
         {loading ? (
           <AnimatePresence>
             {alternateLoading ? (
@@ -83,7 +83,7 @@ export const Button: FC<ComponentProps> = ({ title, icon, variant = 'default', s
         ) : (
           title
         )}
-      </p>
+      </div>
       {loading && (
         <motion.div
           initial={{ width: 0 }}

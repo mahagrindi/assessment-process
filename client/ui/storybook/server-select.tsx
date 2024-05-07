@@ -72,7 +72,7 @@ export const ServerSelect: FC<ComponentProps> = forwardRef<HTMLDivElement, Compo
 
       // Close dropdown if not multi-select
       if (!multi) {
-        setIsOpen(!isOpen)
+        setIsOpen(false)
       }
     }
 
@@ -114,7 +114,7 @@ export const ServerSelect: FC<ComponentProps> = forwardRef<HTMLDivElement, Compo
         )}
         <div className={mr(selectVariant({ variant, size }), classname, isOpen && 'border-gray-500', error && 'border-accent-error focus:border-red-500 focus:ring-red-500')}>
           <div className='flex-1 h-full flex justify-between items-center gap-2'>
-            <div className='flex-1 h-full flex items-center gap-2 cursor-pointer' onClick={() => setIsOpen(!isOpen)}>
+            <div onClick={() => setIsOpen(true)} className='flex-1 h-full flex items-center gap-2 cursor-pointer'>
               <div className='flex-1'>
                 {selectedValues.length > 0 ? (
                   <div className='flex items-center gap-1'>

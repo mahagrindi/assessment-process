@@ -1,6 +1,6 @@
 interface Section {
      id: number;
-     name: string;
+     title: string;
      questions: Question[];
    }
    

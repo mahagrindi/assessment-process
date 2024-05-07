@@ -9,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
 import java.util.*;
 
 @Data
@@ -48,41 +47,6 @@ public class UserEntity implements UserDetails {
     @Column(name = "user-created-at", updatable = false)
     private Date createdAt = new Date();
 
-    /* Helper Function with the USER-Details */
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorityList = new ArrayList<>();
-        String[] roles = role.split(",");
-        for (String r : roles) {
-            authorityList.add(new SimpleGrantedAuthority(r.trim()));
-        }
-        return authorityList;
-    }
-    @Override
-    public String getUsername() {
-        return this.username;
-    }
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-    @Override
-    public boolean isAccountNonExpired() {
-        return this.accountNonExpired;
-    }
-    @Override
-    public boolean isAccountNonLocked() {
-        return this.accountNonLocked;
-    }
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return this.credentialsNonExpired;
-    }
-    @Override
-    public boolean isEnabled() {
-        return this.enabled;
-    }
-
     /* User profile columns */
     @Column(name = "user-first-name", nullable = false)
     private String firstName;
@@ -114,10 +78,50 @@ public class UserEntity implements UserDetails {
     @Column(name = "user-notes")
     private String notes;
 
-    @Column(name = "user-can-assest")
+    @Column(name = "user-can-asset")
     private Boolean isEligibleForEvaluation = false;
 
     @Column(name = "user-cin", unique = true, nullable = false)
     private String cin;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorityList = new ArrayList<>();
+        String[] roles = Arrays.stream(this.role.split(",")).sorted().toArray(String[]::new);
+        for (String r : roles) {
+            authorityList.add(new SimpleGrantedAuthority(r.trim()));
+        }
+        return authorityList;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
+    }
 
 }

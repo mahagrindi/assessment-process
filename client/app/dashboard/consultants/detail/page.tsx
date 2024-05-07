@@ -1,5 +1,7 @@
 import type { JSX } from 'react'
-import { Breadcrumb } from '@/ui/breadcrumb'
+import { ContentHeader } from '@/components/content-header'
+import { LuPlusCircle } from 'react-icons/lu'
+import { Linker } from '@/ui/link'
 
 export default function Page({ searchParams }: { searchParams: { q: string } }): JSX.Element {
   if (!searchParams.q) {
@@ -7,9 +9,13 @@ export default function Page({ searchParams }: { searchParams: { q: string } }):
   }
 
   return (
-    <div className='w-full max-w-[1440px] mx-auto'>
-      <p className='text-3xl capitalize font-semibold mb-3'>consultants details</p>
-      <Breadcrumb />
+    <div className='h-full min-h-full w-full'>
+      <ContentHeader
+        title={'consultants'}
+        args={[
+          <Linker key={'edit-consultant-element'} title={'edit'} variant={'link'} href={`/dashboard/consultants/create`} size={'large'} icon={<LuPlusCircle size={20} />} className={'gap-1 px-3'} />,
+        ]}
+      />
     </div>
   )
 }

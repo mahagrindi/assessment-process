@@ -22,8 +22,8 @@ public class UserService implements UserInterface {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public Page<UserEntity> get(String query, String title, String role, String department, Pageable pageable) {
-        return userRepository.findUsersByFilterCriteria(query, title, role, department, pageable);
+    public Page<UserEntity> get(String query, String title, Boolean status, String department, Pageable pageable) {
+        return userRepository.findUsersByFilterCriteria(query, title, status, department, pageable);
     }
 
     @Override
@@ -39,7 +39,9 @@ public class UserService implements UserInterface {
 
     @Override
     public UserEntity update(UserEntity user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (!user.getPassword().equals(this.userRepository.findById(user.getId()).get().getPassword())) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         return userRepository.save(user);
     }
 
@@ -49,7 +51,9 @@ public class UserService implements UserInterface {
     }
 
     @Override
-    public Boolean isExist(UUID id) {return userRepository.existsById(id);}
+    public Boolean isExist(UUID id) {
+        return userRepository.existsById(id);
+    }
 
     @Override
     public List<String> getDistinctDepartment() {

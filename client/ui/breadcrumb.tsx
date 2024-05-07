@@ -19,10 +19,10 @@ export const Breadcrumb: FC<ComponentProps> = ({}) => {
           <div key={index} className={`flex gap-1 text-content-disabled last:text-content-display ${index === paths.length - 1 ? 'font-[500]' : ''}`}>
             {index < paths.length - 1 ? (
               <Link href={`/${paths.slice(0, index + 1).join('/')}`} className='text-sm leading-5 capitalize'>
-                {path}
+                {path.replace('-', ' ')}
               </Link>
             ) : (
-              <p className='text-sm leading-5 capitalize'>{path}</p>
+              <p className='text-sm leading-5 capitalize'>{path.replace('-', ' ')}</p>
             )}
             {index < paths.length - 1 && <LuChevronRight size={18} />}
           </div>

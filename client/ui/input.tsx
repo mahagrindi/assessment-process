@@ -25,6 +25,7 @@ interface ComponentProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'si
   label?: string
   hint?: string
   error?: string
+  required?:boolean
 }
 
 export const Input: FC<ComponentProps> = forwardRef<HTMLInputElement, ComponentProps>(
@@ -37,8 +38,8 @@ export const Input: FC<ComponentProps> = forwardRef<HTMLInputElement, ComponentP
         </label>
       )}
       <input
-        ref={ref}
         id={label}
+        ref={ref}
         type={type}
         className={mr(inputVariant({ variant, size }), error && 'border border-accent-error focus:border-red-500 focus:ring-red-500')}
         autoComplete='no'

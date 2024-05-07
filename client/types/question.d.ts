@@ -1,5 +1,8 @@
 interface Question {
+  
+  questionType: string;
      id: number;
-     text: string;
+     questionText: string;
+     requerd: boolean;
    }
    

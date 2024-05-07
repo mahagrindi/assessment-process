@@ -28,7 +28,7 @@ public class FormEvaluationService implements FormEvaluationInterface {
 
     @Override
     public List<FormEvaluation> fetchformEvaluationList() {
-        return null;
+        return formEvaluationRepository.findAll() ;
     }
 
 

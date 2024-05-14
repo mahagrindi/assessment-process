@@ -1,6 +1,6 @@
 package studio.farsighted.pfe.api.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,9 +38,9 @@ public class ProgramCohortEntity {
     @Column(name = "program-cohort-status", nullable = false)
     private String cohortStatus;
 
-    @ManyToOne
-    @JsonIgnore
+    @ManyToOne()
     @JoinColumn(referencedColumnName = "id")
+    @JsonIgnoreProperties("cohorts")
     private ProgramEntity program;
 
 }

@@ -40,7 +40,7 @@ export const Input: FC<ComponentProps> = forwardRef<HTMLInputElement, ComponentP
         id={label}
         ref={ref}
         type={type}
-        className={mr(inputVariant({ variant, size }), error && 'border border-accent-error focus:border-red-500 focus:ring-red-500')}
+        className={mr(inputVariant({ variant, size }), error && 'border-[2px] border-accent-error focus:border-red-500 focus:ring-red-500')}
         autoComplete='no'
         {...rest}
       />

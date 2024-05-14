@@ -7,7 +7,7 @@ import studio.farsighted.pfe.api.models.ProgramEntity;
 import java.util.UUID;
 
 public interface ProgramInterface {
-    Page<ProgramEntity> get(String query, String status, String industry, Pageable pageable);
+    Page<ProgramEntity> get(String query, String status, Pageable pageable);
 
     ProgramEntity find(UUID id);
 
@@ -15,7 +15,7 @@ public interface ProgramInterface {
 
     ProgramEntity update(ProgramEntity program);
 
-    void delete(String id);
+    void delete(UUID id);
 
     Boolean isExist(UUID id);
 }

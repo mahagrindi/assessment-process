@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -43,8 +45,15 @@ public class ProgramEntity {
     @Column(name = "program-status")
     private String programStatus;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @CreatedDate
+    @Column(name = "program-created-at", updatable = false)
+    private Date createdAt = new Date();
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(referencedColumnName = "id")
     private ProgramProviderEntity provider;
+
+    @OneToMany(mappedBy = "program", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProgramCohortEntity> cohorts;
 
 }

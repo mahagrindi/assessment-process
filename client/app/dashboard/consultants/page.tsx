@@ -3,13 +3,13 @@ import { LuBriefcase, LuPlusCircle, LuSlidersHorizontal, LuStore } from 'react-i
 
 import { Linker } from '@/ui/link'
 import { DataTable } from '@/ui/storybook/data-table'
+import { ServerSelect } from '@/ui/storybook/server-select'
 
 import { ContentHeader } from '@/components/content-header'
+import { SearchInput } from '@/components/content-data-table-search'
 
 import { consultantColumns } from '@/app/dashboard/consultants/_data/consultant-datatable-header'
 import { GET, GET_DEPARTMENT, GET_JOB_TITLES } from '@/actions/consultant-server-actions'
-import { SearchInput } from '@/components/content-data-table-search'
-import { ServerSelect } from '@/ui/storybook/server-select'
 
 export default async function Page({
   searchParams,

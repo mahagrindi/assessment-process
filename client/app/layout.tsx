@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   icons: {
-    icon: '/assets/logo/ey-logo-black.png',
+    icon: '/assets/logo/ey-logo-black.webp',
   },
 }
 

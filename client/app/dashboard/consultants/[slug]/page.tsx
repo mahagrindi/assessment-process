@@ -32,8 +32,7 @@ export default function Page({ params, searchParams }: { params: { slug: string 
   useLayoutEffect(() => {
     if (params.slug !== 'create') {
       FIND(searchParams.id).then((data) => {
-        const { authorities, createdAt, ...returnedData } = data
-        reset({ ...returnedData })
+        reset({ ...(({ authorities, createdAt, ...returnedData }) => returnedData)(data) })
       })
     }
   }, [searchParams.id]) // eslint-disable-line react-hooks/exhaustive-deps

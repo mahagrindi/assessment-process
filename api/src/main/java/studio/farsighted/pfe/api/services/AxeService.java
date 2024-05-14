@@ -1,9 +1,14 @@
 package studio.farsighted.pfe.api.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import studio.farsighted.pfe.api.models.Axe;
+import studio.farsighted.pfe.api.models.AxeEntity;
 import studio.farsighted.pfe.api.models.Branch;
 import studio.farsighted.pfe.api.exceptions.EntityNotFoundException;
 import studio.farsighted.pfe.api.interfaces.AxeInterface;
@@ -23,24 +28,31 @@ public class AxeService	implements AxeInterface {
 	private BranchRepository branchRepository;
 	// Save operation
 	@Override
-	public Axe saveAxe (Axe axe)
+	public AxeEntity saveAxe (AxeEntity axe)
 	{
 		return axeRepository.save(axe);
 	}
 
 	@Override
-	public List<Axe> fetchAxeList() {
+	public List<AxeEntity> fetchAxeList() {
 		return axeRepository.findAll() ;
 	}
 
-	public Axe axeById(String axeId) {
-		Optional<Axe> optionalAxe = axeRepository.findById(axeId);
+
+	public Page<AxeEntity> get(String axe_name, Boolean visibility, @PageableDefault(size = 10, page = 0, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+		return axeRepository.findAxeByFilter(axe_name, visibility, pageable);
+	}
+
+
+
+	public AxeEntity axeById(String axeId) {
+		Optional<AxeEntity> optionalAxe = axeRepository.findById(axeId);
 		return optionalAxe.orElse(null); // Return null if not found, you can handle this differently based on your needs
 	}
 
 	@Override
-	public Axe updateAxe(Axe axe, String axeId) {
-		Axe AxseDB = axeRepository.findById(axeId).orElse(null);
+	public AxeEntity updateAxe(AxeEntity axe, String axeId) {
+		AxeEntity AxseDB = axeRepository.findById(axeId).orElse(null);
 
 		AxseDB.setNote(axe.getNote());
 		AxseDB.setVisibility(axe.isVisibility());
@@ -51,7 +63,7 @@ public class AxeService	implements AxeInterface {
 	@Override
 	public ResponseEntity<Void> deleteAxeById(String axeId) {
 
-		Optional<Axe> axeOptional = axeRepository.findById(axeId);
+		Optional<AxeEntity> axeOptional = axeRepository.findById(axeId);
 		if (axeOptional.isPresent()) {
 			axeRepository.deleteById(axeId);
 			return ResponseEntity.noContent().build();
@@ -61,20 +73,20 @@ public class AxeService	implements AxeInterface {
 
 	// Read operation
 
-	public List<Axe> fetchCohortList()
+	public List<AxeEntity> fetchCohortList()
 	{
-		return (List<Axe>)
+		return (List<AxeEntity>)
 				axeRepository.findAll();
 	}
 
 
 
 	public Branch addBranchToAxe(String axeId, Branch branch) {
-		Axe axe = axeRepository.findById(axeId)
+		AxeEntity axe = axeRepository.findById(axeId)
 				.orElseThrow(() -> new EntityNotFoundException("Axe not found with ID: " + axeId));
 
 		branch.setAxe(axe);
-		axe.getBranches().add(branch);
+	//	axe.getSubAxes.add(branch);
 
 		return branchRepository.save(branch);
 	}

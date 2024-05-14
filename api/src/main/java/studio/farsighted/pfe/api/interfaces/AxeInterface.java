@@ -2,7 +2,7 @@ package studio.farsighted.pfe.api.interfaces;
 
 import org.springframework.http.ResponseEntity;
 
-import studio.farsighted.pfe.api.models.Axe;
+import studio.farsighted.pfe.api.models.AxeEntity;
 
 import java.util.List;
 
@@ -10,14 +10,14 @@ import java.util.List;
 public interface AxeInterface {
 
     // Save operation
-    Axe saveAxe (Axe axe);
+    AxeEntity saveAxe (AxeEntity axe);
 
     // Read operation
-    List<Axe> fetchAxeList();
+    List<AxeEntity> fetchAxeList();
 
     // Update operation
-    Axe updateAxe(Axe axe,
-                  String axeId);
+    AxeEntity updateAxe(AxeEntity axe,
+                        String axeId);
 
     // Delete operation
     ResponseEntity<Void> deleteAxeById(String axeId);

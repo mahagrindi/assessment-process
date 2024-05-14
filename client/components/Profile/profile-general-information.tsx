@@ -9,11 +9,16 @@ import { FC,  useLayoutEffect, useState } from "react"
 export const Information: FC = () => {
 
      const [formData, setFormData] = useState({
-          username: 'username',
-          email: 'Admin@Tn.Ey.Com',
-          bio: 'Maecenas semper purus lacus, vitae facilisis neque luctus sit amet. Morbi augue tellus, auctor fringilla quam non, feugiat feugiat leo.',
-          date: "",
-          Phone: '56 218 004',
+          username: 'wale.sebii@Ey.Com',
+          role: 'Admin',
+          firstName: 'wale',
+          lastName: 'sebii',
+          middleName: '-',
+          phoneNumber: '56 218 004',
+          jobTitle: 'Develop',
+          department :'inovation',
+          cin: "11419183",
+      
         });
       
         const handleChange = (e: { target: { name: any; value: any } }) => {
@@ -31,69 +36,74 @@ export const Information: FC = () => {
      
    
      <form onSubmit={handleSubmit}>
-     <div className="flex flex-row">
-     <div className="basis-1/2 m-5" >
+
+
+     <div className="flex flex-row mt-5">
+     <div className="basis-1/3  mr-5" >
+ 
+ <Input
+                       type="text"
+                       id="firstName"
+                       name="firstName"
+                       value={formData.firstName}
+                       onChange={handleChange}
+                       required label={"firstName"}        />
+</div>
+<div className="basis-1/3 mx-5 ">
+ 
+<Input
+                              type="text"
+                              id="middleName"
+                              name="middleName"
+                              value={formData.middleName}
+                              onChange={handleChange}
+                            
+                              required label={" middleName "}        />
+                           
+</div>
+<div className="basis-1/3 mx-5 ">
+ 
+<Input
+                              type="text"
+                              id="lastName"
+                              name="lastName"
+                              value={formData.lastName}
+                              onChange={handleChange}
+                            
+                              required label={" lastName "}        />
+                           
+</div>
+     </div>
+     
+     <div className="flex flex-row mt-5">
+     <div className="basis-2/3  mr-5  ">
         <Input
-                              
+                              type="email"
                               id="username"
                             name="username"
                               value={formData.username}
                               onChange={handleChange}
-                               label={"Full Name"}       required   />
-      </div>
-      <div className="basis-1/2 m-5 " >
-        
-        <Input
-          type="email"
-          id="email"
-          name="email"
-          label={"email"}
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </div>
-     </div>
+                               label={"Email"}       required   />
       
-     <div className="flex flex-row">
-     <div className="basis-1/2 mx-5 " >
- 
+      </div>
+      <div className="basis-2/3 mx-5 ">
  <Input
-                       type="date"
-                       id="date"
-                       name="date"
-                       value={formData.date}
+                       type="text"
+                       id="phoneNumber"
+                       name="phoneNumber"
+                       value={formData.phoneNumber}
                        onChange={handleChange}
-                       required label={"Date of Birth"}        />
-</div>
-<div className="basis-1/2 mx-5 ">
+                       required label={"phoneNumber"}        />
  
-<Input
-                              type="text"
-                              id="Phone"
-                              name="Phone"
-                              value={formData.Phone}
-                              onChange={handleChange}
-                            
-                              required label={" Phone Number"}        />
-                           
-</div>
+ </div>
+ 
      </div>
   
-       
     
-      <div className="m-5" > 
-        <Textarea
-                              id="bio"
-                              name="bio"
-                              value={formData.bio}
-                              onChange={handleChange}
-                             label={"Bio"}        />
-      </div>
       <div className="flex flex-row-reverse" >
  
      
-     <div className="m-5" >
+     <div className="m-5 mt-10" >
 
 <Button type="submit" title={"save changes"} />
 

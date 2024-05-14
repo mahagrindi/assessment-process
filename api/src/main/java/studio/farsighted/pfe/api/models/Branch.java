@@ -21,7 +21,7 @@ public class Branch {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "axe_id")
-    private Axe axe;
+    private AxeEntity axe;
 
 
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
@@ -43,11 +43,11 @@ public class Branch {
         note = note;
     }
 
-    public Axe getAxe() {
+    public AxeEntity getAxe() {
         return axe;
     }
 
-    public void setAxe(Axe axe) {
+    public void setAxe(AxeEntity axe) {
         this.axe = axe;
     }
 

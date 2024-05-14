@@ -1,4 +1,7 @@
 {
      "prettier.bracketSameLine": true,
-     "prettier.jsxSingleQuote": true
+     "prettier.jsxSingleQuote": true,
+     "editor.defaultColorDecorators": true,
+     "editor.formatOnPaste": true,
+     "editor.wordBasedSuggestions": "allDocuments"
 }

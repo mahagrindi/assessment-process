@@ -33,6 +33,7 @@ private String createdBy ;
 
     private String title ;
 private String  description ;
+
     @OneToMany( cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_formEvaluation_id" , referencedColumnName = "formEvaluation_id" )
     private List<Challenge> challenges  ;

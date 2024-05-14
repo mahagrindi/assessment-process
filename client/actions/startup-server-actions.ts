@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache'
 export async function GET(page: number = 0, size: number = 10, sort: string = 'startupCreatedAt', dir: string = 'desc', query: string = '', sector: string = ''): Promise<StartupResponseType> {
   return await fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/startup?page=${page}&size=${size}&sort=${sort},${dir}&query=${query}&sector=${sector}`, {
     method: 'GET',
+    next: { revalidate: 0 },
     headers: { Authorization: `Bearer ${cookies().get('token')?.value}` },
   })
     .then((res) => res.json())

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   title: 'EY Auth',
   description: 'Auth page',
   icons: {
-    icon: '/assets/logo/ey-logo-black.png',
+    icon: '/assets/logo/ey-logo-black.webp',
   },
 }
 

@@ -12,10 +12,11 @@ import { mr } from '@/utils/class-authority-merge'
 interface ComponentProps<T> {
   data: T[]
   columns: ColumnDef<T>[]
-  paging: PageableType
+  paging?: PageableType
+  rounded?: boolean
 }
 
-export function DataTable<T>({ data, columns, paging }: PropsWithChildren<ComponentProps<T>>): JSX.Element {
+export function DataTable<T>({ data, columns, paging, rounded = false }: PropsWithChildren<ComponentProps<T>>): JSX.Element {
   const { push } = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -84,8 +85,8 @@ export function DataTable<T>({ data, columns, paging }: PropsWithChildren<Compon
     getPaginationRowModel: getPaginationRowModel(),
     onPaginationChange: setPagination,
     manualPagination: true,
-    pageCount: paging.totalPages ?? -1,
-    rowCount: paging.totalElements,
+    pageCount: paging ? paging.totalPages : -1,
+    rowCount: paging ? paging.totalElements : data.length,
     state: {
       pagination,
     },
@@ -106,9 +107,9 @@ export function DataTable<T>({ data, columns, paging }: PropsWithChildren<Compon
   }
 
   return (
-    <div className='bg-primary-white border-[2px] border-gray-200'>
+    <div className={mr('bg-primary-white border-[2px] border-gray-200', rounded && 'rounded overflow-hidden')}>
       <table className='w-full'>
-        <thead className='h-[42px] bg-gray-50 border-y borer-gray-250'>
+        <thead className='h-[42px] bg-gray-50 border-b borer-gray-250'>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
@@ -126,7 +127,7 @@ export function DataTable<T>({ data, columns, paging }: PropsWithChildren<Compon
         <tbody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
-              <tr key={row.id} data-state={row.getIsSelected() && 'selected'} className='h-[64px] border-b border-gray-250 text-start'>
+              <tr key={row.id} data-state={row.getIsSelected() && 'selected'} className='h-[64px] border-t border-gray-250 text-start'>
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id} className='text-start font-normal text-sm text-content-display px-3'>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -136,80 +137,84 @@ export function DataTable<T>({ data, columns, paging }: PropsWithChildren<Compon
             ))
           ) : (
             <tr aria-colspan={columns.length}>
-              <th>No results.</th>
+              <td className='text-center text-sm text-content-display py-4' colSpan={columns.length}>
+                No data available
+              </td>
             </tr>
           )}
         </tbody>
       </table>
 
-      <div className='px-6 py-4'>
-        <div className='flex items-center justify-between px-2'>
-          <div className='flex flex-row-reverse items-center gap-2'>
-            <div className='flex-1 text-sm text-muted-foreground'>
-              showing {paging.number * paging.size + 1} to {Math.min((paging.number + 1) * paging.size, paging.totalElements)} of {paging.totalElements}
-            </div>
-            <div>
-              <select
-                value={pageSize}
-                onChange={(e) => setPagination({ pageIndex: 0, pageSize: Number(e.target.value) })}
-                className='cursor-pointer h-8 text-xs border border-gray-250 rounded text-content-display'>
-                {[5, 10, 15, 25].map((size) => (
-                  <option key={size} value={size}>
-                    {size}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className='flex items-center space-x-6 lg:space-x-8'>
-            <div className='flex items-center space-x-2'>
-              <button
-                onClick={() => table.setPageIndex(0)}
-                disabled={!table.getCanPreviousPage()}
-                className='cursor-pointer h-8 w-8 flex items-center justify-center bg-primary-white border disabled:bg-content-mute disabled:text-content-disabled rounded border-gray-250 text-content-display'>
-                <span className='sr-only'>Go to first page</span>
-                <LuChevronFirst />
-              </button>
-              <button
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
-                className='cursor-pointer h-8 w-8 flex items-center justify-center bg-primary-white border disabled:bg-content-mute disabled:text-content-disabled rounded border-gray-250 text-content-display'>
-                <span className='sr-only'>Go to previous page</span>
-                <LuChevronLeft />
-              </button>
-              <div className='flex items-center justify-center gap-1'>
-                {/* Page indices */}
-                {generatePageIndices().map((index) => (
-                  <div
-                    key={index}
-                    onClick={() => table.setPageIndex(index)}
-                    className={mr(
-                      'cursor-pointer h-8 w-8 flex items-center justify-center border disabled:bg-content-mute disabled:text-content-disabled text-sm rounded',
-                      index !== table.getState().pagination.pageIndex ? 'border-gray-250 text-content-display bg-primary-white' : 'text-primary-background bg-content-display'
-                    )}>
-                    {index + 1}
-                  </div>
-                ))}
+      {paging && (
+        <div className='px-6 py-4'>
+          <div className='flex items-center justify-between px-2'>
+            <div className='flex flex-row-reverse items-center gap-2'>
+              <div className='flex-1 text-sm text-muted-foreground'>
+                showing {paging.number * paging.size + 1} to {Math.min((paging.number + 1) * paging.size, paging.totalElements)} of {paging.totalElements}
               </div>
-              <button
-                disabled={!table.getCanNextPage()}
-                onClick={() => table.nextPage()}
-                className='cursor-pointer h-8 w-8 flex items-center justify-center bg-primary-white border disabled:bg-content-mute disabled:text-content-disabled rounded border-gray-250 text-content-display'>
-                <span className='sr-only'>Go to next page</span>
-                <LuChevronRight />
-              </button>
-              <button
-                disabled={!table.getCanNextPage()}
-                onClick={() => table.setPageIndex(table.getPageCount())}
-                className='cursor-pointer h-8 w-8 flex items-center justify-center bg-primary-white border disabled:bg-content-mute disabled:text-content-disabled rounded border-gray-250 text-content-display'>
-                <span className='sr-only'>Go to last page</span>
-                <LuChevronLast />
-              </button>
+              <div>
+                <select
+                  value={pageSize}
+                  onChange={(e) => setPagination({ pageIndex: 0, pageSize: Number(e.target.value) })}
+                  className='cursor-pointer h-8 text-xs border border-gray-250 rounded text-content-display'>
+                  {[5, 10, 15, 25].map((size) => (
+                    <option key={size} value={size}>
+                      {size}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className='flex items-center space-x-6 lg:space-x-8'>
+              <div className='flex items-center space-x-2'>
+                <button
+                  onClick={() => table.setPageIndex(0)}
+                  disabled={!table.getCanPreviousPage()}
+                  className='cursor-pointer h-8 w-8 flex items-center justify-center bg-primary-white border disabled:bg-content-mute disabled:text-content-disabled rounded border-gray-250 text-content-display'>
+                  <span className='sr-only'>Go to first page</span>
+                  <LuChevronFirst />
+                </button>
+                <button
+                  onClick={() => table.previousPage()}
+                  disabled={!table.getCanPreviousPage()}
+                  className='cursor-pointer h-8 w-8 flex items-center justify-center bg-primary-white border disabled:bg-content-mute disabled:text-content-disabled rounded border-gray-250 text-content-display'>
+                  <span className='sr-only'>Go to previous page</span>
+                  <LuChevronLeft />
+                </button>
+                <div className='flex items-center justify-center gap-1'>
+                  {/* Page indices */}
+                  {generatePageIndices().map((index) => (
+                    <div
+                      key={index}
+                      onClick={() => table.setPageIndex(index)}
+                      className={mr(
+                        'cursor-pointer h-8 w-8 flex items-center justify-center border disabled:bg-content-mute disabled:text-content-disabled text-sm rounded',
+                        index !== table.getState().pagination.pageIndex ? 'border-gray-250 text-content-display bg-primary-white' : 'text-primary-background bg-content-display'
+                      )}>
+                      {index + 1}
+                    </div>
+                  ))}
+                </div>
+                <button
+                  disabled={!table.getCanNextPage()}
+                  onClick={() => table.nextPage()}
+                  className='cursor-pointer h-8 w-8 flex items-center justify-center bg-primary-white border disabled:bg-content-mute disabled:text-content-disabled rounded border-gray-250 text-content-display'>
+                  <span className='sr-only'>Go to next page</span>
+                  <LuChevronRight />
+                </button>
+                <button
+                  disabled={!table.getCanNextPage()}
+                  onClick={() => table.setPageIndex(table.getPageCount())}
+                  className='cursor-pointer h-8 w-8 flex items-center justify-center bg-primary-white border disabled:bg-content-mute disabled:text-content-disabled rounded border-gray-250 text-content-display'>
+                  <span className='sr-only'>Go to last page</span>
+                  <LuChevronLast />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

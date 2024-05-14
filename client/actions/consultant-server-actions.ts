@@ -64,7 +64,10 @@ export async function POST(consultant: Consultant): Promise<ConsultantType> {
     body: JSON.stringify(consultant),
   })
     .then((res) => res.json())
-    .then((data) => data)
+    .then((data) => {
+      revalidatePath('/dashboard/consultants')
+      return data
+    })
     .catch((err) => {
       throw new Error(err.message)
     })

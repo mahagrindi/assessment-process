@@ -40,6 +40,15 @@ public class AxeController {
     }
 
 /* API to fetsh list axe */
+@GetMapping("/")
+@PreAuthorize("hasAnyAuthority('ADMIN')")
+
+public List<AxeEntity> getAllAxes() {
+    return axeService.fetchAxeList();
+}
+
+
+
 
 
     @GetMapping("{id}")
@@ -58,12 +67,6 @@ public class AxeController {
         } catch (Exception e) {
             throw new PersistDataException("formEvaluation not saved: " + e.getMessage());
         }
-    }
-
-
-    @GetMapping("/")
-    public List<AxeEntity> getAllAxes() {
-        return axeService.fetchAxeList();
     }
 
 

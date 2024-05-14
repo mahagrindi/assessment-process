@@ -7,8 +7,6 @@ import { motion } from 'framer-motion'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { mr } from '@/utils/class-authority-merge'
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-
 const selectVariant = cva('h-full w-full flex items-center px-2 border-[2px] disabled:bg-gray-100 disabled:pointer-events-none rounded outline-none', {
   variants: {
     variant: {
@@ -27,7 +25,7 @@ const selectVariant = cva('h-full w-full flex items-center px-2 border-[2px] dis
   },
 })
 
-interface ComponentProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size'>, VariantProps<typeof selectVariant> {
+interface ComponentProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size' | 'onChange'>, VariantProps<typeof selectVariant> {
   label?: string
   hint?: string
   error?: string
@@ -35,28 +33,22 @@ interface ComponentProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, '
   placeholder?: string | ReactElement
   classname?: string
   multi?: boolean
-  paramQuery?: string
+  value: string
+  onChange: (e: string) => void
 }
 
-export const ServerSelect: FC<ComponentProps> = forwardRef<HTMLDivElement, ComponentProps>(
-  ({ label, data, hint, error, variant = 'default', size = 'default', required = false, placeholder, classname, multi = false, paramQuery = 'selection' }, ref) => {
-    const { push } = useRouter()
-    const pathname = usePathname()
-    const searchParams = useSearchParams()
-
+export const DropDown: FC<ComponentProps> = forwardRef<HTMLDivElement, ComponentProps>(
+  ({ label, data, hint, error, variant = 'default', size = 'default', required = false, placeholder, classname, multi = false, value, onChange }, ref) => {
     const [isOpen, setIsOpen] = useState(false)
     const [selectedValues, setSelectedValues] = useState<string[]>([]) // Array to hold selected values
 
-    // Add useEffect to handle initial selection preservation
     useEffect(() => {
-      const urlSearchParams = new URLSearchParams(window.location.search)
-      const selectedParam = urlSearchParams.get(paramQuery)
-      if (selectedParam) {
-        // Split the parameter string by comma to get individual selected values
-        const selectedValuesFromParam = selectedParam.split(',')
-        setSelectedValues(selectedValuesFromParam)
+      if (value && !selectedValues.length) {
+        const defaultValue = value.split(',')
+        const validDefaultValues = defaultValue.filter((val) => data.some((item) => item.value === val))
+        setSelectedValues(validDefaultValues)
       }
-    }, [paramQuery])
+    }, [value, data, selectedValues])
 
     const handleSelectOption = (value: string) => {
       // Update selectedValues based on multi-select
@@ -66,19 +58,15 @@ export const ServerSelect: FC<ComponentProps> = forwardRef<HTMLDivElement, Compo
       // Join selected values by a delimiter (e.g., comma) for the search parameter
       const selectedString = updatedValues.join(',')
 
-      const updatedSearchParams = new URLSearchParams(searchParams)
-      updatedSearchParams.set(paramQuery, selectedString)
-      updatedSearchParams.set('page', '1')
-      push(`${pathname}?${updatedSearchParams.toString()}`)
+      onChange(selectedString)
 
-      // Close dropdown if not multi-select
       if (!multi) {
         setIsOpen(!isOpen)
       }
     }
 
     return (
-      <div ref={ref} onBlur={() => console.log('mouse out')} className={mr('flex flex-col items-start gap-1 self-stretch select-none relative')}>
+      <div ref={ref} className={mr('flex flex-col items-start gap-1 self-stretch select-none relative')}>
         {label && (
           <label htmlFor='select' className='text-sm font-[500] tracking-wide capitalize text-content-prompt'>
             <span>{label}</span>
@@ -128,4 +116,4 @@ export const ServerSelect: FC<ComponentProps> = forwardRef<HTMLDivElement, Compo
   }
 )
 
-ServerSelect.displayName = 'ServerSelect'
+DropDown.displayName = 'DropDown'

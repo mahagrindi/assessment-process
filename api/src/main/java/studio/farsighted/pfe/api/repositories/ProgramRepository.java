@@ -12,9 +12,8 @@ import java.util.UUID;
 public interface ProgramRepository extends JpaRepository<ProgramEntity, UUID> {
 
     @Query("SELECT program FROM ProgramEntity program WHERE " +
-            "(:query IS NULL OR :query = '' OR LOWER(program.programName) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(program.programDescription) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(program.provider.programClientName) LIKE LOWER(CONCAT('%', :query, '%'))) " +
-            "AND (:status IS NULL OR :status= '' OR program.programStatus = :status) " +
-            "AND (:industry IS NULL OR :industry = '' OR program.programIndustry = :industry)")
-    Page<ProgramEntity> findProgramsByFilterCriteria(@Param("query") String query, @Param("status") String status, @Param("industry") String industry, Pageable pageable);
+            "(:query IS NULL OR :query = '' OR LOWER(program.programName) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(program.programDescription) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(program.provider.programProviderName) LIKE LOWER(CONCAT('%', :query, '%'))) " +
+            "AND (:status IS NULL OR :status= '' OR program.programStatus = :status)")
+    Page<ProgramEntity> findProgramsByFilterCriteria(@Param("query") String query, @Param("status") String status, Pageable pageable);
 
 }

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: 'EY Dashboard',
   description: 'Dashboard page',
   icons: {
-    icon: '/assets/logo/ey-logo-black.png',
+    icon: '/assets/logo/ey-logo-black.webp',
   },
 }
 

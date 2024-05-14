@@ -19,7 +19,7 @@ public class ProgramProviderEntity {
     private UUID id;
 
     @Column(name = "program-provider_name", nullable = false)
-    private String programClientName;
+    private String programProviderName;
 
     @Column(name = "program-provider-logo")
     private String programProviderLogo;

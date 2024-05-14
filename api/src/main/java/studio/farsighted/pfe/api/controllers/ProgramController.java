@@ -22,11 +22,11 @@ public class ProgramController {
     @Autowired
     private ProgramService programService;
 
-    @GetMapping(value = "", params = {"query", "status", "industry"})
+    @GetMapping(value = "", params = {"query", "status"})
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Page<ProgramEntity>> index(@RequestParam(value = "query", required = false) String query, @RequestParam(value = "status", required = false) String status, @RequestParam(value = "industry", required = false) String industry, @PageableDefault(size = 10, page = 0, sort = "programEstimatedDuration", direction = Sort.Direction.DESC) Pageable pageable) {
+    public ResponseEntity<Page<ProgramEntity>> index(@RequestParam(value = "query", required = false) String query, @RequestParam(value = "status", required = false) String status, @PageableDefault(size = 10, page = 0, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         try {
-            return ResponseEntity.ok(programService.get(query, status, industry, pageable));
+            return ResponseEntity.ok(programService.get(query, status, pageable));
         } catch (Exception e) {
             throw new PaginationBoundException("Programs not found: " + e.getMessage());
         }
@@ -63,8 +63,18 @@ public class ProgramController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public void delete(@PathVariable("id") String id) {
-        programService.delete(id);
+    public ResponseEntity<ProgramEntity> delete(@PathVariable("id") UUID id) {
+        ProgramEntity program = programService.find(id);
+        if (!programService.isExist(id)) {
+            throw new PersistDataException("Program with id: " + id + " not found");
+        }
+
+        try {
+            programService.delete(id);
+            return ResponseEntity.ok(program);
+        } catch (Exception e) {
+            throw new PersistDataException("Program with id: " + id + " not deleted: " + e.getMessage());
+        }
     }
 
 }

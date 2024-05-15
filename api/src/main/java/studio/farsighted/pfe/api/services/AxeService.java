@@ -12,11 +12,13 @@ import studio.farsighted.pfe.api.models.AxeEntity;
 import studio.farsighted.pfe.api.models.Branch;
 import studio.farsighted.pfe.api.exceptions.EntityNotFoundException;
 import studio.farsighted.pfe.api.interfaces.AxeInterface;
+import studio.farsighted.pfe.api.models.UserEntity;
 import studio.farsighted.pfe.api.repositories.AxeRepository;
 import studio.farsighted.pfe.api.repositories.BranchRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 // Annotation
 @Service
@@ -51,14 +53,26 @@ public class AxeService	implements AxeInterface {
 	}
 
 	@Override
-	public AxeEntity updateAxe(AxeEntity axe, String axeId) {
-		AxeEntity AxseDB = axeRepository.findById(axeId).orElse(null);
+	public AxeEntity updateAxe(AxeEntity axe) {
 
-		AxseDB.setNote(axe.getNote());
+		AxeEntity AxseDB = axeRepository.findById(axe.getId()).orElse(null);
+
+
 		AxseDB.setVisibility(axe.isVisibility());
 		AxseDB.setAxe_name(axe.getAxe_name());
+		AxseDB.setDescription(axe.getDescription());
 		return axeRepository.save(AxseDB);
 	}
+
+	public AxeEntity updateAxeVisibility(String id ) {
+
+		AxeEntity AxseDB = axeRepository.findById(id).orElse(null);
+
+
+		AxseDB.setVisibility(!AxseDB.isVisibility());
+		return axeRepository.save(AxseDB);
+	}
+
 
 	@Override
 	public ResponseEntity<Void> deleteAxeById(String axeId) {
@@ -89,6 +103,10 @@ public class AxeService	implements AxeInterface {
 	//	axe.getSubAxes.add(branch);
 
 		return branchRepository.save(branch);
+	}
+
+	public Boolean isExist(String id) {
+		return axeRepository.existsById(id);
 	}
 
 }

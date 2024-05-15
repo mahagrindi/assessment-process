@@ -78,7 +78,8 @@ export default function Page({ params, searchParams }: { params: { slug: string 
             <Controller name={'username'} control={control} render={({ field }) => <Input {...field} type='email' label='work email' required error={errors?.username && errors.username.message} />} />
           </div>
           <div className='grid grid-cols-3 gap-4'>
-            <Controller name='firstName' control={control} render={({ field }) => <Input {...field} type='text' label='first name' required error={errors?.firstName && errors.firstName.message} />} />
+            <Controller name='firstName' control={control} render={({ field }) => 
+            <Input {...field} type='text' label='first name' required error={errors?.firstName && errors.firstName.message} />} />
             <Controller name='middleName' control={control} render={({ field }) => <Input {...field} value={field.value ? field.value : undefined} label='middle name' />} />
             <Controller name='lastName' control={control} render={({ field }) => <Input {...field} type='text' label='last name' required error={errors?.lastName && errors.lastName.message} />} />
           </div>

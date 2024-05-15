@@ -12,9 +12,11 @@ import studio.farsighted.pfe.api.exceptions.PaginationBoundException;
 import studio.farsighted.pfe.api.exceptions.PersistDataException;
 import studio.farsighted.pfe.api.models.AxeEntity;
 import studio.farsighted.pfe.api.models.Branch;
+import studio.farsighted.pfe.api.models.UserEntity;
 import studio.farsighted.pfe.api.services.AxeService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/axes")
@@ -47,16 +49,32 @@ public List<AxeEntity> getAllAxes() {
     return axeService.fetchAxeList();
 }
 
-
-
-
-
-    @GetMapping("{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public AxeEntity getAxeById(@PathVariable String id) {
+/* API GET By ID */
+@GetMapping("/{id}")
+@PreAuthorize("hasAnyAuthority('ADMIN')")
+public AxeEntity getAxeById(@PathVariable String id) {
         return axeService.axeById(id);
-    }
+}
 
+
+/* API PUT to Update Axe */
+@PutMapping("/")
+@PreAuthorize("hasAnyAuthority('ADMIN')")
+public AxeEntity update(@RequestBody AxeEntity axe) {
+        if (!axeService.isExist(axe.getId())) {
+            throw new PersistDataException("axe with id: " + axe.getId() + " not found");
+        }
+        return axeService.updateAxe(axe);
+    }
+/* API UpDate visibility */
+@PutMapping("/{id}")
+@PreAuthorize("hasAnyAuthority('ADMIN')")
+public AxeEntity updateVisibility(@PathVariable String id) {
+    if (!axeService.isExist(id)) {
+        throw new PersistDataException("axe with id: " + id + " not found");
+    }
+    return axeService.updateAxeVisibility(id);
+}
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMIN')")
@@ -71,9 +89,6 @@ public List<AxeEntity> getAllAxes() {
 
 
 
-    @PutMapping("/{id}")
-    public AxeEntity updateAxe(@PathVariable String id, @RequestBody AxeEntity updatedAxe) {
-        return axeService.updateAxe(updatedAxe ,id);    }
 
 
 

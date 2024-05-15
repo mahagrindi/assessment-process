@@ -6,6 +6,7 @@ import { LuArrowDownWideNarrow, LuArrowUpWideNarrow, LuClipboardEdit, LuEye, LuS
 
 import { Chip } from '@/ui/chip'
 import { PUT } from '@/actions/consultant-server-actions'
+import { PUTVisibility } from '@/actions/axe-server-actions'
 
 export const AxeColumns: ColumnDef<AxeType>[] = [
   {
@@ -80,7 +81,7 @@ export const AxeColumns: ColumnDef<AxeType>[] = [
     id: 'subAxes',
     header: 'number of sub-axe',
     accessorKey: 'subAxes',
-    cell: ({ row }) => <div className='w-[82px]'>{row.original.subAxes.length}</div>,
+    cell: ({ row }) => <div className='w-[82px]'>{row.original.subAxes?.length}</div>,
   },
 
   {
@@ -90,15 +91,18 @@ export const AxeColumns: ColumnDef<AxeType>[] = [
     // size: 64,
     cell: ({ row }) => (
       <div className='flex flex-row-reverse justify-end gap-2 '>
-        <button title='Restrict access' className='flex disabled:opacity-25 disabled:cursor-not-allowed'>
+        <button title='Restrict visibility' className='flex disabled:opacity-25 disabled:cursor-not-allowed' 
+        
+        onClick={() => PUTVisibility(row.original.id || '')}>
           {row.original.visibility ? <LuShieldClose size={20} className={'text-accent-error'} /> : <LuShield size={20} className={'text-purple-200'} />}
         </button>
-        <Link passHref href={`/dashboard/axes/${row.original.axe_name}-${row.original.axe_name}?id=${row.original.id}`}>
-          <button title='Edit user' className='flex disabled:opacity-25 disabled:cursor-not-allowed'>
+
+        <Link passHref href={`/dashboard/axes/${row.original.axe_name}?id=${row.original.id}`}>
+          <button title='Edit axe' className='flex disabled:opacity-25 disabled:cursor-not-allowed'>
             <LuClipboardEdit size={20} className='text-accent-link' />
           </button>
         </Link>
-        <Link passHref href={`/dashboard/axes/detail?q=${row.original.id }`}>
+        <Link passHref href={`/dashboard/axes/detail?q=${row.original.id}`}>
           <button title='View details' className='flex'>
             <LuEye size={20} className='text-accent-success' />
           </button>

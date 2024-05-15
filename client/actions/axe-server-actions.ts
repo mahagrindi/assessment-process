@@ -1,4 +1,12 @@
-import { cookies } from 'next/headers';
+'use server'
+import { cookies } from 'next/headers'
+import { revalidatePath } from 'next/cache'
+
+import * as yup from 'yup'
+  
+
+
+/* list of axes with pagenation and filter */
 
 export async function GET(
   axe_name: string = '',
@@ -37,6 +45,7 @@ export async function GET(
   }
 }
 
+/* creat of axes  */
 
 export async function POST(axe: AxeType): Promise<AxeType> {
   console.log(axe);
@@ -47,7 +56,10 @@ export async function POST(axe: AxeType): Promise<AxeType> {
     body: JSON.stringify(axe),
   })
     .then((res) => res.json())
-    .then((data) => data)
+     .then((data) => {
+      revalidatePath('/dashboard/consultants')
+      return data
+    })
     .catch((err) => {
       throw new Error(err.message);
     });
@@ -55,18 +67,54 @@ export async function POST(axe: AxeType): Promise<AxeType> {
 
 
 
+/* find axes by ID  */
+ 
+export async function FIND(id: string): Promise<AxeType> {
+ return await fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/axes/${id}`, {
+    method: 'GET',
+    next: { revalidate: 0 }, 
+    headers: { Authorization: `Bearer ${cookies().get('token')?.value}` },
+  })
+    .then((res) => res.json())
+    .then((data) => data)
+    .catch((err) => {
+      throw new Error(err.message)
+    })
+}
 
-export async function getAxeDetails(  id : string = '97864'): Promise<AxeType> {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/axes/?id=${id}`, {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${cookies().get('token')?.value}` },
-    });
-    if (!response.ok) {
-      throw new Error('Failed to fetch evaluation form By ID ');
-    }
-    return await response.json();
-  } catch (error) {
-    throw new Error("error" );
-  }
+
+/* Update Axe */
+
+export async function PUT(axe: AxeType): Promise<AxeType> {
+  return await fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/axes/`, {
+    method: 'PUT',
+    next: { revalidate: 0 },
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${cookies().get('token')?.value}` },
+    body: JSON.stringify(axe),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+     
+      return data
+    })
+    .catch((err) => {
+      throw new Error(err.message)
+    })
+}
+
+
+export async function PUTVisibility(id: string): Promise<AxeType> {
+ return await fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/axes/${id}`, {
+    method: 'PUT',
+    next: { revalidate: 0 }, 
+    headers: { Authorization: `Bearer ${cookies().get('token')?.value}` },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      revalidatePath('/dashboard/axes')
+      return data
+    })
+    .catch((err) => {
+      throw new Error(err.message)
+    })
 }

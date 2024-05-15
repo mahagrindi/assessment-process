@@ -16,8 +16,7 @@ public interface AxeInterface {
     List<AxeEntity> fetchAxeList();
 
     // Update operation
-    AxeEntity updateAxe(AxeEntity axe,
-                        String axeId);
+    AxeEntity updateAxe(AxeEntity axe);
 
     // Delete operation
     ResponseEntity<Void> deleteAxeById(String axeId);

@@ -21,7 +21,7 @@ export default async function Page({ searchParams,}: {
     <div className='h-full min-h-full w-full'>
       <ContentHeader
         title={'Axes'}
-        args={[<Linker key={'create-link-consultant-element'} title={'add new axe'} href={`/dashboard/axes/add-new-axe`} size={'large'} icon={<LuPlusCircle size={20} />} className={'gap-2 px-3'} />]}
+        args={[<Linker key={'create-link-consultant-element'} title={'add new axe'} href={`/dashboard/axes/create`} size={'large'} icon={<LuPlusCircle size={20} />} className={'gap-2 px-3'} />]}
       />
 
       <div className='bg-primary-white flex flex-col border-t-[2px] border-gray-200'>

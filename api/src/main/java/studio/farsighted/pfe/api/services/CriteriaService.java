@@ -14,19 +14,35 @@ public class CriteriaService {
     @Autowired
     private CriteriaRepository criteriaRepository;
 
-    public Criteria saveCriteria(Criteria criteria) {
-        return criteriaRepository.save(criteria);
-    }
-
-    public List<Criteria> getAllCriteria() {
-        return criteriaRepository.findAll();
-    }
 
     public Optional<Criteria> getCriteriaById(String id) {
         return criteriaRepository.findById(id);
     }
 
-    public void deleteCriteria(String id) {
-        criteriaRepository.deleteById(id);
+
+
+    public Boolean isExist(String id) {
+        return criteriaRepository.existsById(id);
+    }
+
+
+    public Criteria updateVisibility(String id ) {
+
+        Criteria CriteriaDB = criteriaRepository.findById(id).orElse(null);
+
+
+        CriteriaDB.setVisibility(!CriteriaDB.isVisibility());
+        return criteriaRepository.save(CriteriaDB);
+    }
+
+
+    public Criteria update(Criteria criteria) {
+
+
+        Criteria CriteriaDB = criteriaRepository.findById(criteria.getId()).orElse(null);
+        CriteriaDB.setCriterionName(criteria.getCriterionName());
+        CriteriaDB.setVisibility(criteria.isVisibility());
+
+        return criteriaRepository.save(CriteriaDB);
     }
 }

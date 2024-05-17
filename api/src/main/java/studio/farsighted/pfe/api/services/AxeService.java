@@ -4,21 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import studio.farsighted.pfe.api.models.AxeEntity;
-import studio.farsighted.pfe.api.models.Branch;
+import studio.farsighted.pfe.api.models.SubAxeEntity;
 import studio.farsighted.pfe.api.exceptions.EntityNotFoundException;
 import studio.farsighted.pfe.api.interfaces.AxeInterface;
-import studio.farsighted.pfe.api.models.UserEntity;
 import studio.farsighted.pfe.api.repositories.AxeRepository;
-import studio.farsighted.pfe.api.repositories.BranchRepository;
+import studio.farsighted.pfe.api.repositories.SubAxeRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 // Annotation
 @Service
@@ -27,7 +24,7 @@ public class AxeService	implements AxeInterface {
 	@Autowired
 	private AxeRepository axeRepository;
 	@Autowired
-	private BranchRepository branchRepository;
+	private SubAxeRepository branchRepository;
 	// Save operation
 	@Override
 	public AxeEntity saveAxe (AxeEntity axe)
@@ -95,18 +92,24 @@ public class AxeService	implements AxeInterface {
 
 
 
-	public Branch addBranchToAxe(String axeId, Branch branch) {
+	public AxeEntity addSubAxe(String axeId, SubAxeEntity subAxeEntity) {
 		AxeEntity axe = axeRepository.findById(axeId)
 				.orElseThrow(() -> new EntityNotFoundException("Axe not found with ID: " + axeId));
 
-		branch.setAxe(axe);
-	//	axe.getSubAxes.add(branch);
+		List<SubAxeEntity> subAxes = axe.getSubAxes(); // Get the list of sub-axes
+		subAxes.add(subAxeEntity); // Add the new sub-axe to the list
 
-		return branchRepository.save(branch);
+		// Now set the updated list back to the axe
+		axe.setSubAxes(subAxes);
+
+		// Save the updated axe
+		return axeRepository.save(axe);
 	}
+
 
 	public Boolean isExist(String id) {
 		return axeRepository.existsById(id);
 	}
+
 
 }

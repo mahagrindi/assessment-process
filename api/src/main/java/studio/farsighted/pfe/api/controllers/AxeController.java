@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import studio.farsighted.pfe.api.exceptions.PaginationBoundException;
 import studio.farsighted.pfe.api.exceptions.PersistDataException;
 import studio.farsighted.pfe.api.models.AxeEntity;
-import studio.farsighted.pfe.api.models.Branch;
-import studio.farsighted.pfe.api.models.UserEntity;
+import studio.farsighted.pfe.api.models.ProgramCohortEntity;
+import studio.farsighted.pfe.api.models.SubAxeEntity;
 import studio.farsighted.pfe.api.services.AxeService;
 
 import java.util.List;
@@ -44,7 +44,6 @@ public class AxeController {
 /* API to fetsh list axe */
 @GetMapping("/")
 @PreAuthorize("hasAnyAuthority('ADMIN')")
-
 public List<AxeEntity> getAllAxes() {
     return axeService.fetchAxeList();
 }
@@ -66,7 +65,8 @@ public AxeEntity update(@RequestBody AxeEntity axe) {
         }
         return axeService.updateAxe(axe);
     }
-/* API UpDate visibility */
+
+/* API UpDate visibility of axe */
 @PutMapping("/{id}")
 @PreAuthorize("hasAnyAuthority('ADMIN')")
 public AxeEntity updateVisibility(@PathVariable String id) {
@@ -76,32 +76,42 @@ public AxeEntity updateVisibility(@PathVariable String id) {
     return axeService.updateAxeVisibility(id);
 }
 
-    @PostMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<AxeEntity> save(@RequestBody AxeEntity axe) {
-        try {
-
-            return ResponseEntity.ok(axeService.saveAxe(axe) );
-        } catch (Exception e) {
-            throw new PersistDataException("formEvaluation not saved: " + e.getMessage());
-        }
+/* API Post Creat axe */
+@PostMapping
+@PreAuthorize("hasAnyAuthority('ADMIN')")
+public ResponseEntity<AxeEntity> save(@RequestBody AxeEntity axe) {
+    try {
+        return ResponseEntity.ok(axeService.saveAxe(axe) );
+    } catch (Exception e) {
+        throw new PersistDataException("formEvaluation not saved: " + e.getMessage());
     }
+}
 
-
-
-
-
-
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAxe(@PathVariable String id) {
-      return  axeService.deleteAxeById(id);
-
+/* API Post to add sub-axe to an axe */
+@PostMapping(value = "/subaxes", params = {"axeId"})
+@PreAuthorize("hasAnyAuthority('ADMIN')")
+public ResponseEntity<AxeEntity> save(@RequestParam(value = "axeId") String id, @RequestBody SubAxeEntity subAxe) {
+    try {
+        return ResponseEntity.ok(axeService.addSubAxe(id, subAxe));
+    } catch (Exception e) {
+        throw new PersistDataException("Program Cohort not saved: " + e.getMessage());
     }
+}
 
-    @PostMapping("/add-branch/{axeId}")
-    public AxeEntity addBranchToAxe(@PathVariable String axeId, @RequestBody Branch branch) {
-        return axeService.addBranchToAxe(axeId , branch).getAxe();
+
+
+
+@DeleteMapping("/{id}")
+public ResponseEntity<Void> deleteAxe(@PathVariable String id) {
+    return  axeService.deleteAxeById(id);
+
+}
+
+  @PutMapping("/add-branch")
+  @PreAuthorize("hasAnyAuthority('ADMN')")
+
+    public AxeEntity addBranchToAxe(@PathVariable String axeId, @RequestBody SubAxeEntity subAxeEntity) {
+        return axeService.addSubAxe(axeId , subAxeEntity) ;
     }
 
 }

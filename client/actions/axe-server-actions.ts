@@ -57,7 +57,7 @@ export async function POST(axe: AxeType): Promise<AxeType> {
   })
     .then((res) => res.json())
      .then((data) => {
-      revalidatePath('/dashboard/consultants')
+ /*      revalidatePath('/dashboard/consultants') */
       return data
     })
     .catch((err) => {
@@ -102,7 +102,7 @@ export async function PUT(axe: AxeType): Promise<AxeType> {
     })
 }
 
-
+/*  change visibility */
 export async function PUTVisibility(id: string): Promise<AxeType> {
  return await fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/axes/${id}`, {
     method: 'PUT',
@@ -118,3 +118,31 @@ export async function PUTVisibility(id: string): Promise<AxeType> {
       throw new Error(err.message)
     })
 }
+
+/* add sub axe to an axe */
+
+ 
+
+export async function POST_SUBAXE(subaxe: SubAxeType, axeId: string): Promise<AxeType> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/axes/subaxes?axeId=${axeId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${cookies().get('token')?.value}`,
+      },
+      body: JSON.stringify(subaxe),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    revalidatePath(`/dashboard/axes/detail?q=${axeId}`);
+    return data;
+  } catch (err) {
+    throw new Error(`Failed to add sub-axe`);
+  }
+}
+

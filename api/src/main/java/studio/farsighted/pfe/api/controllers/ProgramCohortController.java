@@ -1,6 +1,10 @@
 package studio.farsighted.pfe.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -8,7 +12,6 @@ import studio.farsighted.pfe.api.exceptions.PersistDataException;
 import studio.farsighted.pfe.api.models.ProgramCohortEntity;
 import studio.farsighted.pfe.api.services.ProgramCohortService;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,12 +24,12 @@ public class ProgramCohortController {
 
     @GetMapping(value = "", params = {"programId"})
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<List<ProgramCohortEntity>> index(@RequestParam(value = "programId", required = false) UUID programId) {
+    public ResponseEntity<Page<ProgramCohortEntity>> index(@RequestParam(value = "programId", required = false) UUID programId, @PageableDefault(size = 10, page = 0, sort = "cohortStartDate", direction = Sort.Direction.DESC) Pageable pageable) {
         try {
             if (programId == null)
-                return ResponseEntity.ok(programCohortService.get());
+                return ResponseEntity.ok(programCohortService.get(pageable));
 
-            return ResponseEntity.ok(programCohortService.findByProgram(programId));
+            return ResponseEntity.ok(programCohortService.findByProgram(programId, pageable));
         } catch (Exception e) {
             throw new PersistDataException("Program Cohorts not found: " + e.getMessage());
         }

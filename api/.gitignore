@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### project files ###
-!**/src/main/resources/uploads/**
+src/main/resources/uploads/**

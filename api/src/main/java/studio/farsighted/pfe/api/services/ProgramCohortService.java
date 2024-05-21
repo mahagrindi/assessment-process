@@ -1,6 +1,8 @@
 package studio.farsighted.pfe.api.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import studio.farsighted.pfe.api.exceptions.PersistDataException;
 import studio.farsighted.pfe.api.interfaces.ProgramCohortInterface;
@@ -9,7 +11,6 @@ import studio.farsighted.pfe.api.models.ProgramEntity;
 import studio.farsighted.pfe.api.repositories.ProgramCohortRepository;
 import studio.farsighted.pfe.api.repositories.ProgramRepository;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -22,13 +23,13 @@ public class ProgramCohortService implements ProgramCohortInterface {
     private ProgramRepository programRepository;
 
     @Override
-    public List<ProgramCohortEntity> get() {
-        return programCohortRepository.findAll();
+    public Page<ProgramCohortEntity> get(Pageable pageable) {
+        return programCohortRepository.findAll(pageable);
     }
 
     @Override
-    public List<ProgramCohortEntity> findByProgram(UUID id) {
-        return programCohortRepository.findAllByProgramId(id);
+    public Page<ProgramCohortEntity> findByProgram(UUID id, Pageable pageable) {
+        return programCohortRepository.findAllByProgramId(id, pageable);
     }
 
     @Override

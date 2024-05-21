@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import studio.farsighted.pfe.api.models.ProgramEntity;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface ProgramInterface {
@@ -18,4 +19,7 @@ public interface ProgramInterface {
     void delete(UUID id);
 
     Boolean isExist(UUID id);
+
+    List<ProgramEntity> getList();
+
 }

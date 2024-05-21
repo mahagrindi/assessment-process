@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -42,5 +43,8 @@ public class ProgramCohortEntity {
     @JoinColumn(referencedColumnName = "id")
     @JsonIgnoreProperties("cohorts")
     private ProgramEntity program;
+
+    @OneToMany(mappedBy = "cohort", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProgramCohortChallengeEntity> challenges;
 
 }

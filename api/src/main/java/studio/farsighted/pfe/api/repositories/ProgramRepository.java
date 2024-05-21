@@ -15,5 +15,4 @@ public interface ProgramRepository extends JpaRepository<ProgramEntity, UUID> {
             "(:query IS NULL OR :query = '' OR LOWER(program.programName) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(program.programDescription) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(program.provider.programProviderName) LIKE LOWER(CONCAT('%', :query, '%'))) " +
             "AND (:status IS NULL OR :status= '' OR program.programStatus = :status)")
     Page<ProgramEntity> findProgramsByFilterCriteria(@Param("query") String query, @Param("status") String status, Pageable pageable);
-
 }

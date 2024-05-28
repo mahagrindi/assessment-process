@@ -25,8 +25,7 @@ public class FormEvaluationController {
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<FormEvaluation> save(@RequestBody FormEvaluation formEvaluation) {
         try {
-
-            return ResponseEntity.ok(formEvaluationService.saveFormEvaluation(formEvaluation) );
+            return ResponseEntity.ok(formEvaluationService.saveForm(formEvaluation));
         } catch (Exception e) {
             throw new PersistDataException("formEvaluation not saved: " + e.getMessage());
         }
@@ -52,4 +51,17 @@ public class FormEvaluationController {
             throw new PersistDataException(" Form Emty: " + e.getMessage());
         }
     }
+
+
+
+    @PostMapping(value = "/copies", params = {"id"})
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<ResponseEntity<FormEvaluation>> CopieForm(@RequestParam(value = "id") String id) {
+        try {
+            return ResponseEntity.ok(formEvaluationService.Copie(id));
+        } catch (Exception e) {
+            throw new PersistDataException("Program Cohort not saved: " + e.getMessage());
+        }
+    }
+
 }

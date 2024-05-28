@@ -5,7 +5,6 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,43 +12,30 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-
-@Table(name = "FormEvaluation")
+@Table(name = "form_evaluation")
 public class FormEvaluation {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "formEvaluation_id", unique = true, nullable = false)
+    @Column(name = "form_evaluation_id", unique = true, nullable = false)
     private String id;
 
     @CreatedDate
-    @Column(name = "Form_created_at", updatable = false)
+    @Column(name = "form_created_at", updatable = false)
     private Date createdAt = new Date();
-private String createdBy ;
+
+    private String createdBy;
     private String version;
+    private String title;
+    @Column(columnDefinition = "LONGTEXT")
+    private String description;
 
+    @ElementCollection
+    @CollectionTable(name = "form_evaluation_challenges", joinColumns = @JoinColumn(name = "form_evaluation_id"))
+    @Column(name = "challenge_id")
+    private List<String> challengeIds;
 
-
-
-    private String title ;
-private String  description ;
-
-    @OneToMany( cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_formEvaluation_id" , referencedColumnName = "formEvaluation_id" )
-    private List<Challenge> challenges  ;
-
-
-    @OneToMany( cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_formEvaluation_id" , referencedColumnName = "formEvaluation_id" )
-    private List<Section> sections  ;
-    public String getId() {
-        return id;
-    }
-
-
-
-
-
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_form_evaluation_id", referencedColumnName = "form_evaluation_id")
+    private List<Section> sections;
 }
-
-

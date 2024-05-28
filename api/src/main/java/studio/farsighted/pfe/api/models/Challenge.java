@@ -1,9 +1,13 @@
 package studio.farsighted.pfe.api.models;
 
 import jakarta.persistence.*;
+import lombok.*;
 
+@Data
 @Entity
-@Table(name = "Challenges")
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "challenges")
 public class Challenge {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,31 +15,4 @@ public class Challenge {
 
     private String title;
     private String description;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-
 }

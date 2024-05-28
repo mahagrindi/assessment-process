@@ -4,6 +4,8 @@ import Link from 'next/link'
 import type { JSX } from 'react'
 import { useState } from 'react'
 
+import { useRouter } from 'next/navigation'
+
 import { Button } from '@/ui/button'
 import { Input } from '@/ui/input'
 import { Toast } from '@/ui/toast'
@@ -11,17 +13,14 @@ import { Toast } from '@/ui/toast'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
-import { useRouter } from 'next/navigation'
-import { getCookie, setCookie } from 'cookies-next'
-
 import { formLoginSchema } from '@/validation/form-auth-validation'
-import { authenticate } from '@/actions/auth-actions'
-import { identify } from '@/actions/current-user-action'
+
+import { useAuth } from '@/provider/user-provider'
 
 export default function Page(): JSX.Element {
   const { push } = useRouter()
+  const { login, error, emptyState, isAuthenticated } = useAuth()
   const [loading, setLoading] = useState<boolean>(false)
-  const [error, setError] = useState<ErrorAuthType | undefined>()
 
   const {
     formState: { errors },
@@ -32,27 +31,9 @@ export default function Page(): JSX.Element {
     defaultValues: { username: '', password: '' },
   })
 
-  const onSubmit = (data: LoginType): void => {
-    setLoading(true)
-    authenticate(data)
-      .then((res) => {
-        if (res.fulfillment) {
-          setCookie('token', res.token.token, { path: '/', domain: 'localhost', maxAge: res.token.expiresIn / 1000, expires: new Date(res.token.expiresIn / 1000) })
-          if (getCookie('token')) {
-            push('/dashboard')
-          }
-        } else {
-          setError(res.error)
-          setLoading(false)
-        }
-      })
-      .then(() => setLoading(false))
-      .then(() => identify())
-  }
-
   return (
     <div className='w-full h-full flex items-center justify-center'>
-      {error && <Toast title={error?.title} message={error?.description} variant='error' close={() => setError(undefined)} />}
+      {error.status !== 0 && <Toast title={error?.title} message={error?.description} variant='error' close={emptyState} />}
       <div className='w-full max-w-sm flex flex-col gap-8'>
         <div className='grid gap-1'>
           <h1 className='w-full text-center text-3xl text-content-display font-[600] capitalize'>sign in</h1>
@@ -77,7 +58,20 @@ export default function Page(): JSX.Element {
           </div>
         </div>
         <div className='w-full'>
-          <Button title={'sign in'} type={'submit'} onClick={handleSubmit(onSubmit)} loading={loading} />
+          <Button
+            title={'sign in'}
+            type={'submit'}
+            onClick={handleSubmit(
+              (data) => {
+                setLoading(true)
+                login(data)
+                  .then(() => isAuthenticated && setLoading(false))
+                  .then(() => push('/dashboard'))
+              },
+              (err) => console.log(err)
+            )}
+            loading={loading}
+          />
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@
 import type { ButtonHTMLAttributes, FC, ReactElement } from 'react'
 import { useState } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { motion } from 'framer-motion'
 import { mr } from '@/utils/class-authority-merge'
@@ -18,6 +18,7 @@ interface ComponentProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const VerticalNavigation: FC<ComponentProps> = ({ title, active = false, haveSubmenu = false, icon, subMenu, ...rest }) => {
   const pathname = usePathname()
+  const { prefetch } = useRouter()
   const [isDropped, setIsDropDown] = useState<boolean>(active)
 
   return haveSubmenu ? (
@@ -35,7 +36,12 @@ export const VerticalNavigation: FC<ComponentProps> = ({ title, active = false, 
       {isDropped && (
         <div>
           {subMenu?.map((item, index) => (
-            <Link key={index} passHref href={item.path} className={mr('flex-1 w-full h-[42px] flex items-center pl-10', active ? 'text-primary-white bg-gray-500' : 'text-gray-300 bg-primary-black')}>
+            <Link
+              key={index}
+              passHref
+              href={item.path}
+              onMouseEnter={() => prefetch(item.path)}
+              className={mr('flex-1 w-full h-[42px] flex items-center pl-10', active ? 'text-primary-white bg-gray-500' : 'text-gray-300 bg-primary-black')}>
               <p className={mr('text-sm w-full text-start capitalize', pathname === item.path ? 'text-primary-yellow' : 'text-gray-300')}>{item.title}</p>
             </Link>
           ))}

@@ -1,10 +1,12 @@
 package studio.farsighted.pfe.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -47,5 +49,9 @@ public class StartupEntity {
 
     @Column(name = "startup-description", nullable = false, columnDefinition = "TEXT")
     private String startupDescription;
+
+    @OneToMany(mappedBy = "startup", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("startup")
+    private List<EvaluationEntity> evaluations;
 
 }

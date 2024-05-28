@@ -10,6 +10,7 @@ import { SearchInput } from '@/components/content-data-table-search'
 
 import { GET } from '@/actions/program-server-actions'
 import { programColumns } from '@/app/dashboard/programs/_data/program-datatable-header'
+import { FilterOptions } from '@/components/filter-options'
 
 export default async function Page({ searchParams }: { searchParams: { page: string; size: string; sort: string; dir: string; query: string; status: string } }): Promise<JSX.Element> {
   const program: ProgramResponseType = (await GET(searchParams.query, searchParams.status, Number(searchParams.page) - 1, Number(searchParams.size), searchParams.sort, searchParams.dir)) || {}
@@ -20,6 +21,17 @@ export default async function Page({ searchParams }: { searchParams: { page: str
         title={'programs'}
         args={[<Linker key={'create-link-program'} title={'new program'} href={`/dashboard/programs/create`} size={'large'} icon={<LuPlus size={20} />} className={'gap-2 px-3'} />]}
       />
+
+      {(searchParams.status || searchParams.query) && (
+        <div className='px-6 mb-6'>
+          <FilterOptions
+            filter={[
+              { name: 'query', option: searchParams.query },
+              { name: 'status', option: searchParams.status },
+            ]}
+          />
+        </div>
+      )}
 
       <div className='bg-primary-white flex flex-col border-t-[2px] border-gray-200'>
         <div className='flex items-center justify-between px-6 py-4'>
@@ -36,7 +48,7 @@ export default async function Page({ searchParams }: { searchParams: { page: str
               }
               classname={'min-w-[150px]'}
               data={[
-                { label: 'Boarding', value: 'BOARDING' },
+                { label: 'OnBoarding', value: 'ONBOARDING' },
                 { label: 'Starting', value: 'STARTING' },
                 { label: 'Ongoing', value: 'ONGOING' },
                 { label: 'Suspended', value: 'SUSPENDED' },

@@ -4,12 +4,13 @@ import { ReactNode } from 'react'
 import type { Metadata } from 'next'
 
 import Image from 'next/image'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+
+import { mr } from '@/utils/class-authority-merge'
 
 import { BoxesCore } from '@/ui/storybook/boxes-core'
-import { mr } from '@/utils/class-authority-merge'
 import { AuthFooter } from '@/components/auth-footer'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'EY Auth',

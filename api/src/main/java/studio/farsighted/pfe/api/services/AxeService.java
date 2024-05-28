@@ -1,82 +1,48 @@
 package studio.farsighted.pfe.api.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import studio.farsighted.pfe.api.models.Axe;
-import studio.farsighted.pfe.api.models.Branch;
-import studio.farsighted.pfe.api.exceptions.EntityNotFoundException;
 import studio.farsighted.pfe.api.interfaces.AxeInterface;
+import studio.farsighted.pfe.api.models.AxeEntity;
 import studio.farsighted.pfe.api.repositories.AxeRepository;
-import studio.farsighted.pfe.api.repositories.BranchRepository;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
-// Annotation
 @Service
-public class AxeService	implements AxeInterface {
+public class AxeService implements AxeInterface {
 
-	@Autowired
-	private AxeRepository axeRepository;
-	@Autowired
-	private BranchRepository branchRepository;
-	// Save operation
-	@Override
-	public Axe saveAxe (Axe axe)
-	{
-		return axeRepository.save(axe);
-	}
+    @Autowired
+    private AxeRepository axeRepository;
 
-	@Override
-	public List<Axe> fetchAxeList() {
-		return axeRepository.findAll() ;
-	}
+    @Override
+    public Page<AxeEntity> get(String query, Boolean status, Pageable pageable) {
+        return axeRepository.filterByCriteria(query, status, pageable);
+    }
 
-	public Axe axeById(String axeId) {
-		Optional<Axe> optionalAxe = axeRepository.findById(axeId);
-		return optionalAxe.orElse(null); // Return null if not found, you can handle this differently based on your needs
-	}
+    @Override
+    public AxeEntity findById(UUID id) {
+        return axeRepository.findById(id).get();
+    }
 
-	@Override
-	public Axe updateAxe(Axe axe, String axeId) {
-		Axe AxseDB = axeRepository.findById(axeId).orElse(null);
+    @Override
+    public AxeEntity save(AxeEntity axeEntity) {
+        return axeRepository.save(axeEntity);
+    }
 
-		AxseDB.setNote(axe.getNote());
-		AxseDB.setVisibility(axe.isVisibility());
-		AxseDB.setAxe_name(axe.getAxe_name());
-		return axeRepository.save(AxseDB);
-	}
+    @Override
+    public AxeEntity update(AxeEntity axeEntity) {
+        return axeRepository.save(axeEntity);
+    }
 
-	@Override
-	public ResponseEntity<Void> deleteAxeById(String axeId) {
+    @Override
+    public void delete(UUID id) {
+        axeRepository.deleteById(id);
+    }
 
-		Optional<Axe> axeOptional = axeRepository.findById(axeId);
-		if (axeOptional.isPresent()) {
-			axeRepository.deleteById(axeId);
-			return ResponseEntity.noContent().build();
-		}
-		return ResponseEntity.notFound().build();
-	}
-
-	// Read operation
-
-	public List<Axe> fetchCohortList()
-	{
-		return (List<Axe>)
-				axeRepository.findAll();
-	}
-
-
-
-	public Branch addBranchToAxe(String axeId, Branch branch) {
-		Axe axe = axeRepository.findById(axeId)
-				.orElseThrow(() -> new EntityNotFoundException("Axe not found with ID: " + axeId));
-
-		branch.setAxe(axe);
-		axe.getBranches().add(branch);
-
-		return branchRepository.save(branch);
-	}
-
+    @Override
+    public boolean isExist(UUID id) {
+        return axeRepository.existsById(id);
+    }
 }

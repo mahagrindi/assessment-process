@@ -36,11 +36,11 @@ interface ComponentProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'si
 
 export const InputNumber: FC<ComponentProps> = forwardRef<HTMLInputElement, ComponentProps>(
   ({ variant = 'default', size = 'default', value: initialValue = 1, min = 1, max = 100, label, hint, error, required = false, onChange, ...rest }, ref) => {
-    const [value, setValue] = useState(initialValue)
+    const [value, setValue] = useState<number>(initialValue)
 
     useEffect(() => {
       onChange(value.toString())
-    }, [value]) // eslint-disable-line react-hooks/exhaustive-deps
+    }, [value, onChange])
 
     return (
       <div className='flex flex-col items-start gap-1 self-stretch'>
@@ -53,7 +53,15 @@ export const InputNumber: FC<ComponentProps> = forwardRef<HTMLInputElement, Comp
         <div className={mr(inputNumberVariant({ variant, size }), error && 'border-[2px] border-accent-error focus:border-red-500 focus:ring-red-500')}>
           <div className='w-full flex justify-between items-center gap-x-3'>
             <div>
-              <input ref={ref} id={label} className='p-0 bg-transparent border-0 text-gray-800 focus:ring-0' type='number' readOnly value={value} {...rest} />
+              <input
+                ref={ref}
+                id={label}
+                className='w-full p-0 bg-transparent border-0 text-gray-800 focus:ring-0'
+                type='number'
+                value={value}
+                onChange={(e) => setValue(Number(e.target.value))}
+                {...rest}
+              />
             </div>
             <div className='flex justify-end items-center gap-x-1.5'>
               <button

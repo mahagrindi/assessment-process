@@ -1,11 +1,11 @@
 'use client'
 
-import type { JSX, ReactElement } from 'react'
+import type { JSX, ReactNode } from 'react'
 import { createContext, useContext, useState } from 'react'
 import { DashboardStore, dashboardStore } from '@/provider/store/dashboard-store'
 
 interface ComponentProps {
-  children: ReactElement
+  children: ReactNode
 }
 
 export default function DashboardProvider({ children }: ComponentProps): JSX.Element {

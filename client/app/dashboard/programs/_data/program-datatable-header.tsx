@@ -65,17 +65,17 @@ export const programColumns: ColumnDef<ProgramType>[] = [
        */
       switch (row.original.programStatus) {
         case 'STARTING':
-          return <Chip title={row.original.programStatus} variant='default' />
-        case 'BOARDING':
-          return <Chip title={row.original.programStatus} variant='content' />
+          return <Chip title={row.original.programStatus} size='small' variant='default' />
+        case 'ONBOARDING':
+          return <Chip title={row.original.programStatus} size='small' variant='content' />
         case 'ONGOING':
-          return <Chip title={row.original.programStatus} variant='info' />
+          return <Chip title={row.original.programStatus} size='small' variant='info' />
         case 'SUSPENDED':
-          return <Chip title={row.original.programStatus} variant='warning' />
+          return <Chip title={row.original.programStatus} size='small' variant='warning' />
         case 'COMPLETED':
-          return <Chip title={row.original.programStatus} variant='danger' />
+          return <Chip title={row.original.programStatus} size='small' variant='danger' />
         default:
-          return <Chip title={row.original.programStatus} variant='default' />
+          return <Chip title={row.original.programStatus} size='small' variant='default' />
       }
     },
   },
@@ -108,7 +108,7 @@ export const programColumns: ColumnDef<ProgramType>[] = [
   {
     id: 'cohorts',
     header: 'Cohorts',
-    accessorKey: 'cohorts.length',
+    accessorFn: (row) => `${row.cohorts.length} cohorts`,
   },
   {
     id: 'actions',
@@ -120,7 +120,7 @@ export const programColumns: ColumnDef<ProgramType>[] = [
         <button title='Remove Program from list' className='flex' onClick={() => DELETE(row.original.id!)}>
           <LuTrash size={20} className='text-accent-error' />
         </button>
-        <Link passHref href={`/dashboard/programs/${row.original.programName}?id=${row.original.id}`}>
+        <Link passHref href={`/dashboard/programs/${row.original.programName.replaceAll(' ', '-')}?id=${row.original.id}`}>
           <button title='Edit Program information' className='flex'>
             <LuClipboardEdit size={20} className='text-accent-link' />
           </button>

@@ -12,6 +12,7 @@ import studio.farsighted.pfe.api.exceptions.PersistDataException;
 import studio.farsighted.pfe.api.models.ProgramCohortEntity;
 import studio.farsighted.pfe.api.services.ProgramCohortService;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -73,6 +74,16 @@ public class ProgramCohortController {
             return ResponseEntity.ok(true);
         } catch (Exception e) {
             throw new PersistDataException("Program Cohort not deleted: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/get-cohort-list")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<List<ProgramCohortEntity>> getAll() {
+        try {
+            return ResponseEntity.ok(programCohortService.getAll());
+        } catch (Exception e) {
+            throw new PersistDataException("Program Cohorts not found: " + e.getMessage());
         }
     }
 

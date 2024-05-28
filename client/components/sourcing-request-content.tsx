@@ -52,7 +52,6 @@ export const SourcingRequestContent: FC = () => {
           success: data !== 0 ? { success: 'startup list updated', message: `The sourcing job has been executed successfully. ${data} element has been added to the database.` } : null,
           progress,
         })
-
         if (data === 0) {
           clearInterval(interval) // Stop the interval if data is 0
         }

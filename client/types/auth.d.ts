@@ -4,8 +4,14 @@ interface LoginType {
 }
 
 interface TokenType {
-  token: string
-  expiresIn: nnumber
+  token: {
+    token: string
+    expiresIn: nnumber
+  }
+  refresh: {
+    token: string
+    expiresIn: nnumber
+  }
 }
 
 interface ErrorAuthType {

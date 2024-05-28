@@ -9,7 +9,7 @@ import { mr } from '@/utils/class-authority-merge'
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
-const selectVariant = cva('h-full w-full flex items-center px-2 border-[2px] disabled:bg-gray-100 disabled:pointer-events-none rounded outline-none', {
+const selectVariant = cva('h-full w-full flex items-center px-2 border-[2px] disabled:bg-gray-100 disabled:pointer-events-none rounded outline-none relative', {
   variants: {
     variant: {
       default: 'border-gray-225 text-sm focus:border-gray-500 focus:ring-gray-500',
@@ -77,8 +77,14 @@ export const ServerSelect: FC<ComponentProps> = forwardRef<HTMLDivElement, Compo
       }
     }
 
+    useEffect(() => {
+      if (!searchParams.get(paramQuery)) {
+        setSelectedValues([])
+      }
+    }, [paramQuery, searchParams])
+
     return (
-      <div ref={ref} onBlur={() => console.log('mouse out')} className={mr('flex flex-col items-start gap-1 self-stretch select-none relative')}>
+      <div ref={ref} onBlur={() => console.log('mouse out')} className={mr('flex flex-col items-start gap-1 self-stretch select-none')}>
         {label && (
           <label htmlFor='select' className='text-sm font-[500] tracking-wide capitalize text-content-prompt'>
             <span>{label}</span>
@@ -90,7 +96,19 @@ export const ServerSelect: FC<ComponentProps> = forwardRef<HTMLDivElement, Compo
             <div onClick={() => setIsOpen(!isOpen)} className='flex-1 h-full flex items-center gap-2 cursor-pointer'>
               <div className='flex-1'>
                 {selectedValues.length > 0 ? (
-                  <div className='flex items-center gap-1'>{selectedValues.length === 1 ? selectedValues.join(',') : `${selectedValues.length} selected`}</div>
+                  <div className='flex items-center gap-1'>
+                    {selectedValues.length === 1
+                      ? // Find the corresponding label for the selected value
+                        data.find((item) => item.value === selectedValues[0])?.label || selectedValues[0]
+                      : // Display labels of all selected values
+                        selectedValues
+                          .map(
+                            (value) =>
+                              // Find the corresponding label for each selected value
+                              data.find((item) => item.value === value)?.label || value
+                          )
+                          .join(', ')}
+                  </div>
                 ) : placeholder ? (
                   placeholder
                 ) : (
@@ -121,6 +139,7 @@ export const ServerSelect: FC<ComponentProps> = forwardRef<HTMLDivElement, Compo
             </div>
           )}
         </div>
+        {isOpen && <div className='absolute top-0 left-0 w-full h-full bg-transparent' onClick={() => setIsOpen(false)} />}
         {!error && hint && <p className='text-xs font-[500] text-content-disabled first-letter:uppercase'>{hint}</p>}
         {error && <p className='text-xs font-[500] text-accent-error first-letter:uppercase'>{error}</p>}
       </div>

@@ -47,4 +47,8 @@ public class ProgramCohortEntity {
     @OneToMany(mappedBy = "cohort", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProgramCohortChallengeEntity> challenges;
 
+    @OneToMany(mappedBy = "cohort", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("cohort")
+    private List<EvaluationEntity> evaluations;
+
 }

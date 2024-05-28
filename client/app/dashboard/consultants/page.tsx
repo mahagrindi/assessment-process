@@ -10,6 +10,7 @@ import { SearchInput } from '@/components/content-data-table-search'
 
 import { consultantColumns } from '@/app/dashboard/consultants/_data/consultant-datatable-header'
 import { GET, GET_DEPARTMENT, GET_JOB_TITLES } from '@/actions/consultant-server-actions'
+import { FilterOptions } from '@/components/filter-options'
 
 export default async function Page({
   searchParams,
@@ -27,6 +28,19 @@ export default async function Page({
         title={'consultants'}
         args={[<Linker key={'create-link-consultant-element'} title={'add new'} href={`/dashboard/consultants/create`} size={'large'} icon={<LuPlusCircle size={20} />} className={'gap-2 px-3'} />]}
       />
+
+      {(searchParams.status || searchParams.query || searchParams.dep || searchParams.title) && (
+        <div className='px-6 mb-6'>
+          <FilterOptions
+            filter={[
+              { name: 'query', option: searchParams.query },
+              { name: 'status', option: searchParams.status },
+              { name: 'dep', option: searchParams.dep },
+              { name: 'title', option: searchParams.title },
+            ]}
+          />
+        </div>
+      )}
 
       <div className='bg-primary-white flex flex-col border-t-[2px] border-gray-200'>
         <div className='flex items-center justify-between px-6 py-4'>

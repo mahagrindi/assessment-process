@@ -1,24 +1,21 @@
 package studio.farsighted.pfe.api.interfaces;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import studio.farsighted.pfe.api.models.AxeEntity;
 
-import studio.farsighted.pfe.api.models.Axe;
+import java.util.UUID;
 
-import java.util.List;
-
-// Class
 public interface AxeInterface {
+    Page<AxeEntity> get(String query, Boolean status, Pageable pageable);
 
-    // Save operation
-    Axe saveAxe (Axe axe);
+    AxeEntity findById(UUID id);
 
-    // Read operation
-    List<Axe> fetchAxeList();
+    AxeEntity save(AxeEntity axeEntity);
 
-    // Update operation
-    Axe updateAxe(Axe axe,
-                  String axeId);
+    AxeEntity update(AxeEntity axeEntity);
 
-    // Delete operation
-    ResponseEntity<Void> deleteAxeById(String axeId);
+    void delete(UUID id);
+
+    boolean isExist(UUID id);
 }

@@ -15,7 +15,7 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "program_cohort_challenge")
+@Table(name = "datatable-program_cohort_challenge")
 public class ProgramCohortChallengeEntity {
 
     @Id

@@ -28,6 +28,11 @@ public class StartupService implements StartupInterface {
     private CsvParser csvParser;
 
     @Override
+    public List<StartupEntity> getAll() {
+        return startupRepository.findAll();
+    }
+
+    @Override
     public Page<StartupEntity> get(String query, String sector, Pageable pageable) {
         return startupRepository.findByStartupNameOrDescriptionAndSector(query, sector, pageable);
     }

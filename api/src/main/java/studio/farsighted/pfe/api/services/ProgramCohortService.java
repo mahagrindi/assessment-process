@@ -11,6 +11,7 @@ import studio.farsighted.pfe.api.models.ProgramEntity;
 import studio.farsighted.pfe.api.repositories.ProgramCohortRepository;
 import studio.farsighted.pfe.api.repositories.ProgramRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -21,6 +22,11 @@ public class ProgramCohortService implements ProgramCohortInterface {
 
     @Autowired
     private ProgramRepository programRepository;
+
+    @Override
+    public List<ProgramCohortEntity> getAll() {
+        return programCohortRepository.findAll();
+    }
 
     @Override
     public Page<ProgramCohortEntity> get(Pageable pageable) {

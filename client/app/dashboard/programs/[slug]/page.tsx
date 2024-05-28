@@ -1,7 +1,7 @@
 'use client'
 
 import { type JSX, useLayoutEffect } from 'react'
-import { LuFileEdit, LuSave } from 'react-icons/lu'
+import { LuArrowLeftToLine, LuFileEdit, LuSave } from 'react-icons/lu'
 
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -14,6 +14,7 @@ import { FileUpload } from '@/ui/file'
 import { TextArea } from '@/ui/textarea'
 import { DropDown } from '@/ui/dropdown'
 import { InputNumber } from '@/ui/storybook/input-number'
+import { Linker } from '@/ui/link'
 
 import { ContentHeader } from '@/components/content-header'
 import { formProgramDefaultValues, formProgramSchema } from '@/validation/form-program-validation'
@@ -27,6 +28,7 @@ export default function Page({ params, searchParams }: { params: { slug: string 
     handleSubmit,
     control,
     reset,
+    setValue,
   } = useForm({
     resolver: yupResolver(formProgramSchema),
     defaultValues: formProgramDefaultValues,
@@ -38,11 +40,18 @@ export default function Page({ params, searchParams }: { params: { slug: string 
     }
   }, [searchParams.id]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  useLayoutEffect(() => {
+    if (params.slug === 'create') {
+      setValue('programStatus', 'ONBOARDING')
+    }
+  }, [params.slug, setValue])
+
   return (
     <div className='h-full min-h-full w-full'>
       <ContentHeader
         title={'programs'}
         args={[
+          <Linker key={'back-to-programs'} href={'/dashboard/programs'} title={'Cancel'} size={'large'} variant='link' icon={<LuArrowLeftToLine />} className={'gap-2 px-3'} />,
           params.slug === 'create' ? (
             <Button
               key={'create-program-element'}
@@ -93,27 +102,29 @@ export default function Page({ params, searchParams }: { params: { slug: string 
               )}
             />
 
-            <Controller
-              name='programStatus'
-              control={control}
-              render={({ field }) => (
-                <DropDown
-                  required
-                  label='select status'
-                  placeholder={'Select status'}
-                  value={field.value}
-                  onChange={(e) => field.onChange(e)}
-                  data={[
-                    { label: 'Boarding', value: 'BOARDING' },
-                    { label: 'Starting', value: 'STARTING' },
-                    { label: 'Ongoing', value: 'ONGOING' },
-                    { label: 'Suspended', value: 'SUSPENDED' },
-                    { label: 'Completed', value: 'COMPLETED' },
-                  ]}
-                  error={errors.programStatus && errors.programStatus.message}
-                />
-              )}
-            />
+            {params.slug !== 'create' && (
+              <Controller
+                name='programStatus'
+                control={control}
+                render={({ field }) => (
+                  <DropDown
+                    required
+                    label='select status'
+                    placeholder={'Select status'}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e)}
+                    data={[
+                      { label: 'OnBoarding', value: 'ONBOARDING' },
+                      { label: 'Starting', value: 'STARTING' },
+                      { label: 'Ongoing', value: 'ONGOING' },
+                      { label: 'Suspended', value: 'SUSPENDED' },
+                      { label: 'Completed', value: 'COMPLETED' },
+                    ]}
+                    error={errors.programStatus && errors.programStatus.message}
+                  />
+                )}
+              />
+            )}
 
             <Controller
               name='programName'

@@ -13,6 +13,7 @@ import studio.farsighted.pfe.api.exceptions.PersistDataException;
 import studio.farsighted.pfe.api.models.ProgramEntity;
 import studio.farsighted.pfe.api.services.ProgramService;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -75,6 +76,11 @@ public class ProgramController {
         } catch (Exception e) {
             throw new PersistDataException("Program with id: " + id + " not deleted: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/list-programs")
+    public ResponseEntity<List<ProgramEntity>> list() {
+        return ResponseEntity.ok(programService.getList());
     }
 
 }

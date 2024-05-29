@@ -3,13 +3,11 @@ import '@/styles/main.css'
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
-
 import { DashboardHeader } from '@/components/dashboard-header'
 import { DashboardSidebar } from '@/components/dahsboard-sidebar'
 
 import { mr } from '@/utils/class-authority-merge'
+import { Toaster } from 'sonner'
 
 import DashboardProvider from '@/provider/dashboard-provider'
 
@@ -22,10 +20,6 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
-  if (!cookies().get('token')) {
-    redirect('/')
-  }
-
   return (
     <DashboardProvider>
       <div className={mr('flex flex-col w-full h-screen max-h-screen')}>
@@ -34,7 +28,10 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         </div>
         <div className='flex-1 w-full flex overflow-hidden'>
           <DashboardSidebar />
-          <div className='flex-1 bg-primary-background pb-6 overflow-x-hidden overflow-y-auto'>{children}</div>
+          <div className='flex-1 bg-primary-background pb-6 overflow-x-hidden overflow-y-auto'>
+            <Toaster />
+            {children}
+          </div>
         </div>
       </div>
     </DashboardProvider>

@@ -1,28 +1,21 @@
 'use client'
 
-import { type FC, useLayoutEffect, useState } from 'react'
+import { type FC } from 'react'
 import { motion } from 'framer-motion'
-import { getCookie } from 'cookies-next'
 import { usePathname, useRouter } from 'next/navigation'
 
 import { MdOutlineChevronRight, MdOutlineLogout, MdOutlineSettings } from 'react-icons/md'
 
+import { useAuth } from '@/provider/user-provider'
 import { mr } from '@/utils/class-authority-merge'
 import { VerticalNavigation } from '@/ui/vertical-navigation'
-
-import { logout } from '@/actions/auth-actions'
 
 interface ComponentProps {}
 
 export const DashboardHeaderProfile: FC<ComponentProps> = () => {
   const { push } = useRouter()
+  const { logout, user, isAuthenticated } = useAuth()
   const pathname: string = usePathname()
-
-  const [user, setUser] = useState<AuthUserProfileType>()
-
-  useLayoutEffect(() => {
-    getCookie('user') && setUser(JSON.parse(getCookie('user') as string) as AuthUserProfileType)
-  }, [])
 
   return (
     <div>
@@ -30,7 +23,7 @@ export const DashboardHeaderProfile: FC<ComponentProps> = () => {
       <div className='w-full h-[1px] bg-content-display' />
       <div className={mr('h-[82px]  flex items-center justify-center relative', pathname === '/dashboard/profile' && 'bg-content-display')}>
         <div className={mr('w-1 h-full bg-red-200', pathname.includes('dashboard/profile') ? 'bg-primary-yellow' : 'bg-primary-black')} />
-        {!user ? (
+        {!isAuthenticated ? (
           <div className='relative flex items-center justify-center px-3'>
             <div className='animate-ping absolute inline-flex h-3 w-3 rounded-full bg-yellow-400 opacity-75'></div>
             <div className='absolute inline-flex rounded-full h-3 w-3 bg-yellow-600'></div>

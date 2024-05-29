@@ -1,58 +1,72 @@
 'use client'
 
-import Link from 'next/link'
 import type { ColumnDef } from '@tanstack/react-table'
-import { LuArrowDownWideNarrow, LuArrowUpWideNarrow, LuClipboardEdit, LuEye, LuShield, LuShieldClose } from 'react-icons/lu'
+import { LuClipboardEdit, LuShield, LuShieldClose, LuTrash } from 'react-icons/lu'
 
+import Link from 'next/link'
+import { toast } from 'sonner'
+
+import { DELETE, PUT } from '@/actions/criteria-server-actions'
 import { Chip } from '@/ui/chip'
-import { PUTVisibilityCriterias, PUTVisibilitySubAxe } from '@/actions/sub-axe-server-actions'
 
-export const CriteriaColumns: ColumnDef<CriteriaType>[] = [
+export const criteriaColumns: ColumnDef<AxeSubCriteriaType>[] = [
   {
-    id: 'criterionName',
-    header: () => (
-      <div className='capitalize flex items-center gap-1'>
-        <p>Criterion</p>
-        {typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('dir') === 'ASC' ? (
-          <Link href={{ search: '?sort=axe_name&dir=DESC' }} passHref>
-            <LuArrowUpWideNarrow size={18} />
-          </Link>
-        ) : (
-          <Link href={{ search: '?sort=axe_name&dir=ASC' }} passHref>
-            <LuArrowDownWideNarrow size={18} />
-          </Link>
-        )}
-      </div>
-    ),
-    cell: ({ row }) => (
-      <div className='flex flex-row items-center gap-2'>
-        <p className='text-sm text-content-display capitalize'>{row.original.criterionName}</p>
-      </div>
-    ),
+    id: 'axeSubCriteriaName',
+    header: 'Criteria',
+    accessorKey: 'axeSubCriteriaName',
   },
   {
-    id: 'visibility',
-    header: 'visibility',
-    accessorKey: 'visibility',
-    cell: ({ row }) => <div className='w-[82px]'>{row.original.visibility ? <Chip title={'Enabled'} variant={'success'} /> : <Chip title={'Disabled'} variant={'danger'} />}</div>,
+    id: 'status',
+    header: 'Status',
+    accessorKey: 'status',
+    cell: ({ row }) => <div className='w-[82px]'>{row.original.status ? <Chip title={'Enabled'} variant={'success'} /> : <Chip title={'Hidden'} variant={'danger'} />}</div>,
   },
-
+  {
+    id: 'axeSub.axeSubName',
+    header: 'Branch',
+    accessorKey: 'axeSub.axeSubName',
+  },
+  {
+    id: 'axeSubCriteriaWeight',
+    header: 'Weight',
+    accessorKey: 'axeSubCriteriaWeight',
+  },
+  {
+    id: 'axeSub.axe.axeName',
+    header: 'Axe',
+    accessorKey: 'axeSub.axe.axeName',
+  },
   {
     id: 'action',
     header: ({ header }) => <div className='text-end mr-5'>{header.column.id}</div>,
-    accessorKey: 'startupName',
+    accessorKey: 'id',
     // size: 64,
     cell: ({ row }) => (
       <div className='flex flex-row-reverse justify-end gap-2 '>
-        <button title='Restrict access' className='flex disabled:opacity-25 disabled:cursor-not-allowed' onClick={() => PUTVisibilityCriterias(row.original.id)}>
-          {row.original.visibility ? <LuShieldClose size={20} className={'text-accent-error'} /> : <LuShield size={20} className={'text-purple-200'} />}
+        <button title={'Delete challenge'} className='flex disabled:cursor-not-allowed' onClick={() => DELETE(row.original.id!)}>
+          <LuTrash size={20} className='text-accent-error' />
         </button>
 
-        <Link passHref href={`/dashboard/axes/detail/sub-axe/${row.original.criterionName}?idcriterias=${row.original.id}`}>
-          <button title='Edit user' className='flex disabled:opacity-25 disabled:cursor-not-allowed'>
+        <Link passHref href={`/dashboard/axes/criteria/${row.original.axeSubCriteriaName.replaceAll(' ', '-')}?sub=${row.original.axeSub.id}&id=${row.original.id}`}>
+          <button title='Edit axe' className='flex disabled:opacity-25 disabled:cursor-not-allowed'>
             <LuClipboardEdit size={20} className='text-accent-link' />
           </button>
         </Link>
+
+        <button
+          title='Restrict visibility'
+          className='flex disabled:opacity-25 disabled:cursor-not-allowed'
+          onClick={() => {
+            console.log(row.original)
+            PUT({
+              ...row.original,
+              status: !row.original.status,
+            })
+              .then(() => toast.success('Criteria is now ' + (row.original.status ? 'hidden' : 'enabled')))
+              .catch((err) => toast.error(err.message))
+          }}>
+          {row.original.status ? <LuShieldClose size={20} className={'text-accent-error'} /> : <LuShield size={20} className={'text-purple-200'} />}
+        </button>
 
         <div className='flex-1' />
       </div>

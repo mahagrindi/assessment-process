@@ -9,6 +9,7 @@ import studio.farsighted.pfe.api.models.ProgramEntity;
 import studio.farsighted.pfe.api.repositories.ProgramProviderRepository;
 import studio.farsighted.pfe.api.repositories.ProgramRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -54,5 +55,10 @@ public class ProgramService implements ProgramInterface {
     @Override
     public Boolean isExist(UUID id) {
         return programRepository.existsById(id);
+    }
+
+    @Override
+    public List<ProgramEntity> getList() {
+        return programRepository.findAll();
     }
 }

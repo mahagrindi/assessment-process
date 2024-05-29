@@ -1,7 +1,13 @@
+'use client'
+
 import { Information } from '@/components/Profile/profile-general-information'
+
 import type { JSX } from 'react'
+import { useAuth } from '@/provider/user-provider'
 
 export default function Page(): JSX.Element {
+  const { user } = useAuth()
+
   return (
     <div className='h-full min-h-full w-full flex flex-col'>
       <div className='mb-3'>
@@ -10,6 +16,13 @@ export default function Page(): JSX.Element {
 
         <Information />
       </div>
+
+      <div>{JSON.stringify(user.firstName)}</div>
+      <div>{JSON.stringify(user.lastName)}</div>
+      <div>{JSON.stringify(user.middleName)}</div>
+      <div>{JSON.stringify(user.profileImage)}</div>
+      <div>{JSON.stringify(user.phoneNumber)}</div>
     </div>
   )
 }
+  

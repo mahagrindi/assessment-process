@@ -29,11 +29,12 @@ const chipVariants = cva('relative w-fit flex items-center justify-center gap-2 
 interface ComponentProps extends VariantProps<typeof chipVariants> {
   icon?: ReactElement
   title?: string
+  className?: string
 }
 
-export const Chip: FC<ComponentProps> = forwardRef<HTMLDivElement, ComponentProps>(({ title, icon, variant = 'default', size = 'default' }, ref) => {
+export const Chip: FC<ComponentProps> = forwardRef<HTMLDivElement, ComponentProps>(({ title, icon, variant = 'default', size = 'default', className }, ref) => {
   return (
-    <div ref={ref} className={mr(chipVariants({ variant, size }))}>
+    <div ref={ref} className={mr(chipVariants({ variant, size }), className)}>
       {icon && <div>{icon}</div>}
       {title && <p>{title}</p>}
     </div>

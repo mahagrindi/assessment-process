@@ -1,12 +1,13 @@
 'use client'
 
 import { type JSX, useLayoutEffect } from 'react'
-import { LuFileEdit, LuSave } from 'react-icons/lu'
+import { LuArrowLeftToLine, LuFileEdit, LuSave } from 'react-icons/lu'
 
 import { Button } from '@/ui/button'
 import { Input } from '@/ui/input'
 import { Switch } from '@/ui/switch'
 import { FileUpload } from '@/ui/file'
+import { Linker } from '@/ui/link'
 
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -42,6 +43,7 @@ export default function Page({ params, searchParams }: { params: { slug: string 
       <ContentHeader
         title={'consultants'}
         args={[
+          <Linker key={'back-to-consultants'} href={'/dashboard/consultants'} title={'Cancel'} size={'large'} variant='link' icon={<LuArrowLeftToLine />} className={'gap-2 px-3'} />,
           params.slug === 'create' ? (
             <Button
               key={'create-consultant-element'}

@@ -4,46 +4,37 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Axe-entity")
+@Table(name = "datatable-axe")
 public class AxeEntity {
+
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "axe_id", unique = true, nullable = false)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    private String axe_name;
+    @Column(name = "axe-name", unique = true)
+    private String axeName;
 
-    private boolean visibility;
+    @Column(name = "axe-description", columnDefinition = "TEXT")
+    private String axeDescription;
 
-    private double note;
+    @Column(name = "axe-status", columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean status = true;
 
+    @CreatedDate
+    @Column(name = "user-created-at", updatable = false)
     private Date createdAt = new Date();
 
-    private float numberProrgam ;
-
-    private float coefficient;
-
-    private String description ;
-
-
-
-
-    @OneToMany( cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_axe_id" , referencedColumnName = "axe_id" )
-    private List<SubAxeEntity> subAxes ;
-
-
-
-
+    @OneToMany(mappedBy = "axe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AxeSubEntity> axeSubs;
 
 }

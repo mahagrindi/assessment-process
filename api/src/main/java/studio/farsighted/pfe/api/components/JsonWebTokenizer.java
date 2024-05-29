@@ -16,6 +16,10 @@ import java.util.function.Function;
 @Service
 public class JsonWebTokenizer {
     private final Long EXPIRATION_TIME = 3_600_000L;
+    private final Long REFRESH_EXPIRATION_TIME = 86_400_000L;
+    /**
+     * TODO: key gets invalidated everytime the server restarts because it's generated on the fly
+     */
     private final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String extractUsername(String token) {
@@ -36,6 +40,14 @@ public class JsonWebTokenizer {
 
     public long getExpirationTime() {
         return EXPIRATION_TIME;
+    }
+
+    public String generateRefreshToken(UserDetails userDetails) throws Exception {
+        return buildToken(new HashMap<>(), userDetails, REFRESH_EXPIRATION_TIME);
+    }
+
+    public long getRefreshExpirationTime() {
+        return REFRESH_EXPIRATION_TIME;
     }
 
     private String buildToken(Map<String, Object> claims, UserDetails userDetails, Long expiration) {

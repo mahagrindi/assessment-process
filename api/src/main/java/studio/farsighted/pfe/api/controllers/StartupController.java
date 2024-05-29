@@ -98,4 +98,14 @@ public class StartupController {
         }
     }
 
+    @GetMapping("/get-startup-list")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<List<StartupEntity>> getAll() {
+        try {
+            return ResponseEntity.ok(startupService.getAll());
+        } catch (Exception e) {
+            throw new PaginationBoundException("Startups not found");
+        }
+    }
+
 }

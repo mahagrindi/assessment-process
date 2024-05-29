@@ -7,7 +7,7 @@ import { cva, VariantProps } from 'class-variance-authority'
 import { motion } from 'framer-motion'
 import { MdCheckCircle, MdClose, MdError, MdInfo, MdWarning } from 'react-icons/md'
 
-const toastVariant = cva('z-20 w-full max-w-[350px] top-4 right-4 absolute py-2 px-3 rounded', {
+const toastVariant = cva('z-20 w-full max-w-[350px] bottom-4 right-4 absolute py-2 px-3 rounded', {
   variants: {
     variant: {
       default: 'border-[2px] bg-primary-white',
@@ -26,9 +26,10 @@ interface ComponentProps extends VariantProps<typeof toastVariant> {
   title?: string
   message?: string
   close?: () => void
+  enableClose?: boolean
 }
 
-export const Toast: FC<ComponentProps & Record<string, any>> = ({ title, message, variant = 'default', className, close }) => {
+export const Toast: FC<ComponentProps & Record<string, any>> = ({ title, message, variant = 'default', className, enableClose = true, close }) => {
   const decideIcon = () => {
     switch (variant) {
       case 'error':
@@ -56,9 +57,11 @@ export const Toast: FC<ComponentProps & Record<string, any>> = ({ title, message
           <p className='col-span-11 text-sm text-content-prompt'>{message}</p>
         </div>
       </div>
-      <div>
-        <MdClose size={21} className='absolute top-2 right-2 text-content-prompt cursor-pointer' onClick={close} />
-      </div>
+      {enableClose && (
+        <div>
+          <MdClose size={21} className='absolute top-2 right-2 text-content-prompt cursor-pointer' onClick={close} />
+        </div>
+      )}
     </motion.div>
   )
 }

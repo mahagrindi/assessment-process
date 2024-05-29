@@ -22,7 +22,7 @@ export const Breadcrumb: FC<ComponentProps> = ({}) => {
                 {path.replace('-', ' ')}
               </Link>
             ) : (
-              <p className='text-sm leading-5 capitalize'>{path.replace('-', ' ')}</p>
+              <p className='text-sm leading-5 capitalize'>{path.replaceAll('-', ' ')}</p>
             )}
             {index < paths.length - 1 && <LuChevronRight size={18} />}
           </div>

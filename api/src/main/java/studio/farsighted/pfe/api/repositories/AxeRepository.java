@@ -7,12 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import studio.farsighted.pfe.api.models.AxeEntity;
 
-public interface AxeRepository extends JpaRepository<AxeEntity, String> {
+import java.util.UUID;
 
-    @Query("SELECT axe FROM AxeEntity axe WHERE " +
-            "LOWER(axe.axe_name) LIKE LOWER(CONCAT('%', :axe_name, '%')) " +
-            "AND (:visibility IS NULL OR axe.visibility = :visibility)")
-    Page<AxeEntity> findAxeByFilter(@Param("axe_name") String axe_name,
-                                    @Param("visibility") Boolean visibility,
-                                    Pageable pageable);
+public interface AxeRepository extends JpaRepository<AxeEntity, UUID> {
+        @Query("SELECT axe FROM AxeEntity axe WHERE " +
+                        "(:query IS NULL OR :query = '' OR LOWER(axe.axeName) LIKE LOWER(CONCAT('%', :query, '%'))) " +
+                        "AND (:status IS NULL OR axe.status = :status)")
+        Page<AxeEntity> filterByCriteria(@Param("query") String query, @Param("status") Boolean status,
+                        Pageable pageable);
 }

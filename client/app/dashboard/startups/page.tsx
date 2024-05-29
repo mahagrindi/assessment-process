@@ -11,6 +11,7 @@ import { startupColumns } from '@/app/dashboard/startups/_data/startup-datatable
 import { ServerSelect } from '@/ui/storybook/server-select'
 import { SearchInput } from '@/components/content-data-table-search'
 import { GET, GET_ACTIVITY_SECTOR } from '@/actions/startup-server-actions'
+import { FilterOptions } from '@/components/filter-options'
 
 export const metadata: Metadata = {
   title: 'EY Dashboard',
@@ -41,6 +42,17 @@ export default async function Page({ searchParams }: { searchParams: { page: str
           <Linker key={'create-link-startup'} size={'large'} title={'add new'} className={'gap-2 px-3'} href={`/dashboard/startups/create`} icon={<LuPlus className='flex' size={18} />} />,
         ]}
       />
+
+      {(searchParams.sector || searchParams.query) && (
+        <div className='px-6 mb-6'>
+          <FilterOptions
+            filter={[
+              { name: 'query', option: searchParams.query },
+              { name: 'sector', option: searchParams.sector },
+            ]}
+          />
+        </div>
+      )}
 
       <div className='bg-primary-white flex flex-col border-t-[2px] border-gray-200'>
         <div className='flex items-center justify-between px-6 py-4'>

@@ -76,7 +76,7 @@ public class AxeController {
             throw new PersistDataException("Axe with id: " + id + " not deleted: " + e.getMessage());
         }
 
-        return axeService.updateAxeVisibility(id);
+    /*     return axeService.updateAxeVisibility(id); */
     }
 
 }

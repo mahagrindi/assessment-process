@@ -41,6 +41,15 @@ public class AxeService implements AxeInterface {
         axeRepository.deleteById(id);
     }
 
+    public AxeEntity updateAxeVisibility(UUID id ) {
+
+		AxeEntity AxseDB = axeRepository.findById(id).get();
+
+
+		AxseDB.setStatus(!AxseDB.isStatus());
+		return axeRepository.save(AxseDB);
+	}
+
     @Override
     public boolean isExist(UUID id) {
         return axeRepository.existsById(id);

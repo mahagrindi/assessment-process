@@ -57,12 +57,14 @@ export default function UserProvider({ children }: ComponentProps): JSX.Element 
     setError(userStore.error)
   }
 
-  useLayoutEffect((): void => {
-    if (getCookie('token')) {
+  useLayoutEffect(() => {
+    const token = getCookie('token')
+
+    if (token) {
       query
         .get('/auth/me', {
           headers: {
-            Authorization: `Bearer ${getCookie('token')}`,
+            Authorization: `Bearer ${token}`,
           },
         })
         .then((res) => {
@@ -75,17 +77,28 @@ export default function UserProvider({ children }: ComponentProps): JSX.Element 
           } else {
             deleteCookie('token')
             deleteCookie('refresh')
+            setIsAuthenticated(false)
+            if (pathname.includes('/dashboard')) {
+              push('/login') // Or any other non-dashboard route
+            }
           }
         })
         .catch((err) => {
           setError(err)
           deleteCookie('token')
           deleteCookie('refresh')
+          setIsAuthenticated(false)
+          if (pathname.includes('/dashboard')) {
+            push('/login') // Or any other non-dashboard route
+          }
         })
     } else {
-      push('/')
+      setIsAuthenticated(false)
+      if (pathname.includes('/dashboard')) {
+        push('/login') // Or any other non-dashboard route
+      }
     }
-  }, [push, isAuthenticated, pathname])
+  }, [pathname, push])
 
   return <UserContext.Provider value={{ isAuthenticated, user, error, login, logout, emptyState }}>{children}</UserContext.Provider>
 }

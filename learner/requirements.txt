@@ -3,3 +3,7 @@ flask
 pandas
 transformers
 torch
+nltk
+scikit-learn
+joblib
+ 

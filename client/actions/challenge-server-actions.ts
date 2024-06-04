@@ -79,3 +79,15 @@ export async function DELETE(id: string): Promise<boolean> {
       throw new Error(err.message)
     })
 }
+export async function GET_ALL(): Promise<ChallengeType[]> {
+  return await fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/challenges`, {
+    method: 'GET',
+    next: { revalidate: 0 },
+    headers: { Authorization: `Bearer ${cookies().get('token')?.value}` },
+  })
+    .then((res) => res.json())
+    .then((data) => data)
+    .catch((err) => {
+      throw new Error(err.message)
+    })
+}

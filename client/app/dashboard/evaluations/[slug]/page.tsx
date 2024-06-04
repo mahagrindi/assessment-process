@@ -47,27 +47,34 @@ export default function Page({ params, searchParams }: { params: { slug: string 
   }
 
   const handleSubmit = async () => {
+    console.log("hereee")
+    console.log("hereee")
     try {
-      const res = await identify()
-      const userName = `${res.firstName} ${res.middleName} ${res.lastName}`
+   /*   const res = await identify()
+      const userName = `${res.firstName} ${res.middleName} ${res.lastName}`*/
       const form = {
         title,
         description: text,
         challenges: selectedOptions,
         sections,
-        createdBy: userName,
+        createdBy: "userName",
       }
-      if (params.slug === 'create') {
-        console.log(form)
-        /*  await POST(form)*/
-        alert('The form has been added successfully')
+
+  
+     if (params.slug === 'create') {
+
+       await POST(form)
+          .then(() => {
+            alert('The form has been added successfully');
+            push('/dashboard/evaluations');
+          } )
       } else {
-        /* await UPDATE(searchParams.id, form)*/
+     /*   /!* await UPDATE(searchParams.id, form) *!/*/
         alert('The form has been updated successfully')
       }
-      push('/dashboard/evaluations')
+/*     */
     } catch (error) {
-      console.error('Error submitting form:', error)
+
       alert('Error submitting form: ' + error)
     }
   }

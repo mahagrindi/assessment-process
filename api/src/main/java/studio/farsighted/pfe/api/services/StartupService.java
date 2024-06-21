@@ -61,7 +61,7 @@ public class StartupService implements StartupInterface {
     public Integer transformToDatabase() {
         try {
             AtomicInteger count = new AtomicInteger(0);
-            List<StartupEntity> startupEntities = csvParser.parse("D:\\Repositories\\web work\\design-develop-assessment-process\\DB\\sheets\\startups.csv", StartupEntity.class);
+            List<StartupEntity> startupEntities = csvParser.parse("D:\\EY-intership\\assessment-process\\DB\\sheets\\startups.csv", StartupEntity.class);
 //            startupRepository.saveAll(startupEntities);
             startupEntities.parallelStream().forEach(startup -> {
                 try {

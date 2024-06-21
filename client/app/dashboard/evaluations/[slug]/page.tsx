@@ -60,7 +60,7 @@ export default function Page({ params, searchParams }: { params: { slug: string 
         createdBy: "userName",
       }
 
-  
+
      if (params.slug === 'create') {
 
        await POST(form)

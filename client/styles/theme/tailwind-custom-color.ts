@@ -1,10 +1,16 @@
 export const EY_COLORS = {
   primary: {
     yellow: '#ffe600',
+    green :'#57e188',
+    blue :  '#188ce5',
+    purple:  '#9c82d4',
+    red:   '#ff9a91',
+    orange:   '#ffb46a',
     black: '#1a1a24',
     white: '#fffffe',
     background: '#f7f7f8',
     border: '#E5E7EB',
+
   },
   accent: {
     link: '#155cb4',

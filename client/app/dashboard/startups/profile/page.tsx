@@ -34,7 +34,7 @@ export default async function Page({ searchParams }: { searchParams: { id: strin
 
 
           <Tabs child1={<StartupGeneralInformation />} child2={<HistoryOfAssesment />} />
-     
+
       </div>
 
     </div>

@@ -163,10 +163,18 @@ export const startupColumns: ColumnDef<StartupType>[] = [
             <LuClipboardEdit size={20} className='text-accent-link' />
           </button>
         </Link>
-        <button title='More information' className='flex'>
-          <LuEye size={20} className='text-accent-success' />
-        </button>
+
+        <Link passHref href={`/dashboard/startups/profile?id=${row.original.id}`}>
+          <button title='More information' className='flex'>
+            <LuEye size={20} className='text-accent-success' />
+          </button>
+        </Link>
+
+
         <div className='flex-1' />
+
+
+
       </div>
     ),
   },

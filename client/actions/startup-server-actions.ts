@@ -50,3 +50,18 @@ export async function DELETE(id: string): Promise<StartupType> {
       throw new Error(err.message)
     })
 }
+
+
+
+export async function FIND(id: string): Promise<StartupType> {
+  return await fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/startup/${id}`, {
+    method: 'GET',
+    next: { revalidate: 0 },
+    headers: { Authorization: `Bearer ${cookies().get('token')?.value}` },
+  })
+    .then((res) => res.json())
+    .then((data) => data)
+    .catch((err) => {
+      throw new Error(err.message)
+    })
+}

@@ -27,7 +27,7 @@ export default async function Page({ searchParams }: { searchParams: { id: strin
         args={[
           <Linker
             key={'back-to-cohorts'}
-            href={`/dashboard/programs/detail?id=${searchParams.id}`}
+            href={`/dashboard/programs/detail?id=${cohort.program.id}`}
             title={'Cancel'}
             size={'large'}
             variant='link'

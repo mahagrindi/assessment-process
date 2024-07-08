@@ -1,5 +1,5 @@
 interface StartupType {
-  id: string
+  id?: string
   startupName: string
   startupActivitySector: string
   startupLabelDate: string
@@ -10,6 +10,7 @@ interface StartupType {
   startupPhone?: string
   startupFounders?: string
   startupDescription: string
+  evaluations: string[]
 }
 
 type StartupResponseType = PageableType & {

@@ -31,15 +31,17 @@ export const Switch: FC<ComponentProps> = forwardRef<HTMLInputElement, Component
   return (
     <div className='flex flex-col items-start gap-1 self-stretch'>
       <div className='flex items-center gap-6'>
-        <label htmlFor={label} className={mr('text-sm font-[500] tracking-wide capitalize text-content-display')} style={{ width: width }}>
-          <div>
-            <span>{label}</span>
-            {required && <span className='text-accent-error ml-1 text-sm'>*</span>}
-          </div>
-          <div>
-            <p className='text-xs font-[500] text-content-disabled first-letter:uppercase'>{hint}</p>
-          </div>
-        </label>
+        {label && (
+          <label htmlFor={label} className={mr('text-sm font-[500] tracking-wide capitalize text-content-display')} style={{ width: width }}>
+            <div>
+              <span>{label}</span>
+              {required && <span className='text-accent-error ml-1 text-sm'>*</span>}
+            </div>
+            <div>
+              <p className='text-xs font-[500] text-content-disabled first-letter:uppercase'>{hint}</p>
+            </div>
+          </label>
+        )}
         <input ref={ref} id={label} type='checkbox' className={mr(switchVariant({ size }))} {...rest} />
       </div>
       {error && <p className='text-xs font-[500] text-accent-error first-letter:uppercase'>{error}</p>}

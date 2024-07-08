@@ -11,10 +11,10 @@ const toastVariant = cva('z-20 w-full max-w-[350px] bottom-4 right-4 absolute py
   variants: {
     variant: {
       default: 'border-[2px] bg-primary-white',
-      error: 'border-[2px] border-accent-error bg-red-100 bg-opacity-20',
-      warning: 'border-[2px] border-accent-warning bg-orange-100 bg-opacity-20',
-      success: 'border-[2px] border-accent-success bg-green-100 bg-opacity-20',
-      info: 'border-[2px] border-accent-link bg-blue-100 bg-opacity-20',
+      error: 'border-[2px] border-accent-error bg-primary-white after:bg-red-100 before:bg-opacity-50',
+      warning: 'border-[2px] border-accent-warning bg-primary-white after:bg-orange-100 before:bg-opacity-50',
+      success: 'border-[2px] border-accent-success bg-primary-white after:bg-green-100 before:bg-opacity-50',
+      info: 'border-[2px] border-accent-link bg-primary-white after:bg-blue-100 before:bg-opacity-50',
     },
   },
   defaultVariants: {

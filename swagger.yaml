@@ -1,0 +1,1233 @@
+openapi: 3.0.1
+info:
+  title: EY Assessment Api Definition
+  description: This is the API definition for the EY Assessment API.
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Local Dev Server
+security:
+  - bearer: []
+paths:
+  /api/user:
+    get:
+      tags:
+        - user-controller
+      operationId: index
+      parameters:
+        - name: query
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: title
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: dep
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Pageable'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageUserEntity'
+    put:
+      tags:
+        - user-controller
+      operationId: update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserEntity'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserEntity'
+    post:
+      tags:
+        - user-controller
+      operationId: save
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserEntity'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserEntity'
+  /api/startup:
+    get:
+      tags:
+        - startup-controller
+      operationId: index_1
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: sector
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Pageable'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageStartupEntity'
+    put:
+      tags:
+        - startup-controller
+      operationId: update_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartupEntity'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/StartupEntity'
+    post:
+      tags:
+        - startup-controller
+      operationId: save_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartupEntity'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/StartupEntity'
+    patch:
+      tags:
+        - startup-controller
+      operationId: merge
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int32
+  /api/program:
+    get:
+      tags:
+        - program-controller
+      operationId: index_2
+      parameters:
+        - name: query
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Pageable'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageProgramEntity'
+    put:
+      tags:
+        - program-controller
+      operationId: update_2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProgramEntity'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProgramEntity'
+    post:
+      tags:
+        - program-controller
+      operationId: save_2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProgramEntity'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProgramEntity'
+  /api/program/cohort:
+    get:
+      tags:
+        - program-cohort-controller
+      operationId: index_3
+      parameters:
+        - name: programId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Pageable'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageProgramCohortEntity'
+    put:
+      tags:
+        - program-cohort-controller
+      operationId: update_3
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProgramCohortEntity'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProgramCohortEntity'
+    post:
+      tags:
+        - program-cohort-controller
+      operationId: save_3
+      parameters:
+        - name: programId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProgramCohortEntity'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProgramCohortEntity'
+  '/api/program/cohort/challenge/{id}':
+    get:
+      tags:
+        - program-cohort-challenge-controller
+      operationId: show_1
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProgramCohortChallengeEntity'
+    put:
+      tags:
+        - program-cohort-challenge-controller
+      operationId: update_4
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProgramCohortChallengeEntity'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProgramCohortChallengeEntity'
+    delete:
+      tags:
+        - program-cohort-challenge-controller
+      operationId: delete_4
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: boolean
+  '/api/axe/{id}':
+    get:
+      tags:
+        - axe-controller
+      operationId: find_3
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AxeEntity'
+    put:
+      tags:
+        - axe-controller
+      operationId: update_5
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AxeEntity'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AxeEntity'
+    delete:
+      tags:
+        - axe-controller
+      operationId: delete_5
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: boolean
+  /auth/login:
+    post:
+      tags:
+        - authentication-controller
+      operationId: authenticate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUserDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/JwtResponseDTO'
+  /api/program/cohort/challenge:
+    post:
+      tags:
+        - program-cohort-challenge-controller
+      operationId: save_4
+      parameters:
+        - name: cohortId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProgramCohortChallengeEntity'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProgramCohortChallengeEntity'
+  /api/files:
+    post:
+      tags:
+        - storage-controller
+      operationId: POST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/StorageUploadDTO'
+  /api/axe:
+    get:
+      tags:
+        - axe-controller
+      operationId: index_4
+      parameters:
+        - name: query
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Pageable'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageAxeEntity'
+    post:
+      tags:
+        - axe-controller
+      operationId: save_5
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AxeEntity'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AxeEntity'
+  /auth/me:
+    get:
+      tags:
+        - authentication-controller
+      operationId: authenticatedUser
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserEntity'
+  '/api/user/{id}':
+    get:
+      tags:
+        - user-controller
+      operationId: find
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserEntity'
+    delete:
+      tags:
+        - user-controller
+      operationId: delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+  /api/user/job-titles:
+    get:
+      tags:
+        - user-controller
+      operationId: getDistinctJobTitles
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/user/departments:
+    get:
+      tags:
+        - user-controller
+      operationId: getDistinctDepartment
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  '/api/startup/{id}':
+    get:
+      tags:
+        - startup-controller
+      operationId: find_1
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/StartupEntity'
+    delete:
+      tags:
+        - startup-controller
+      operationId: delete_1
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/StartupEntity'
+  /api/startup/activity-sector:
+    get:
+      tags:
+        - startup-controller
+      operationId: getDistinctSector
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  type: string
+  '/api/program/{id}':
+    get:
+      tags:
+        - program-controller
+      operationId: find_2
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProgramEntity'
+    delete:
+      tags:
+        - program-controller
+      operationId: delete_2
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProgramEntity'
+  /api/program/list-programs:
+    get:
+      tags:
+        - program-controller
+      operationId: list
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProgramEntity'
+  '/api/program/cohort/{id}':
+    get:
+      tags:
+        - program-cohort-controller
+      operationId: show
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProgramCohortEntity'
+    delete:
+      tags:
+        - program-cohort-controller
+      operationId: delete_3
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: boolean
+  '/api/files/{file}':
+    get:
+      tags:
+        - storage-controller
+      operationId: GET
+      parameters:
+        - name: file
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                format: binary
+components:
+  schemas:
+    GrantedAuthority:
+      type: object
+      properties:
+        authority:
+          type: string
+    UserEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+        accountNonLocked:
+          type: boolean
+        accountNonExpired:
+          type: boolean
+        credentialsNonExpired:
+          type: boolean
+        enabled:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
+        badgeNumber:
+          type: string
+        jobTitle:
+          type: string
+        department:
+          type: string
+        phoneNumber:
+          type: string
+        eyEmployee:
+          type: boolean
+        profileImage:
+          type: string
+        notes:
+          type: string
+        isEligibleForEvaluation:
+          type: boolean
+        cin:
+          type: string
+        authorities:
+          type: array
+          items:
+            $ref: '#/components/schemas/GrantedAuthority'
+    StartupEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        startupName:
+          type: string
+        startupActivitySector:
+          type: string
+        startupLabelDate:
+          type: string
+        startupCreatedAt:
+          type: string
+        startupLogo:
+          type: string
+        startupWebsite:
+          type: string
+        startupEmail:
+          type: string
+        startupPhone:
+          type: string
+        startupFounders:
+          type: string
+        startupDescription:
+          type: string
+    ProgramCohortChallengeEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        challengeTitle:
+          type: string
+        challengeRequirement:
+          type: string
+        challengeDescription:
+          type: string
+        challengeAdvantages:
+          type: array
+          items:
+            type: string
+        challengeSub:
+          type: array
+          items:
+            type: string
+        challengeKeyword:
+          type: array
+          items:
+            type: string
+    ProgramCohortEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        cohortName:
+          type: string
+        cohortDescription:
+          type: string
+        cohortStartDate:
+          type: string
+          format: date-time
+        cohortEndDate:
+          type: string
+          format: date-time
+        cohortDuration:
+          type: integer
+          format: int32
+        cohortStatus:
+          type: string
+        program:
+          $ref: '#/components/schemas/ProgramEntity'
+        challenges:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProgramCohortChallengeEntity'
+    ProgramEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        programPicture:
+          type: string
+        programName:
+          type: string
+        programIndustry:
+          type: string
+        programDescription:
+          type: string
+        programStartDate:
+          type: string
+          format: date-time
+        programEndDate:
+          type: string
+          format: date-time
+        programEstimatedDuration:
+          type: integer
+          format: int32
+        programStatus:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        provider:
+          $ref: '#/components/schemas/ProgramProviderEntity'
+        cohorts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProgramCohortEntity'
+    ProgramProviderEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        programProviderName:
+          type: string
+        programProviderLogo:
+          type: string
+        programProviderWebsite:
+          type: string
+    AxeEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        axeName:
+          type: string
+        axeDescription:
+          type: string
+        status:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        axeSubs:
+          type: array
+          items:
+            $ref: '#/components/schemas/AxeSubEntity'
+    AxeSubCriteriaEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        axeSubCriteriaName:
+          type: string
+        axeSubCriteriaDescription:
+          type: string
+        status:
+          type: boolean
+        axeSubCriteriaWeight:
+          type: integer
+          format: int32
+        axeSub:
+          $ref: '#/components/schemas/AxeSubEntity'
+    AxeSubEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        axeSubName:
+          type: string
+        axeSubDescription:
+          type: string
+        status:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        axeSubWeight:
+          type: integer
+          format: int32
+        axe:
+          $ref: '#/components/schemas/AxeEntity'
+        criterias:
+          type: array
+          items:
+            $ref: '#/components/schemas/AxeSubCriteriaEntity'
+    LoginUserDTO:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    JwtResponseDTO:
+      type: object
+      properties:
+        token:
+          $ref: '#/components/schemas/Token'
+        refresh:
+          $ref: '#/components/schemas/RefreshToken'
+    RefreshToken:
+      type: object
+      properties:
+        token:
+          type: string
+        expiresIn:
+          type: integer
+          format: int64
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+        expiresIn:
+          type: integer
+          format: int64
+    StorageUploadDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+    Pageable:
+      type: object
+      properties:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          minimum: 1
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            type: string
+    PageUserEntity:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserEntity'
+        number:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortObject'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        empty:
+          type: boolean
+    PageableObject:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortObject'
+        pageSize:
+          type: integer
+          format: int32
+        pageNumber:
+          type: integer
+          format: int32
+        unpaged:
+          type: boolean
+        paged:
+          type: boolean
+    SortObject:
+      type: object
+      properties:
+        direction:
+          type: string
+        nullHandling:
+          type: string
+        ascending:
+          type: boolean
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+    PageStartupEntity:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/StartupEntity'
+        number:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortObject'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        empty:
+          type: boolean
+    PageProgramEntity:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProgramEntity'
+        number:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortObject'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        empty:
+          type: boolean
+    PageProgramCohortEntity:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProgramCohortEntity'
+        number:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortObject'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        empty:
+          type: boolean
+    PageAxeEntity:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/AxeEntity'
+        number:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortObject'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        empty:
+          type: boolean
+  securitySchemes:
+    Bearer Authentication:
+      type: http
+      description: JWT authentication using Bearer token
+      in: header
+      scheme: bearer
+      bearerFormat: JWT

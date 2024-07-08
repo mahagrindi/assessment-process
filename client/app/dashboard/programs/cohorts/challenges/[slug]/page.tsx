@@ -1,6 +1,6 @@
 'use client'
 
-import { ChangeEvent, type JSX, useLayoutEffect, useState } from 'react'
+import { type ChangeEvent, type JSX, useLayoutEffect, useState } from 'react'
 import { LuFileEdit, LuSave, LuX } from 'react-icons/lu'
 
 import { useRouter } from 'next/navigation'

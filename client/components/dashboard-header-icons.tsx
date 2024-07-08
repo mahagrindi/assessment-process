@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from 'react'
 
-import { MdCalendarMonth, MdOutlineNotificationsNone } from 'react-icons/md'
+import { MdCalendarMonth, MdOutlineLanguage, MdOutlineNotificationsNone } from 'react-icons/md'
 import Link from 'next/link'
 
 export const DashboardHeaderIcons: FC = () => (
@@ -18,6 +18,8 @@ export const DashboardHeaderIcons: FC = () => (
 )
 
 const navigation_icons: { icon: ReactNode; href: string }[] = [
+  // language
+  { icon: <MdOutlineLanguage size={24} />, href: '/dashboard/language' },
   { icon: <MdOutlineNotificationsNone size={24} />, href: '/dashboard/notifications' },
   { icon: <MdCalendarMonth size={24} />, href: '/dashboard/calendar' },
 ]

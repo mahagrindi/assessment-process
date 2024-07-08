@@ -10,8 +10,11 @@ import { motion } from 'framer-motion'
 import { Switch } from '@/ui/switch'
 import { Button } from '@/ui/button'
 import { mr } from '@/utils/class-authority-merge'
+import { useRouter } from 'next/navigation'
 
 export const SourcingRequestContent: FC = () => {
+  const { refresh } = useRouter()
+
   const [isToggle, setToggle] = useState<boolean>()
   const [state, setState] = useState<{ loading: boolean; error: { error: string; message: string } | null; success: { success: string; message: string } | null; progress: number }>({
     loading: false,
@@ -36,6 +39,7 @@ export const SourcingRequestContent: FC = () => {
 
         if (data !== 0) {
           progress = 100
+          refresh()
         } else {
           progress = Math.ceil(Math.min((elapsedTime / MAX_TIME) * 100, 100)) // Calculate progress based on elapsed time
         }

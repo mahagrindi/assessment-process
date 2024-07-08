@@ -3,7 +3,7 @@
 import Link from 'next/link'
 
 import type { ColumnDef } from '@tanstack/react-table'
-import { LuClipboardEdit, LuEye, LuShield, LuShieldClose, LuTrash } from 'react-icons/lu'
+import { LuClipboardEdit, LuShield, LuShieldClose, LuTrash } from 'react-icons/lu'
 
 import { toast } from 'sonner'
 import { Chip } from '@/ui/chip'
@@ -63,12 +63,6 @@ export const subAxeColumns: ColumnDef<AxeSubType>[] = [
           }}>
           {row.original.status ? <LuShieldClose size={20} className={'text-accent-error'} /> : <LuShield size={20} className={'text-purple-200'} />}
         </button>
-
-        <Link passHref href={`/dashboard/axes/detail?id=${row.original.id}`}>
-          <button title='View details' className='flex disabled:opacity-25 disabled:cursor-not-allowed' disabled={!row.original.status}>
-            <LuEye size={20} className='text-accent-success' />
-          </button>
-        </Link>
         <div className='flex-1' />
       </div>
     ),

@@ -1,5 +1,6 @@
 export interface UserStore {
   isAuthenticated: boolean
+  isLoading: boolean
 
   user: AuthUserProfileType
   error: ErrorAuthType
@@ -11,6 +12,7 @@ export interface UserStore {
 
 export const userStore: UserStore = {
   isAuthenticated: false,
+  isLoading: false,
 
   user: {
     username: '',
@@ -20,6 +22,7 @@ export const userStore: UserStore = {
     badgeNumber: '',
     isEligibleForEvaluation: false,
     authorities: [],
+    cin: '',
   },
 
   error: {

@@ -22,10 +22,14 @@ export default function UserProvider({ children }: ComponentProps): JSX.Element 
   const pathname: string = usePathname()
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(userStore.isAuthenticated)
+  const [isLoading, setIsLoading] = useState(userStore.isLoading)
+
   const [user, setUser] = useState<AuthUserProfileType>(userStore.user)
   const [error, setError] = useState<ErrorAuthType>(userStore.error)
 
   const login = async (data: User): Promise<void> => {
+    setIsLoading(true)
+    setError({ ...userStore.error })
     return await query
       .post('/auth/login', data, {})
       .then((res) => {
@@ -36,9 +40,13 @@ export default function UserProvider({ children }: ComponentProps): JSX.Element 
       })
       .then(() => {
         setIsAuthenticated(true)
+        setIsLoading(false)
+        push('/dashboard')
       })
       .catch((err) => {
-        console.log(err.response.data)
+        setIsAuthenticated(false)
+        setIsLoading(false)
+        setError(err.response.data)
       })
   }
 
@@ -57,12 +65,14 @@ export default function UserProvider({ children }: ComponentProps): JSX.Element 
     setError(userStore.error)
   }
 
-  useLayoutEffect((): void => {
-    if (getCookie('token')) {
+  useLayoutEffect(() => {
+    const token = getCookie('token')
+
+    if (token) {
       query
         .get('/auth/me', {
           headers: {
-            Authorization: `Bearer ${getCookie('token')}`,
+            Authorization: `Bearer ${token}`,
           },
         })
         .then((res) => {
@@ -75,19 +85,30 @@ export default function UserProvider({ children }: ComponentProps): JSX.Element 
           } else {
             deleteCookie('token')
             deleteCookie('refresh')
+            setIsAuthenticated(false)
+            if (pathname.includes('/dashboard')) {
+              push('/login') // Or any other non-dashboard route
+            }
           }
         })
         .catch((err) => {
           setError(err)
           deleteCookie('token')
           deleteCookie('refresh')
+          setIsAuthenticated(false)
+          if (pathname.includes('/dashboard')) {
+            push('/login') // Or any other non-dashboard route
+          }
         })
     } else {
-      push('/')
+      setIsAuthenticated(false)
+      if (pathname.includes('/dashboard')) {
+        push('/login') // Or any other non-dashboard route
+      }
     }
-  }, [push, isAuthenticated, pathname])
+  }, [pathname, push])
 
-  return <UserContext.Provider value={{ isAuthenticated, user, error, login, logout, emptyState }}>{children}</UserContext.Provider>
+  return <UserContext.Provider value={{ isAuthenticated, user, error, isLoading, login, logout, emptyState }}>{children}</UserContext.Provider>
 }
 
 const UserContext = createContext<UserStore>(userStore)

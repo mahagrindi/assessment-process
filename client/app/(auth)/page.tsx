@@ -2,9 +2,6 @@
 
 import Link from 'next/link'
 import type { JSX } from 'react'
-import { useState } from 'react'
-
-import { useRouter } from 'next/navigation'
 
 import { Button } from '@/ui/button'
 import { Input } from '@/ui/input'
@@ -18,9 +15,7 @@ import { formLoginSchema } from '@/validation/form-auth-validation'
 import { useAuth } from '@/provider/user-provider'
 
 export default function Page(): JSX.Element {
-  const { push } = useRouter()
-  const { login, error, emptyState, isAuthenticated } = useAuth()
-  const [loading, setLoading] = useState<boolean>(false)
+  const { login, error, emptyState, isLoading } = useAuth()
 
   const {
     formState: { errors },
@@ -62,15 +57,11 @@ export default function Page(): JSX.Element {
             title={'sign in'}
             type={'submit'}
             onClick={handleSubmit(
-              (data) => {
-                setLoading(true)
-                login(data)
-                  .then(() => isAuthenticated && setLoading(false))
-                  .then(() => push('/dashboard'))
-              },
+              (data) => login(data),
+
               (err) => console.log(err)
             )}
-            loading={loading}
+            loading={isLoading}
           />
         </div>
       </div>

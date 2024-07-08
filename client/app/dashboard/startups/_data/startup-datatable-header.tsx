@@ -155,10 +155,10 @@ export const startupColumns: ColumnDef<StartupType>[] = [
     // size: 64,
     cell: ({ row }) => (
       <div className='flex flex-row-reverse justify-end gap-2'>
-        <button title='Remove startup from list' className='flex' onClick={() => DELETE(row.original.id)}>
+        <button title='Remove startup from list' className='flex' onClick={() => DELETE(row.original.id!)}>
           <LuTrash size={20} className='text-accent-error' />
         </button>
-        <Link passHref href={`/dashboard/startups/${row.original.startupName.replaceAll(' ', '')}?id=${row.original.id}`}>
+        <Link passHref href={`/dashboard/startups/${row.original.startupName.replaceAll(' ', '-')}?id=${row.original.id}`}>
           <button title='Edit startup information' className='flex'>
             <LuClipboardEdit size={20} className='text-accent-link' />
           </button>

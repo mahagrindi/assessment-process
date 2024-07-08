@@ -21,4 +21,13 @@ public interface StartupRepository extends JpaRepository<StartupEntity, UUID> {
     @Query("SELECT startup FROM StartupEntity startup WHERE (:query IS NULL OR :query = '' OR (LOWER(startup.startupName) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(startup.startupDescription) LIKE LOWER(CONCAT('%', :query, '%')))) AND (:sector IS NULL OR :sector = '' OR startup.startupActivitySector = :sector)")
     Page<StartupEntity> findByStartupNameOrDescriptionAndSector(@Param("query") String query, @Param("sector") String sector, Pageable pageable);
 
+    @Query("SELECT startupActivitySector, COUNT(startupActivitySector) FROM StartupEntity GROUP BY startupActivitySector")
+    List<Object[]> countStartupsByActivitySector();
+
+    @Query("SELECT startupLabelDate, COUNT(startupLabelDate) FROM StartupEntity GROUP BY startupLabelDate")
+    List<Object[]> countStartupsByLabelDate();
+
+    @Query("SELECT startupCreatedAt, COUNT(startupCreatedAt) FROM StartupEntity GROUP BY startupCreatedAt")
+    List<Object[]> countStartupsByCreatedAt();
+
 }

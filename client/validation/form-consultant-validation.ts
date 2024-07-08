@@ -22,3 +22,26 @@ export const formConsultantSchema = yup.object().shape({
   isEligibleForEvaluation: yup.boolean(),
   cin: yup.string().required('CIN is required').min(8, 'National ID must be at least 8 characters'),
 })
+
+export const formConsultantDefaultValues: yup.InferType<typeof formConsultantSchema> = {
+  id: '',
+  username: '',
+  password: '',
+  role: '',
+  accountNonLocked: false,
+  accountNonExpired: false,
+  credentialsNonExpired: false,
+  enabled: false,
+  firstName: '',
+  lastName: '',
+  middleName: '',
+  badgeNumber: '',
+  jobTitle: '',
+  department: '',
+  phoneNumber: '',
+  eyEmployee: false,
+  profileImage: '',
+  notes: '',
+  isEligibleForEvaluation: false,
+  cin: '',
+}

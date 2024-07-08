@@ -42,6 +42,7 @@ interface AuthUserProfileType extends Omit<LoginType, 'password'> {
   profileImage?: string
   notes?: string
   isEligibleForEvaluation: boolean
+  cin: string
 
   authorities: Array<{
     authority: string
